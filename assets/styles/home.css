@@ -1,0 +1,270 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #ffffff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    position: fixed; /* Làm cho sidebar cố định */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Đảm bảo sidebar nằm phía trên main-content */
+}
+
+.sidebar .logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.sidebar .logo img {
+    width: 85%;
+    margin-right: 10px;
+}
+
+.sidebar .menu {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar .menu li {
+    margin: 50px 0;
+}
+
+.sidebar .menu li a {
+    text-decoration: none;
+    color: #646464;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar .menu li a:hover {
+    color: #27a4f2;
+}
+
+.sidebar .menu li a i {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.sidebar .create-btn {
+    display: block;
+    width: 50%;
+    padding: 10px 0;
+    background-color: #27a4f2;
+    color: #fff;
+    text-align: center;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+.main-content {
+    flex-grow: 1; /* Để main-content chiếm phần còn lại của không gian */
+    padding: 20px;
+    margin-left: 290px;
+}
+
+.search-bar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.search-bar input {
+    width: 30%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+}
+
+.welcome-banner {
+    background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    height: 20vh;
+}
+
+.welcome-banner h2 {
+    margin: 0;
+    font-size: 2.0rem;
+}
+
+.welcome-banner p {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.welcome-banner img {
+    width: 300px;
+    height: 300px;
+}
+
+.main-section {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+    padding-bottom: 20px;
+}
+
+.section-title {
+    padding-top: 20px;
+    font-size: 24px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.section-title i {
+    margin-left: 10px;
+    color: #ff4500;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-left: 20px;
+}
+
+.card {
+    background-image: url('/assets/images/home/bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #fff; /* Màu nền dự phòng nếu ảnh không tải được */
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 5px 5px 7px rgba(0, 0, 0, 0.5);
+    width: calc(33.333% - 20px);
+    position: relative;
+    height: 170px; /* Đặt chiều cao cố định cho card */
+    color: #fff;
+}
+
+.card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 10px;
+}
+
+.card-content h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #fff;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.card-content p {
+    margin: 0;
+    font-size: 14px;
+    color: #fff;
+    position: absolute;
+    top: 40px;
+    left: 10px;
+}
+
+.tags {
+    display: flex;
+    gap: 5px;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+.tags span {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.card-footer span {
+    color: #fff;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding-right: 5px;
+}
+
+.card-footer i {
+    color: #fff;
+    padding-right: 20px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
