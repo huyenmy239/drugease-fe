@@ -1,0 +1,31 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Example</title>
+</head>
+<body>
+    <h1>Subjects List</h1>
+    <ul id="subjects-list"></ul>
+
+    <script>
+        fetch('http://localhost:8000/api/rooms/subjects/')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const subjectsList = document.getElementById('subjects-list');
+                data.forEach(subject => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = subject.name;
+                    subjectsList.appendChild(listItem);
+                });
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    </script>
+</body>
+</html>
