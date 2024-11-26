@@ -1,0 +1,67 @@
+.main-content {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+}
+
+.profile-card {
+    background-color: white;
+    width: 100%;
+    padding: 20px 20vw 0;
+    border-radius: 5px;
+}
+
+.profile-pic {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.profile-pic img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+.profile-pic span {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.info {
+    margin-bottom: 20px;
+}
+.info div {
+    margin-bottom: 20px;
+}
+.info div span {
+    font-weight: bold;
+}
+.info div i {
+    margin-left: 10px;
+    cursor: pointer;
+}
+.log {
+    margin-top: 30px;
+}
+
+.log-item {
+    display: flex;
+    flex-direction: column;
+    border-bottom: #ddd 1px solid;
+    margin-top: 20px;
+    padding-bottom: 10px;
+}
+
+.log-item .room {
+    color: #0084FF;
+    cursor: pointer;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 10px 0;
+}
