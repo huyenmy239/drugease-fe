@@ -27,6 +27,12 @@
         .visible {
             display: block;
         }
+        img.profile-avatar {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
     </style>
 </head>
 <body>
@@ -51,15 +57,28 @@
     <!-- Profile and History Section -->
     <div class="container hidden" id="main-container">
         <h3>Welcome, <span id="user-role"></span></h3>
+        
+        <!-- Profile Section -->
         <button onclick="getProfile()">Get Profile</button>
         <pre id="profile-response"></pre>
+        
+        <h3>Update Profile</h3>
+        <input type="text" id="update-username" placeholder="New Username">
+        <input type="email" id="update-email" placeholder="New Email">
+        <input type="text" id="update-avatar" placeholder="New Avatar URL">
+        
+        <!-- Input for Uploading Profile Picture -->
+        <input type="file" id="update-profile-picture" accept="image/*">
+        
+        <button onclick="updateProfile()">Update Profile</button>
+        <pre id="update-profile-response"></pre>
 
         <button onclick="getHistory()">Get History</button>
         <pre id="history-response"></pre>
     </div>
 
     <script>
-        const baseURL = "http://192.168.1.49:8000/api/accounts/users/"; // Adjust base URL if needed
+        const baseURL = "http://127.0.0.1:8000/api/accounts/users/"; // Adjust base URL if needed
         let token = ""; // Store token after login
         let role = "";  // Store role (User/Admin)
 
@@ -107,13 +126,11 @@
                 document.getElementById("login-response").innerText = JSON.stringify(data, null, 2);
 
                 if (response.status === 200) {
-                    // Save token and role
-                    token = data.token;
-                    role = data.role;
+                    // Save token to localStorage
+                    localStorage.setItem("token", data.token);
 
-                    // Update UI
-                    document.getElementById("user-role").innerText = role;
-                    toggleSections(true);
+                    // Redirect to profile page
+                    window.location.href = "pro.html";
                 } else {
                     alert("Login failed! Check your credentials.");
                 }
@@ -134,6 +151,56 @@
                 });
                 const data = await response.json();
                 document.getElementById("profile-response").innerText = JSON.stringify(data, null, 2);
+
+                // Update UI with profile data
+                document.getElementById("update-username").value = data.username || '';
+                document.getElementById("update-email").value = data.email || '';
+                document.getElementById("update-avatar").value = data.avatar || '';
+
+                // If there's an avatar or profile picture, display it
+                if (data.profile_picture) {
+                    const profilePicElement = document.createElement("img");
+                    profilePicElement.src = data.profile_picture; // Assuming the URL is returned as part of the profile data
+                    profilePicElement.classList.add("profile-avatar");
+                    document.getElementById("profile-response").appendChild(profilePicElement);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        // Update Profile API (with image upload)
+        async function updateProfile() {
+            const username = document.getElementById("update-username").value;
+            const email = document.getElementById("update-email").value;
+            const avatar = document.getElementById("update-avatar").value;
+            const profilePicture = document.getElementById("update-profile-picture").files[0];
+
+            // Prepare FormData object to send image and other fields
+            const formData = new FormData();
+            formData.append("username", username);
+            formData.append("email", email);
+            formData.append("avatar", avatar);
+            if (profilePicture) {
+                formData.append("profile_picture", profilePicture); // key is 'profile_picture' for image
+            }
+
+            try {
+                const response = await fetch(`${baseURL}profile/`, {
+                    method: "PUT",
+                    headers: {
+                        "Authorization": `Token ${token}`,
+                    },
+                    body: formData
+                });
+                const responseData = await response.json();
+                document.getElementById("update-profile-response").innerText = JSON.stringify(responseData, null, 2);
+
+                if (response.status === 200) {
+                    alert("Profile updated successfully!");
+                } else {
+                    alert("Failed to update profile.");
+                }
             } catch (error) {
                 console.error(error);
             }
