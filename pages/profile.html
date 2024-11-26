@@ -10,48 +10,13 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/assets/styles/home.css" />
+    <link rel="stylesheet" href="/assets/styles/components/sidebar.css" />
     <link rel="stylesheet" href="/assets/styles/profile.css" />
   </head>
 
   <body>
     <div class="container">
-      <div class="sidebar">
-        <div class="logo">
-          <img
-            alt="Blueroom logo"
-            src="/assets/images/logo.png"
-            width="100px"
-          />
-        </div>
-        <a class="create-btn" href="#"> + Create </a>
-        <ul class="menu">
-          <li>
-            <a href="#">
-              <i class="fas fa-home"> </i>
-              Home
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="fas fa-sticky-note"> </i>
-              Note
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="fas fa-user"> </i>
-              Profile
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="fas fa-sign-out-alt"> </i>
-              Log out
-            </a>
-          </li>
-        </ul>
-      </div>
+      <div class="sidebar" id="sidebar-placeholder"></div>
 
       <div class="main-content">
         <div class="profile-card">
@@ -135,6 +100,7 @@
     </div>
 
     <script src="/js/pages/profile.js"></script>
+    <script src="/js/components/sidebar.js"></script>
 
   </body>
 </html>

@@ -1,7 +1,9 @@
 .main-content {
     display: flex;
     justify-content: center;
-    /* align-items: center; */
+    flex-grow: 1;
+    padding: 20px;
+    margin-left: 290px;
 }
 
 .profile-card {
