@@ -28,70 +28,35 @@
                   src="https://storage.googleapis.com/a1aa/image/q3TEnqsqfUSqbiAMdHgl1yI0fY9vixkmfUaLUL3iHh1MtnpnA.jpg"
                   width="100"
                 />
-                <span> Edit </span>
+                <span id="edit-btn"> Edit </span>
             </div>
-            <div class="info">
+            <div class="info update-form">
                 <div class="log-title">
                   <span id="username">Username:</span>
-                  <span id="profile-username">Light</span> <!-- Thêm ID profile-username -->
-                  <i class="fas fa-pencil-alt"></i>
+                  <input type="text" id="profile-username"/> <!-- Thêm ID profile-username -->
                 </div>
                 <div>
                   <span id="password">Password:</span>
-                  ••••••••
-                  <i class="fas fa-pencil-alt"></i>
-                  <i class="fas fa-eye-slash"></i>
+                  <div style="position: relative; width: 100%;">
+                    <input type="password" id="profile-password" placeholder="••••••••••••••••" disabled/>
+                    <i class="fas fa-pencil-alt" id="edit-password-icon" style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); cursor:pointer;"></i>
+                  </div>
                 </div>
                 <div>
                   <span id="email">Email:</span>
-                  <span id="profile-email">hihihih@gmail.com</span> <!-- Thêm ID profile-email -->
+                  <input type="email" id="profile-email"/>
                 </div>
               </div>
               
-              <!-- Form cập nhật thông tin -->
-              <div class="update-form">
-                <input type="text" id="new-username" placeholder="New username" />
-                <input type="email" id="new-email" placeholder="New email" />
-                <input type="file" id="new-avatar" />
-                <button onclick="updateProfile()">Update Profile</button>
-              </div>
-              
-              <!-- Thêm nút logout -->
-              <div>
-                <button onclick="logout()">Logout</button>
-              </div>
-              
+              <input style="display: none;" type="file" id="new-avatar"/>
+
+              <button onclick="updateProfile()">Update Profile</button>
 
               <div class="log">
-                <div>Last 24-Hour Access Log:</div>
-                <div class="log-item">
-                    <div class="text">
-                        You joined the '
-                        <b class="room"> Meeting Funny </b>
-                        ' room with the topic
-                        <b> Code, Python, Exchange </b>
-                        at 13:00 PM.
-                    </div>
-                </div>
-
-                <div class="log-item">
-                    <div class="text">
-                        You joined the '
-                        <b class="room"> Meeting Funny </b>
-                        ' room with the topic
-                        <b> Code, Python, Exchange </b>
-                        at 13:00 PM.
-                    </div>
-                </div>
-
-                <div class="log-item">
-                    <div class="text">
-                        You joined the '
-                        <b class="room"> Meeting Funny </b>
-                        ' room with the topic
-                        <b> Code, Python, Exchange </b>
-                        at 13:00 PM.
-                    </div>
+                <div><b>Last 24-Hour Access Log:</b></div>
+                <div class="log-body">
+                  <div class="log-item">
+                  </div>
                 </div>
                 
               </div>
@@ -99,6 +64,7 @@
       </div>
     </div>
 
+    <script src="/js/services/profile.js"></script>
     <script src="/js/pages/profile.js"></script>
     <script src="/js/components/sidebar.js"></script>
 
