@@ -1,0 +1,61 @@
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #ffffff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    position: fixed; /* Làm cho sidebar cố định */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Đảm bảo sidebar nằm phía trên main-content */
+}
+
+.sidebar .logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.sidebar .logo img {
+    width: 85%;
+    margin-right: 10px;
+}
+
+.sidebar .menu {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar .menu li {
+    margin: 50px 0;
+}
+
+.sidebar .menu li a {
+    text-decoration: none;
+    color: #646464;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar .menu li a:hover {
+    color: #27a4f2;
+}
+
+.sidebar .menu li a i {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.sidebar .create-btn {
+    display: block;
+    width: 50%;
+    padding: 10px 0;
+    background-color: #27a4f2;
+    color: #fff;
+    text-align: center;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 18px;
+    margin-top: 20px;
+}

@@ -10,51 +10,14 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/assets/styles/home.css">
+    <link rel="stylesheet" href="/assets/styles/components/sidebar.css">
 </head>
 
 <body>
     <div class="container">
 
-        <div class="sidebar">
-            <div class="logo">
-                <img alt="Blueroom logo"
-                    src="/assets/images/logo.png"
-                    width="100px" />
-            </div>
-            <a class="create-btn" href="#">
-                + Create
-            </a>
-            <ul class="menu">
-                <li>
-                    <a href="#">
-                        <i class="fas fa-home">
-                        </i>
-                        Home
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fas fa-sticky-note">
-                        </i>
-                        Note
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fas fa-user">
-                        </i>
-                        Profile
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fas fa-sign-out-alt">
-                        </i>
-                        Log out
-                    </a>
-                </li>
-            </ul>
-        </div>
+        <div class="sidebar" id="sidebar-placeholder"></div>
+
         <div class="main-content">
             <div class="search-bar">
                 <input placeholder="Search..." type="text" />
@@ -86,6 +49,8 @@
                 </div>
                 <div class="card-container">
                     <div class="card">
+                        <!-- Nút Join -->
+                        <button class="join-button">Join</button>
                         <div class="card-content">
                             <h3>
                                 Let's get it
@@ -116,6 +81,7 @@
                         </div>
                     </div>
                     <div class="card">
+                        <button class="join-button">Join</button>
                         <div class="card-content">
                             <h3>
                                 Let's get it
@@ -144,6 +110,7 @@
                         </div>
                     </div>
                     <div class="card">
+                        <button class="join-button">Join</button>
                         <div class="card-content">
                             <h3>
                                 Let's get it
@@ -177,6 +144,7 @@
                 </div>
                 <div class="card-container">
                     <div class="card">
+                        <button class="join-button">Join</button>
                         <div class="card-content">
                             <h3>
                                 Let's get it
@@ -205,7 +173,7 @@
                         </div>
                     </div>
                     <div class="card">
-    
+                        <button class="join-button">Join</button>
                         <div class="card-content">
                             <h3>
                                 Let's get it
@@ -234,6 +202,7 @@
                         </div>
                     </div>
                     <div class="card">
+                        <button class="join-button">Join</button>
                         <div class="card-content">
                             <h3>
                                 Let's get it
@@ -262,6 +231,7 @@
                         </div>
                     </div>
                     <div class="card">
+                        <button class="join-button">Join</button>
                         <div class="card-content">
                             <h3>
                                 Let's get it
@@ -290,6 +260,7 @@
                         </div>
                     </div>
                     <div class="card">
+                        <button class="join-button">Join</button>
                         <div class="card-content">
                             <h3>
                                 Let's get it
@@ -318,6 +289,7 @@
                         </div>
                     </div>
                     <div class="card">
+                        <button class="join-button">Join</button>
                         <div class="card-content">
                             <h3>
                                 Let's get it
@@ -349,6 +321,8 @@
             </div>
         </div>
     </div>
+
+    <script src="/js/components/sidebar.js"></script>
 </body>
 
 </html>

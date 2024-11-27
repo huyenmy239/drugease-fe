@@ -10,68 +10,6 @@ body {
     min-height: 100vh;
 }
 
-.sidebar {
-    width: 250px;
-    height: 100vh;
-    background-color: #ffffff;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    position: fixed; /* Làm cho sidebar cố định */
-    top: 0;
-    left: 0;
-    z-index: 1000; /* Đảm bảo sidebar nằm phía trên main-content */
-}
-
-.sidebar .logo {
-    display: flex;
-    align-items: center;
-    margin-bottom: 30px;
-}
-
-.sidebar .logo img {
-    width: 85%;
-    margin-right: 10px;
-}
-
-.sidebar .menu {
-    list-style: none;
-    padding: 0;
-}
-
-.sidebar .menu li {
-    margin: 50px 0;
-}
-
-.sidebar .menu li a {
-    text-decoration: none;
-    color: #646464;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-}
-
-.sidebar .menu li a:hover {
-    color: #27a4f2;
-}
-
-.sidebar .menu li a i {
-    margin-right: 10px;
-    font-size: 20px;
-}
-
-.sidebar .create-btn {
-    display: block;
-    width: 50%;
-    padding: 10px 0;
-    background-color: #27a4f2;
-    color: #fff;
-    text-align: center;
-    border-radius: 20px;
-    text-decoration: none;
-    font-size: 18px;
-    margin-top: 20px;
-}
-
 .main-content {
     flex-grow: 1; /* Để main-content chiếm phần còn lại của không gian */
     padding: 20px;
@@ -167,6 +105,54 @@ body {
     color: #fff;
 }
 
+/* Lớp phủ để làm mờ */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0); /* Trong suốt khi không hover */
+    transition: background 0.3s ease;
+    z-index: 1; /* Đặt lớp phủ ở trên nội dung nhưng dưới nút */
+    pointer-events: none; /* Cho phép tương tác với các phần tử bên dưới */
+}
+
+/* Hiệu ứng làm mờ khi hover */
+.card:hover::before {
+    background: rgba(255, 255, 255, 0); /* Làm mờ với lớp phủ màu trắng trong suốt */
+    backdrop-filter: blur(3px); /* Hiệu ứng blur */
+}
+
+/* Nút Join */
+.join-button {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px 20px;
+    background-color: #27A4F2;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    z-index: 2;
+    transition: opacity 0.3s ease;
+}
+
+/* Hiển thị nút khi hover vào thẻ */
+.card:hover .join-button {
+    display: block;
+}
+
+/* Điều chỉnh kích thước nút */
+.join-button:hover {
+    background-color: #2980b9;
+}
+
 .card img {
     width: 100%;
     height: 150px;
@@ -204,10 +190,10 @@ body {
 }
 
 .tags span {
-    background-color: rgba(0, 0, 0, 0.5);
-    color: #fff;
+    background-color: #D9D9D9;
+    color: #535353;
     padding: 5px 10px;
-    border-radius: 5px;
+    border-radius: 20px;
     font-size: 12px;
 }
 
