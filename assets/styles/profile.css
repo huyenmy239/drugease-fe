@@ -1,3 +1,13 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
 .main-content {
     display: flex;
     justify-content: center;
@@ -8,8 +18,8 @@
 
 .profile-card {
     background-color: white;
-    width: 100%;
-    padding: 20px 20vw 0;
+    width: 35%;
+    padding: 20px;
     border-radius: 5px;
 }
 
@@ -19,11 +29,13 @@
     align-items: center;
     margin-bottom: 20px;
 }
+
 .profile-pic img {
     border-radius: 50%;
     width: 100px;
     height: 100px;
 }
+
 .profile-pic span {
     position: absolute;
     background-color: rgba(0, 0, 0, 0.5);
@@ -32,15 +44,19 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
 .info {
     margin-bottom: 20px;
 }
+
 .info div {
     margin-bottom: 20px;
 }
+
 .info div span {
     font-weight: bold;
 }
+
 .info div i {
     margin-left: 10px;
     cursor: pointer;
@@ -48,30 +64,37 @@
 
 .update-form {
     margin-top: 20px;
-  }
-  
-  .update-form input {
-    display: block;
+}
+
+.profile-card input {
     margin: 10px 0;
-    padding: 8px;
-    width: 80%;
+    padding: 8px 10px;
+    width: 100%;
     border: 1px solid #ccc;
     border-radius: 5px;
-  }
-  
-  .update-form button {
+}
+
+#edit-password-icon {
+    color: #aaa;
+    transition: color 0.3s ease;
+}
+
+#edit-password-icon:hover {
+    color: #858585;
+}
+
+.profile-card button {
     background-color: #007bff;
     color: white;
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
-  }
-  
-  .update-form button:hover {
+}
+
+.profile-card button:hover {
     background-color: #0056b3;
-  }
-  
+}
 
 .log {
     margin-top: 30px;

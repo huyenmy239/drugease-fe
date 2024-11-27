@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (response.status === 201) {
                 alert("Registration successful!");
-                window.location.href = "home.html";
+                window.location.href = "signup.html";
             } else {
                 alert(data.username + data.email);
             }
