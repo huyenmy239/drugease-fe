@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room API Client</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .form-container {
+            margin-bottom: 20px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .message-list {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .message {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .message:last-child {
+            border-bottom: none;
+        }
+
+        .response {
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Room API Client</h1>
+
+        <!-- Form to send a message -->
+        <div class="form-container">
+            <h2>Send a Message</h2>
+            <textarea id="message" placeholder="Enter your message"></textarea>
+            <button id="sendMessageBtn">Send Message</button>
+        </div>
+
+        <!-- Form to share a file -->
+        <div class="form-container">
+            <h2>Share a File</h2>
+            <input type="file" id="fileInput" />
+            <button id="shareFileBtn">Share File</button>
+        </div>
+
+        <!-- Form to toggle mic -->
+        <div class="form-container">
+            <h2>Toggle Mic</h2>
+            <button id="toggleMicBtn">Toggle Mic</button>
+        </div>
+
+        <!-- Form to block a user -->
+        <div class="form-container">
+            <h2>Block a User</h2>
+            <input type="number" id="blockUserId" placeholder="Enter User ID" />
+            <button id="blockUserBtn">Block User</button>
+        </div>
+
+        <!-- Message List -->
+        <div class="form-container">
+            <h2>Messages in Room</h2>
+            <div id="messageList" class="message-list"></div>
+        </div>
+
+        <!-- Response -->
+        <div id="response" class="response"></div>
+    </div>
+
+    <script>
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+            alert("You need to login first!");
+            window.location.href = "login.html";
+        }
+
+        const roomUrl = 'http://127.0.0.1:8000/api/rooms';  // URL của API Django của bạn
+        const chatUrl = 'http://127.0.0.1:8000/api/chat';  // URL của API Django của bạn
+        const roomId = 1;  // Đảm bảo rằng bạn thay roomId này bằng ID phòng thực tế của bạn
+
+        // Các button
+        const sendMessageBtn = document.getElementById('sendMessageBtn');
+        const shareFileBtn = document.getElementById('shareFileBtn');
+        const toggleMicBtn = document.getElementById('toggleMicBtn');
+        const blockUserBtn = document.getElementById('blockUserBtn');
+
+        const messageInput = document.getElementById('message');
+        const fileInput = document.getElementById('fileInput');
+        const blockUserIdInput = document.getElementById('blockUserId');
+
+        // Lấy danh sách tin nhắn
+        async function getMessages() {
+            try {
+                const response = await fetch(`${chatUrl}/${roomId}/messages/`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Token ${token}`,  // Thêm token vào header Authorization
+                        'Content-Type': 'application/json',  // Đảm bảo rằng bạn gửi dữ liệu dạng JSON
+                    }
+                });
+
+                // Kiểm tra xem response có thành công không
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+
+                // Kiểm tra dữ liệu có hợp lệ không
+                if (Array.isArray(data)) {
+                    const messageList = document.getElementById('messageList');
+                    messageList.innerHTML = '';  // Clear current messages
+
+                    // Lặp qua các tin nhắn và hiển thị
+                    data.forEach(message => {
+                        const messageDiv = document.createElement('div');
+                        messageDiv.className = 'message';
+                        messageDiv.textContent = `${message.timestamp} - ${message.content} - ${message.user}`;
+                        messageList.appendChild(messageDiv);
+                    });
+                } else {
+                    throw new Error('Invalid response data');
+                }
+            } catch (error) {
+                console.error(error);
+                const messageList = document.getElementById('messageList');
+                messageList.innerHTML = `<p>Error loading messages: ${error.message}</p>`;
+            }
+        }
+
+
+        // Gửi tin nhắn
+        async function sendMessage() {
+            const message = messageInput.value;
+
+            if (!message) {
+                showResponse('Message cannot be empty.');
+                return;
+            }
+
+            const response = await fetch(`${chatUrl}/${roomId}/send-messages/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Token ${token}`  // Thay bằng token của bạn nếu cần
+                },
+                body: JSON.stringify({ message })
+            });
+
+            if (response.ok) {
+                showResponse('Message sent successfully!');
+                getMessages();  // Refresh the message list
+            } else {
+                showResponse('Failed to send message.');
+            }
+        }
+
+        // Chia sẻ file
+        async function shareFile() {
+            const file = fileInput.files[0];
+
+            if (!file) {
+                showResponse('Please choose a file to share.');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            const response = await fetch(`${chatUrl}/${roomId}/share/`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Token ${token}`  // Thay bằng token của bạn nếu cần
+                },
+                body: formData
+            });
+
+            if (response.ok) {
+                showResponse('File shared successfully!');
+                getMessages();
+            } else {
+                showResponse('Failed to share file.');
+            }
+        }
+
+        // Toggle mic
+        async function toggleMic() {
+            const response = await fetch(`${roomUrl}/${roomId}/mic/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Token ${token}`  // Thay bằng token của bạn nếu cần
+                },
+                body: JSON.stringify({ status: true })  // Có thể thay status thành true hoặc false
+            });
+
+            if (response.ok) {
+                showResponse('Mic toggled successfully!');
+            } else {
+                showResponse('Failed to toggle mic.');
+            }
+        }
+
+        // Chặn người dùng
+        async function blockUser() {
+            const userIdToBlock = blockUserIdInput.value;
+
+            if (!userIdToBlock) {
+                showResponse('Please enter a user ID to block.');
+                return;
+            }
+
+            const response = await fetch(`${roomUrl}/${roomId}/block/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Token ${token}`  // Thay bằng token của bạn nếu cần
+                },
+                body: JSON.stringify({ user_id: userIdToBlock })
+            });
+
+            if (response.ok) {
+                showResponse('User blocked successfully!');
+            } else {
+                showResponse('Failed to block user.');
+            }
+        }
+
+        // Hiển thị phản hồi
+        function showResponse(message) {
+            const responseDiv = document.getElementById('response');
+            responseDiv.textContent = message;
+        }
+
+        // Lắng nghe sự kiện click cho các button
+        sendMessageBtn.addEventListener('click', sendMessage);
+        shareFileBtn.addEventListener('click', shareFile);
+        toggleMicBtn.addEventListener('click', toggleMic);
+        blockUserBtn.addEventListener('click', blockUser);
+
+        // Lấy danh sách tin nhắn khi trang được tải
+        getMessages();
+    </script>
+</body>
+</html>
