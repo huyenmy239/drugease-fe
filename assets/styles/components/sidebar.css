@@ -1,5 +1,6 @@
 .sidebar {
-    width: 320px;
+    font-family: 'Roboto', sans-serif;
+    width: 290px;
     height: 100vh;
     background-color: #ffffff;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
@@ -54,7 +55,7 @@
 
 .sidebar .create-btn {
     display: block;
-    width: 40%;
+    width: 50%;
     padding: 10px 0;
     background-color: #27a4f2;
     color: #fff;

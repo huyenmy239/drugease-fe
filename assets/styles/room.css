@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* Meeting screen */
@@ -13,7 +14,7 @@
     align-items: center;
     justify-content: flex-end;
     padding: 20px;
-    margin-left: 320px;
+    margin-left: 290px;
     height: 100vh;
 }
 
