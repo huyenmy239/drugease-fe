@@ -27,8 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
             } 
             // Xử lý riêng cho nút hangup
             else if (button.classList.contains('control-button-hangup')) {
-                meetingScreen.style.display = 'none';
-                mainContent.style.display = 'block';
+                window.location.href = 'home.html';
             } 
             // Xử lý riêng cho nút chat
             else if (button.classList.contains('control-button-chat')) {
