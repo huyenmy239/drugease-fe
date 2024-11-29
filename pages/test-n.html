@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebRTC Test Room</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+        #video-container {
+            display: flex;
+            justify-content: center;
+            width: 80%;
+            margin-bottom: 20px;
+        }
+        video {
+            width: 320px;
+            height: 240px;
+            margin: 10px;
+        }
+        #chat-box {
+            width: 80%;
+            height: 200px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        #chat-input {
+            width: 70%;
+            padding: 10px;
+        }
+        .buttons {
+            margin-top: 20px;
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+        }
+        .status {
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .status span {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Video Container -->
+    <div id="video-container">
+        <video id="local-video" autoplay muted></video>
+        <video id="remote-video" autoplay></video>
+    </div>
+
+    <!-- Chat Box -->
+    <div id="chat-box"></div>
+    <div>
+        <input type="text" id="chat-input" placeholder="Type a message" />
+        <button id="send-message">Send</button>
+    </div>
+
+    <!-- Buttons for mic and screen share -->
+    <div class="buttons">
+        <button id="toggle-mic">Toggle Mic</button>
+        <button id="toggle-camera">Toggle Camera</button>
+        <button id="share-screen">Share Screen</button>
+    </div>
+
+    <!-- Status Messages -->
+    <div class="status">
+        <div id="mic-status">Microphone: <span>On</span></div>
+        <div id="camera-status">Camera: <span>On</span></div>
+    </div>
+</div>
+
+<script>
+    const localVideo = document.getElementById("local-video");
+    const remoteVideo = document.getElementById("remote-video");
+    const chatBox = document.getElementById("chat-box");
+    const chatInput = document.getElementById("chat-input");
+    const sendMessageButton = document.getElementById("send-message");
+    const toggleMicButton = document.getElementById("toggle-mic");
+    const toggleCameraButton = document.getElementById("toggle-camera");
+    const shareScreenButton = document.getElementById("share-screen");
+    const micStatus = document.getElementById("mic-status");
+    const cameraStatus = document.getElementById("camera-status");
+
+    let localStream;
+    let remoteStream;
+    let peerConnection;
+    let isMicMuted = false;
+    let isCameraMuted = false;
+    let isScreenSharing = false;
+
+    // WebSocket connection setup
+    const socket = new WebSocket('ws://127.0.0.1:8000/ws/rooms/1/');  // Replace with actual room ID
+
+    socket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        if (data.type === 'offer') {
+            handleOffer(data.offer);
+        } else if (data.type === 'answer') {
+            handleAnswer(data.answer);
+        } else if (data.type === 'candidate') {
+            handleCandidate(data.candidate);
+        } else if (data.type === 'message') {
+            displayMessage(data.message);
+        }
+    };
+
+    // Start local media stream (camera + mic)
+    async function startMedia() {
+        try {
+            localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+            localVideo.srcObject = localStream;
+        } catch (err) {
+            console.error('Error accessing media devices', err);
+        }
+    }
+
+    // Handle mic toggle
+    toggleMicButton.addEventListener('click', () => {
+        isMicMuted = !isMicMuted;
+        const track = localStream.getTracks().find(track => track.kind === 'audio');
+        track.enabled = !isMicMuted;
+        micStatus.querySelector('span').textContent = isMicMuted ? 'Off' : 'On';
+        micStatus.querySelector('span').style.color = isMicMuted ? 'red' : 'green';
+    });
+
+    // Handle camera toggle
+    toggleCameraButton.addEventListener('click', () => {
+        isCameraMuted = !isCameraMuted;
+        const track = localStream.getTracks().find(track => track.kind === 'video');
+        track.enabled = !isCameraMuted;
+        cameraStatus.querySelector('span').textContent = isCameraMuted ? 'Off' : 'On';
+        cameraStatus.querySelector('span').style.color = isCameraMuted ? 'red' : 'green';
+    });
+
+    // Handle screen sharing
+    shareScreenButton.addEventListener('click', async () => {
+        if (isScreenSharing) {
+            // Stop screen sharing
+            const track = localStream.getTracks().find(track => track.kind === 'video');
+            track.stop();
+            localStream.removeTrack(track);
+            isScreenSharing = false;
+            shareScreenButton.textContent = "Share Screen";
+        } else {
+            // Start screen sharing
+            try {
+                const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+                const screenTrack = screenStream.getTracks()[0];
+                localStream.addTrack(screenTrack);
+                localVideo.srcObject = localStream;
+                isScreenSharing = true;
+                shareScreenButton.textContent = "Stop Sharing";
+            } catch (err) {
+                console.error('Error sharing screen', err);
+            }
+        }
+    });
+
+    // Send message to chat
+    sendMessageButton.addEventListener('click', () => {
+        const message = chatInput.value;
+        if (message.trim()) {
+            socket.send(JSON.stringify({ type: 'message', message: message }));
+            chatInput.value = '';
+        }
+    });
+
+    // Handle incoming offer
+    async function handleOffer(offer) {
+        peerConnection = new RTCPeerConnection();
+        peerConnection.onicecandidate = handleIceCandidate;
+        peerConnection.ontrack = handleRemoteStream;
+        localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
+
+        await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
+
+        const answer = await peerConnection.createAnswer();
+        await peerConnection.setLocalDescription(answer);
+
+        socket.send(JSON.stringify({ type: 'answer', answer: answer }));
+    }
+
+    // Handle incoming answer
+    function handleAnswer(answer) {
+        peerConnection.setRemoteDescription(new RTCSessionDescription(answer));
+    }
+
+    // Handle incoming ICE candidate
+    function handleIceCandidate(event) {
+        if (event.candidate) {
+            socket.send(JSON.stringify({ type: 'candidate', candidate: event.candidate }));
+        }
+    }
+
+    // Handle remote stream (display on remote video)
+    function handleRemoteStream(event) {
+        remoteStream = event.streams[0];
+        remoteVideo.srcObject = remoteStream;
+    }
+
+    // Display chat message
+    function displayMessage(message) {
+        const messageElement = document.createElement('div');
+        messageElement.textContent = message;
+        chatBox.appendChild(messageElement);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // Start media when page loads
+    startMedia();
+</script>
+
+</body>
+</html>

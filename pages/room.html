@@ -81,10 +81,19 @@
     
         <div class="meeting-controls">
             <!-- Microphone button -->
-            <button class="control-button control-button-microphone">
+            <button id="btn-toggle-mic" class="control-button control-button-microphone">
                 <i class="fas fa-microphone-slash"></i> <!-- Trạng thái tắt -->
                 <i class="fas fa-microphone active-icon"></i> <!-- Trạng thái bật -->
             </button>
+
+            <!-- Video của người dùng -->
+            <div style="display: none;">
+                <i class="fas fa-microphone"></i>
+                <video id="local-video" autoplay muted></video>
+        
+                <!-- Video của người khác -->
+                <video id="remote-video" autoplay></video>
+            </div>
             
             <!-- Chat button -->
             <button class="control-button control-button-chat">
@@ -92,9 +101,9 @@
             </button>
             
             <!-- Share screen button -->
-            <button class="control-button control-button-share">
+            <button id="btn-share-screen" class="control-button control-button-share">
                     <i class="fas fa-share-square"></i>
-                </button>
+            </button>
             
             <!-- Hangup button -->
             <button class="control-button control-button-hangup">
@@ -102,7 +111,7 @@
             </button>
         </div>
         <!-- Phần chat -->
-        <div class="meeting-chat">
+        <div id="chat" class="meeting-chat">
             <!-- Thanh điều khiển -->
             <div class="chat-control">
                 <button class="chat-detail-btn">
@@ -115,7 +124,7 @@
             
             <div class="chat-messages-container">
                 <!-- Tin nhắn ví dụ -->
-                <div class="chat-message">
+                <div id="messages" class="chat-message">
                     <img src="/assets/images/avatar/avtgin.jpg" alt="Avatar" class="chat-avatar">
                     <div class="chat-content">
                         <span class="chat-name">Gin</span>
@@ -141,11 +150,11 @@
             
             <!-- Hộp chat -->
             <div class="chat-input-area">
-                <input type="text" class="chat-input" placeholder="Nhập tin nhắn của bạn..." />
+                <input id="msg" type="text" class="chat-input" placeholder="Nhập tin nhắn của bạn..." />
                 <button class="chat-file-btn">
                     <i class="fas fa-file-upload"></i>
                 </button>
-                <button class="chat-send-btn">
+                <button id="btn-send-msg" class="chat-send-btn">
                     <i class="fas fa-paper-plane"></i>
                 </button>
             </div>
