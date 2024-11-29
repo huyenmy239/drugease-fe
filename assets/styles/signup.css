@@ -110,7 +110,7 @@ button:hover {
     background-color: #D9D9D9;
 }
 
-button#submit-form {
+button.submit-form {
     display: block; /* Đảm bảo nút chiếm toàn bộ chiều ngang */
     margin: 20px auto 0 auto; /* Căn giữa theo chiều ngang */
     width: 50%; /* Đặt chiều rộng tùy theo ý muốn (ở đây là 50% chiều rộng của phần tử cha) */
@@ -123,7 +123,7 @@ button#submit-form {
     text-align: center; /* Căn giữa văn bản trong nút */
 }
 
-button#submit-form:hover {
+button.submit-form:hover {
     background-color: #2394da;
 }
 

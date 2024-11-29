@@ -87,6 +87,8 @@
 </div>
 
 <script>
+    // import CONFIG from '../js/utils/settings.js';
+
     const localVideo = document.getElementById("local-video");
     const remoteVideo = document.getElementById("remote-video");
     const chatBox = document.getElementById("chat-box");
@@ -106,7 +108,9 @@
     let isScreenSharing = false;
 
     // WebSocket connection setup
-    const socket = new WebSocket('ws://127.0.0.1:8000/ws/rooms/1/');  // Replace with actual room ID
+
+    const socket = new WebSocket('ws://192.168.1.128:8000/ws/rooms/1/');  // Replace with actual room ID
+    // const socket = new WebSocket(`ws://${CONFIG.BASE_URL}/ws/rooms/1/`);  // Replace with actual room ID
 
     socket.onmessage = function(e) {
         const data = JSON.parse(e.data);

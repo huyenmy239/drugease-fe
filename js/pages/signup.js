@@ -1,3 +1,6 @@
+import CONFIG from '../utils/settings.js';
+
+
 document.addEventListener('DOMContentLoaded', function () {
     const loginForm = document.getElementById('login-form');
     const signupForm = document.getElementById('signup-form');
@@ -46,7 +49,8 @@ document.addEventListener('DOMContentLoaded', function () {
         registerUser(username, email, password);
     });
     
-    const baseURL = "http://127.0.0.1:8000/api/accounts/users/";
+    // const baseURL = "http://127.0.0.1:8000/api/accounts/users/";
+    const baseURL = `http://${CONFIG.BASE_URL}/api/accounts/users/`;
     let token = "";
     let role = "";
 

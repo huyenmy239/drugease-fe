@@ -1,4 +1,8 @@
-const baseURL = "http://127.0.0.1:8000/api/accounts/users/";
+import CONFIG from '../utils/settings.js';
+
+
+// const baseURL = "http://127.0.0.1:8000/api/accounts/users/";
+const baseURL = `http://${CONFIG.BASE_URL}/api/accounts/users/`;
 
 async function loadProfile() {
     const token = localStorage.getItem("token");

@@ -1,6 +1,8 @@
-// Lấy WebSocket URL từ room_id
+import CONFIG from '../utils/settings.js';
+
+
 const roomId = 1; // Đảm bảo bạn thay thế bằng room_id thực tế của mình
-const ws_url = `ws://localhost:8000/ws/rooms/${roomId}/`;
+const ws_url = `ws://${CONFIG.BASE_URL}/ws/rooms/${roomId}/`;
 
 // Khởi tạo WebSocket để nhận tín hiệu WebRTC
 const socket = new WebSocket(ws_url);

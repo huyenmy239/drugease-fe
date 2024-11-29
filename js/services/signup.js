@@ -1,4 +1,8 @@
-const baseURL = "http://127.0.0.1:8000/api/accounts/users/"; // Adjust base URL if needed
+import CONFIG from '../utils/settings.js';
+
+
+// const baseURL = "http://127.0.0.1:8000/api/accounts/users/"; // Adjust base URL if needed
+const baseURL = `http://${CONFIG.BASE_URL}/api/accounts/users`; // Adjust base URL if needed
 let token = ""; // Store token after login
 let role = "";  // Store role (User/Admin)
 
