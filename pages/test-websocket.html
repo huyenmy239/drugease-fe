@@ -1,42 +1,30 @@
-<!-- chat.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Room Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 <body>
-    <div id="messages"></div>
-    <textarea id="messageInput"></textarea>
-    <button id="sendButton">Send</button>
+    <h3 id="username">Username</h3>
+    <button id="btn-join">Join room</button>
 
-    <script>
-        const roomId = 1; // ID của phòng học bạn muốn kết nối
-        const userToken = localStorage.getItem("token");
+    <div class="main-grid-container">
+        <div id="video-container">
+            <div><video id="local-video" style="float: left;" autoplay playsinline></video></div>
+            <button id="btn-toggle-audio">Audio Mute</button>
+            <button id="btn-toggle-video">Video Off</button>
+        </div>
 
-        if (!userToken) {
-            alert("You need to login first!");
-            window.location.href = "login.html";
-        }
+        <div id="chat">
+            <h3>Chat</h3>
+            <div id="messages">
+                <ul id="message-list"></ul>
+            </div>
 
-        // Kết nối WebSocket
-        const socket = new WebSocket(`ws://127.0.0.1:8000/api/chat/ws/rooms/${roomId}/`);
-
-        socket.onopen = function(e) {
-            console.log('WebSocket connection established');
-        };
-
-        socket.onmessage = function(e) {
-            const data = JSON.parse(e.data);
-            const messageElement = document.createElement('div');
-            messageElement.textContent = `${data.timestamp} - ${data.user}: ${data.message}`;
-            document.getElementById('messages').appendChild(messageElement);
-        };
-
-        document.getElementById('sendButton').onclick = function() {
-            const message = document.getElementById('messageInput').value;
-            socket.send(JSON.stringify({'message': message}));
-        };
-    </script>
+            <div><input id="msg"><button id="btn-send-msg">Send Message</button></div>
+            <button id="btn-share-screen">Share Screen</button>
+        </div>
+    </div>
 </body>
 </html>
