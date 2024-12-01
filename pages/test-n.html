@@ -89,6 +89,7 @@
 <script>
     // import CONFIG from '../js/utils/settings.js';
 
+    // Lấy các phần tử trong DOM
     const localVideo = document.getElementById("local-video");
     const remoteVideo = document.getElementById("remote-video");
     const chatBox = document.getElementById("chat-box");
@@ -108,127 +109,203 @@
     let isScreenSharing = false;
 
     // WebSocket connection setup
+    const socket = new WebSocket('ws://127.0.0.1:8000/ws/room/1/');  // Replace with actual room ID
 
-    const socket = new WebSocket('ws://192.168.1.128:8000/ws/rooms/1/');  // Replace with actual room ID
-    // const socket = new WebSocket(`ws://${CONFIG.BASE_URL}/ws/rooms/1/`);  // Replace with actual room ID
-
+    // Khi có message từ WebSocket, xử lý
     socket.onmessage = function(e) {
         const data = JSON.parse(e.data);
+        
+        // Xử lý offer
         if (data.type === 'offer') {
             handleOffer(data.offer);
-        } else if (data.type === 'answer') {
+        }
+        
+        // Xử lý answer
+        if (data.type === 'answer') {
             handleAnswer(data.answer);
-        } else if (data.type === 'candidate') {
+        }
+        
+        // Xử lý ICE candidate
+        if (data.type === 'candidate') {
             handleCandidate(data.candidate);
-        } else if (data.type === 'message') {
+        }
+        
+        // Xử lý message chat
+        if (data.type === 'message') {
             displayMessage(data.message);
+        }
+
+        if (data.type === 'initial_messages') {
+            displayInitialMessages(data.messages);
         }
     };
 
-    // Start local media stream (camera + mic)
-    async function startMedia() {
-        try {
-            localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-            localVideo.srcObject = localStream;
-        } catch (err) {
-            console.error('Error accessing media devices', err);
-        }
+    // Tạo peer connection
+    function createPeerConnection() {
+        const configuration = {
+            iceServers: [
+                { urls: 'stun:stun.l.google.com:19302' }  // STUN server của Google
+            ]
+        };
+        peerConnection = new RTCPeerConnection(configuration);
+
+        // Lắng nghe sự kiện ICE candidate
+        peerConnection.onicecandidate = function(event) {
+            if (event.candidate) {
+                socket.send(JSON.stringify({
+                    type: 'candidate',
+                    candidate: event.candidate
+                }));
+            }
+        };
+
+        // Lắng nghe khi có video từ remote peer
+        peerConnection.ontrack = function(event) {
+            remoteVideo.srcObject = event.streams[0];
+            remoteStream = event.streams[0];
+        };
+
+        // Thêm stream (audio/video) từ local vào peer connection
+        localStream.getTracks().forEach(track => {
+            peerConnection.addTrack(track, localStream);
+        });
     }
 
-    // Handle mic toggle
-    toggleMicButton.addEventListener('click', () => {
-        isMicMuted = !isMicMuted;
-        const track = localStream.getTracks().find(track => track.kind === 'audio');
-        track.enabled = !isMicMuted;
-        micStatus.querySelector('span').textContent = isMicMuted ? 'Off' : 'On';
-        micStatus.querySelector('span').style.color = isMicMuted ? 'red' : 'green';
-    });
-
-    // Handle camera toggle
-    toggleCameraButton.addEventListener('click', () => {
-        isCameraMuted = !isCameraMuted;
-        const track = localStream.getTracks().find(track => track.kind === 'video');
-        track.enabled = !isCameraMuted;
-        cameraStatus.querySelector('span').textContent = isCameraMuted ? 'Off' : 'On';
-        cameraStatus.querySelector('span').style.color = isCameraMuted ? 'red' : 'green';
-    });
-
-    // Handle screen sharing
-    shareScreenButton.addEventListener('click', async () => {
-        if (isScreenSharing) {
-            // Stop screen sharing
-            const track = localStream.getTracks().find(track => track.kind === 'video');
-            track.stop();
-            localStream.removeTrack(track);
-            isScreenSharing = false;
-            shareScreenButton.textContent = "Share Screen";
-        } else {
-            // Start screen sharing
-            try {
-                const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
-                const screenTrack = screenStream.getTracks()[0];
-                localStream.addTrack(screenTrack);
-                localVideo.srcObject = localStream;
-                isScreenSharing = true;
-                shareScreenButton.textContent = "Stop Sharing";
-            } catch (err) {
-                console.error('Error sharing screen', err);
-            }
-        }
-    });
-
-    // Send message to chat
-    sendMessageButton.addEventListener('click', () => {
-        const message = chatInput.value;
-        if (message.trim()) {
-            socket.send(JSON.stringify({ type: 'message', message: message }));
-            chatInput.value = '';
-        }
-    });
-
-    // Handle incoming offer
+    // Xử lý offer
     async function handleOffer(offer) {
-        peerConnection = new RTCPeerConnection();
-        peerConnection.onicecandidate = handleIceCandidate;
-        peerConnection.ontrack = handleRemoteStream;
-        localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
-
         await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
-
         const answer = await peerConnection.createAnswer();
         await peerConnection.setLocalDescription(answer);
 
-        socket.send(JSON.stringify({ type: 'answer', answer: answer }));
+        // Gửi answer về server
+        socket.send(JSON.stringify({
+            type: 'answer',
+            answer: peerConnection.localDescription
+        }));
     }
 
-    // Handle incoming answer
+    // Xử lý answer
     function handleAnswer(answer) {
         peerConnection.setRemoteDescription(new RTCSessionDescription(answer));
     }
 
-    // Handle incoming ICE candidate
-    function handleIceCandidate(event) {
-        if (event.candidate) {
-            socket.send(JSON.stringify({ type: 'candidate', candidate: event.candidate }));
+    // Xử lý ICE candidate
+    function handleCandidate(candidate) {
+        peerConnection.addIceCandidate(new RTCIceCandidate(candidate));
+    }
+
+    // Chạy getUserMedia để lấy quyền truy cập vào microphone và camera
+    async function getUserMedia() {
+        try {
+            const constraints = {
+                video: true, 
+                audio: true
+            };
+
+            // Lấy quyền truy cập vào microphone và camera
+            localStream = await navigator.mediaDevices.getUserMedia(constraints);
+
+            // Gán stream cho video local
+            localVideo.srcObject = localStream;
+
+            // Tạo peer connection khi đã có local stream
+            createPeerConnection();
+        } catch (err) {
+            console.error("Error getting media: ", err);
         }
     }
 
-    // Handle remote stream (display on remote video)
-    function handleRemoteStream(event) {
-        remoteStream = event.streams[0];
-        remoteVideo.srcObject = remoteStream;
+    // Khởi tạo cuộc gọi
+    async function startCall() {
+        await getUserMedia();
+        const offer = await peerConnection.createOffer();
+        await peerConnection.setLocalDescription(offer);
+
+        // Gửi offer qua WebSocket
+        socket.send(JSON.stringify({
+            type: 'offer',
+            offer: peerConnection.localDescription
+        }));
     }
 
-    // Display chat message
+    // Chuyển đổi trạng thái micro (mute/unmute)
+    toggleMicButton.addEventListener('click', function() {
+        const audioTrack = localStream.getAudioTracks()[0];
+        if (isMicMuted) {
+            audioTrack.enabled = true;
+            micStatus.textContent = "Microphone: ON";
+        } else {
+            audioTrack.enabled = false;
+            micStatus.textContent = "Microphone: OFF";
+        }
+        isMicMuted = !isMicMuted;
+    });
+
+    // Chuyển đổi trạng thái camera (mute/unmute)
+    toggleCameraButton.addEventListener('click', function() {
+        const videoTrack = localStream.getVideoTracks()[0];
+        if (isCameraMuted) {
+            videoTrack.enabled = true;
+            cameraStatus.textContent = "Camera: ON";
+        } else {
+            videoTrack.enabled = false;
+            cameraStatus.textContent = "Camera: OFF";
+        }
+        isCameraMuted = !isCameraMuted;
+    });
+
+    // Chia sẻ màn hình
+    shareScreenButton.addEventListener('click', async function() {
+        try {
+            const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+            // Thay thế stream video hiện tại bằng stream chia sẻ màn hình
+            localStream.getTracks().forEach(track => track.stop());  // Dừng tất cả các track hiện tại
+            localStream = screenStream;
+            localVideo.srcObject = screenStream;
+
+            // Cập nhật trạng thái chia sẻ màn hình
+            isScreenSharing = true;
+
+            // Cập nhật stream mới vào peer connection
+            peerConnection.getSenders().forEach(sender => sender.replaceTrack(screenStream.getTracks()[0]));
+
+        } catch (err) {
+            console.error("Error sharing screen: ", err);
+        }
+    });
+
+    // Gửi tin nhắn chat
+    sendMessageButton.addEventListener('click', function() {
+        const message = chatInput.value;
+        if (message.trim() !== '') {
+            socket.send(JSON.stringify({
+                type: 'message',
+                message: message
+            }));
+            chatInput.value = '';
+        }
+    });
+
+    // Hiển thị các tin nhắn ban đầu (trước khi người dùng gửi tin nhắn)
+    function displayInitialMessages(messages) {
+        messages.forEach(function(msg) {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = `${msg.user}: ${msg.message}`;
+            chatBox.appendChild(messageElement);
+        });
+    }
+
+    // Hiển thị tin nhắn chat
     function displayMessage(message) {
         const messageElement = document.createElement('div');
         messageElement.textContent = message;
         chatBox.appendChild(messageElement);
-        chatBox.scrollTop = chatBox.scrollHeight;
     }
 
-    // Start media when page loads
-    startMedia();
+    // Bắt đầu cuộc gọi khi trang web tải
+    window.onload = function() {
+        startCall();
+    };
 </script>
 
 </body>

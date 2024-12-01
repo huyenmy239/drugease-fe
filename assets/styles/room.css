@@ -280,6 +280,8 @@
 }
 
 
+/* Someone */
+
 /* Nội dung tin nhắn */
 .chat-content {
     max-width: calc(100% - 50px); /* Trừ không gian cho avatar */
@@ -315,6 +317,71 @@
     text-decoration: none;
     word-wrap: break-word; /* Xuống dòng nếu tên file quá dài */
     margin-top: 5px; /* Thêm khoảng cách bên trên */
+}
+
+/* Owner */
+
+/* Các tin nhắn (Phía người chủ tin nhắn) */
+.chat-message-owner {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    overflow-wrap: break-word; /* Đảm bảo nội dung xuống dòng khi quá dài */
+    word-break: break-word;
+    max-width: 100%; /* Tin nhắn không vượt quá chiều rộng khung chat */
+    padding-right: 10px; /* Căn chỉnh bên phải */
+    padding-top: 10px;
+    justify-content: flex-end; /* Đẩy nội dung tin nhắn sang bên phải */
+}
+
+/* Avatar (Phía người chủ tin nhắn) */
+.chat-avatar-owner {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-left: 10px; /* Khoảng cách với tin nhắn */
+    flex-shrink: 0; /* Giữ nguyên kích thước avatar */
+}
+
+/* Nội dung tin nhắn (Phía người chủ tin nhắn) */
+.chat-content-owner {
+    max-width: calc(100% - 50px); /* Trừ không gian cho avatar */
+    overflow-wrap: break-word; /* Ngắt dòng nếu nội dung quá dài */
+    word-wrap: break-word;
+    display: flex;
+    flex-direction: column; /* Sắp xếp nội dung theo chiều dọc */
+}
+
+/* Tên người gửi (Phía người chủ tin nhắn) */
+.chat-name-owner {
+    font-weight: bold;
+    margin-bottom: 5px; /* Khoảng cách bên dưới tên người gửi */
+    text-align: right; /* Căn tên người gửi về phía phải */
+}
+
+/* Tin nhắn dạng văn bản (Phía người chủ tin nhắn) */
+.chat-text-owner {
+    margin: 0;
+    text-align: right; /* Căn chỉnh văn bản tin nhắn về bên phải */
+}
+
+/* Tin nhắn dạng hình ảnh (Phía người chủ tin nhắn) */
+.chat-image-owner {
+    width: 60%;
+    max-width: 100%; /* Không vượt quá chiều rộng khung chat */
+    height: auto;
+    border-radius: 5px;
+    margin-top: 5px; /* Thêm khoảng cách bên trên */
+    margin-left: auto; /* Đẩy hình ảnh về bên phải */
+}
+
+/* Tin nhắn dạng file (Phía người chủ tin nhắn) */
+.chat-file-owner {
+    color: #00aaff;
+    text-decoration: none;
+    word-wrap: break-word; /* Xuống dòng nếu tên file quá dài */
+    margin-top: 5px; /* Thêm khoảng cách bên trên */
+    text-align: right; /* Căn file về phía phải */
 }
 
 
