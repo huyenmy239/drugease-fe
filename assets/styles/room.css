@@ -402,9 +402,8 @@
     border-top: 1px solid #ccc; /* Đường viền phía trên */
     height: 60px; /* Đặt chiều cao cố định */
     box-sizing: border-box;
-    width: 100%;
-
-    position: sticky;
+    width: calc(33*(100vw - 290px)/100);
+    position: fixed;
     bottom: 0;
     right: 0;
     z-index: 100;
