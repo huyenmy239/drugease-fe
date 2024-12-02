@@ -289,3 +289,265 @@ body {
 .dropdown:hover .dropbtn {
     background-color: #3e8e41;
 }
+
+/*Create room*/
+.create-room{
+    margin-top: 70px;
+    margin-bottom: 20px;
+}
+
+.create-room-btn{
+    display: block;
+    width: 10%;
+    padding: 10px 0;
+    background-color: #27a4f2;
+    color: #fff;
+    text-align: center;
+    border-radius: 20px;
+    font-size: 18px;
+    border: none;
+}
+
+/* Overlay */
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    
+}
+
+/* Popup */
+#popup {
+    width: 780px;
+    height: 495px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+
+#popup h2 {
+    margin: 0;
+    padding: 10px;
+    background: #f5f5f5;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: 1px solid #ccc;
+    border-radius: 10px 10px 0 0;
+}
+
+#create-room-form {
+    flex: 1;
+    overflow-y: auto; /* Cho phép nội dung cuộn dọc */
+    padding: 15px;
+    position: relative;
+    scrollbar-width: thin; /* Dành cho Firefox */
+    scrollbar-color: #888 #f1f1f1; /* Màu thanh kéo và nền */
+}
+
+/* Tùy chỉnh scrollbar cho WebKit (Chrome, Edge, Safari) */
+#create-room-form::-webkit-scrollbar {
+    width: 6px; /* Độ rộng của thanh cuộn */
+}
+
+#create-room-form::-webkit-scrollbar-thumb {
+    background-color: #888; /* Màu thanh kéo */
+    border-radius: 3px; /* Bo góc */
+}
+
+#create-room-form::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Màu thanh kéo khi hover */
+}
+
+#create-room-form::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Màu nền phía sau thanh cuộn */
+}
+
+
+/* Form Buttons */
+#form-buttons {
+    position: sticky; /* Cố định nút ở cuối form */
+    bottom: 0;
+    background: white; /* Nền trắng để không bị trùng nền cuộn */
+    padding: 10px;
+    text-align: right; /* Căn nút sang phải */
+    border-top: 1px solid #ccc;
+    margin: 0;
+}
+
+#form-buttons button {
+    margin-left: 10px;
+    padding: 8px 16px;
+    background: #27A4F2;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+#form-buttons button#close-popup {
+    background: #C2E7FD;
+    color: #333;
+}
+
+#form-buttons button:hover {
+    background: #0056b3;
+}
+
+#form-buttons button#close-popup:hover {
+    background: #D9D9D9;
+}
+
+.close-popup-btn {
+    position: absolute; /* Đặt nút ở vị trí tuyệt đối so với popup */
+    right: 0; /* Khoảng cách từ cạnh phải của popup */
+    background: transparent; /* Không có nền */
+    border: none; /* Không có viền */
+    cursor: pointer; /* Thay đổi con trỏ thành dạng pointer */
+    color: #555; /* Màu biểu tượng */
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+    top: 0;
+    z-index: 10;
+}
+
+.close-popup-btn:hover {
+    color: #000; /* Thay đổi màu khi hover */
+    transform: scale(1.2); /* Phóng to nhẹ khi hover */
+    transition: all 0.2s ease; /* Hiệu ứng chuyển đổi mượt mà */
+}
+
+/* Form Elements */
+label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+#room-title, #room-description, select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#room-mode, #mic-setting {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+#background-options {
+    display: flex;
+    gap: 10px;
+    overflow-y: auto;
+    padding: 10px 0;
+}
+
+#background-options img {
+    width: 215px;
+    height: 97px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 20px;
+}
+
+#background-options img.selected {
+    border-color: blue;
+}
+
+#background-options input[type="radio"] {
+    display: none;
+}
+
+/* Topic Selection */
+#room-topic {
+    display: inline-block;
+    vertical-align: top;
+    width: calc(50% - 10px);
+}
+
+#selected-topics {
+    display: inline-block;
+    vertical-align: top;
+    max-width: calc(50% - 10px);
+    overflow-x: auto; /* Chỉ cuộn ngang */
+    overflow-y: hidden; /* Ẩn thanh cuộn dọc */
+    white-space: nowrap;
+    height: 40px;
+    margin-left: 10px;
+    padding: 5px;
+
+    scrollbar-width: thin; /* Dành cho Firefox */
+}
+
+#selected-topics::-webkit-scrollbar {
+    height: 4px; /* Chỉ định chiều cao của thanh cuộn ngang */
+}
+
+#selected-topics::-webkit-scrollbar-thumb {
+    background-color: #888; /* Màu thanh kéo */
+    border-radius: 4px; /* Bo góc thanh kéo */
+}
+
+#selected-topics::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Màu khi hover lên thanh kéo */
+}
+
+#selected-topics::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Màu nền phía sau thanh cuộn */
+}
+
+#selected-topics span {
+    display: inline-block;
+    background-color: #f1f1f1;
+    margin: 5px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+/* General Buttons */
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button[type="submit"], button#close-popup {
+    position: relative; /* Đảm bảo không bị ảnh hưởng bởi cha */
+}
+
+button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+}
+
+button#close-popup {
+    background-color: #ccc;
+}
+
+#popup.hidden {
+    display: none;
+}
+
+#overlay.hidden {
+    display: none;
+}

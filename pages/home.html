@@ -40,6 +40,10 @@
                     width="100" />
             </div>
 
+            <div class="create-room">
+                <button class="create-room-btn">+ Create</button>
+            </div>
+
             <div class="main-section">
 
                 <div class="section-title">
@@ -142,6 +146,78 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div id="overlay" class="hidden"></div>
+            <div id="popup" class="hidden">
+                <h2>Create a New Room</h2>
+                <button class="close-popup-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+                <form id="create-room-form">
+                    <!-- Room Title -->
+                    <label for="room-title"></label>
+                    <input type="text" id="room-title" name="room_title" placeholder="Enter room title" required>
+
+                    <!-- Room Description -->
+                    <label for="room-description"></label>
+                    <input type="text" id="room-description" name="room_description" placeholder="Enter room description">
+
+                    <!-- Mode (Radio buttons for Public or Private) -->
+                    <label for="room-mode">Mode:</label>
+                    <div id="room-mode">
+                        <label>
+                            <input type="radio" name="mode" value="public" checked> Public
+                        </label>
+                        <label>
+                            <input type="radio" name="mode" value="private"> Private
+                        </label>
+                    </div>
+
+                    <!-- Microphone (Radio buttons for Enable or Disable) -->
+                    <label for="mic-setting">Microphone:</label>
+                    <div id="mic-setting">
+                        <label>
+                            <input type="radio" name="mic" value="enable" checked> Enable
+                        </label>
+                        <label>
+                            <input type="radio" name="mic" value="disable"> Disable
+                        </label>
+                    </div>
+
+                    <!-- Topic (Combobox) -->
+                    <label for="room-topic">Topic:</label>
+                    <select id="room-topic" name="topic">
+                        <option value="general">General</option>
+                        <option value="education">Education</option>
+                        <option value="business">Business</option>
+                        <option value="entertainment">Entertainment</option>
+                    </select>
+                    <div id="selected-topics"></div>
+
+                    <!-- Background (Image selection) -->
+                    <label for="background-options">Background:</label>
+                    <div id="background-options">
+                        <label>
+                            <input type="radio" name="background" value="blue" data-bg-img="blue.jpg">
+                            <img src="/assets/images/background/cover5.jpg" class="background-image" alt="cover5" />
+                        </label>
+                        <label>
+                            <input type="radio" name="background" value="green" data-bg-img="green.jpg">
+                            <img src="/assets/images/background/cover3.jpg" class="background-image" alt="cover3" />
+                        </label>
+                        <label>
+                            <input type="radio" name="background" value="red" data-bg-img="red.jpg">
+                            <img src="/assets/images/background/cover6.jpg" class="background-image" alt="cover6" />
+                        </label>
+                    </div>
+
+                    <!-- Submit and Cancel Buttons -->
+                    <div id="form-buttons">
+                        <button type="submit">Create</button>
+                        <button type="button" id="close-popup">Cancel</button>
+                    </div>
+                </form>
             </div>
         </div>
 
