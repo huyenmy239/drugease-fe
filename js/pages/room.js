@@ -1,7 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
     const meetingScreen = document.querySelector('.meeting-screen');
-    // const mainContent = document.querySelector('.main-content');
-
     const dropdownButton = document.querySelector('.dropdown-button');
     const dropupButton = document.querySelector('.dropup-button');
     const dropdownMenu = document.querySelector('.dropdown-menu');
@@ -17,6 +15,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const filesBtn = document.querySelector('.details-files-btn');
     const mediaContent = document.querySelector('.media-content');
     const filesContent = document.querySelector('.files-content');
+
+    const chatBox = document.getElementById('chat-box'); // Phần tử chứa tin nhắn
+    const chatInput = document.getElementById('chat-input'); // Ô nhập tin nhắn
 
     // Thêm sự kiện cho từng button
     buttons.forEach((button) => {
@@ -96,5 +97,17 @@ document.addEventListener('DOMContentLoaded', function () {
         // Hiển thị lại đoạn chat
         document.querySelector('.meeting-chat').style.display = 'block';
     });
+
+    // Tự động cuộn xuống khi có tin nhắn mới
+    function scrollToBottom() {
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // Lắng nghe sự thay đổi trong chat-box để cuộn xuống mỗi khi có tin nhắn mới
+    const observer = new MutationObserver(scrollToBottom);
+    observer.observe(chatBox, { childList: true, subtree: true });
+
+
+    // Gửi t;
     
 });

@@ -300,6 +300,8 @@
 /* Tin nhắn dạng văn bản */
 .chat-text {
     margin: 0;
+    padding-right: 30px;
+    height:auto;
 }
 
 /* Tin nhắn dạng hình ảnh */
@@ -362,7 +364,8 @@
 /* Tin nhắn dạng văn bản (Phía người chủ tin nhắn) */
 .chat-text-owner {
     margin: 0;
-    text-align: right; /* Căn chỉnh văn bản tin nhắn về bên phải */
+    text-align: left; /* Căn chỉnh văn bản tin nhắn về bên phải */
+    padding-left: 30px;
 }
 
 /* Tin nhắn dạng hình ảnh (Phía người chủ tin nhắn) */
@@ -386,6 +389,10 @@
 
 
 /* Khu vực hộp nhập tin nhắn */
+.chat-messages-container {/* Chiều cao của .chat-input-area */
+    overflow-y: auto;
+    max-height: calc(100vh - 120px); /* Tùy chỉnh theo độ cao thanh chat */
+}
 
 .chat-input-area {
     display: flex;
@@ -397,10 +404,9 @@
     box-sizing: border-box;
     width: 100%;
 
-    position: absolute;
-    bottom: 0px;
-    left: 50%;
-    transform: translateX(-50%);
+    position: sticky;
+    bottom: 0;
+    right: 0;
     z-index: 100;
 }
 
@@ -412,6 +418,7 @@
     padding: 10px 15px;
     font-size: 14px;
     outline: none;
+    width: 100%;
 }
 
 /* Nút gửi file */
