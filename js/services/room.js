@@ -1,6 +1,11 @@
 import CONFIG from '../utils/settings.js';
 
 const baseURL = `http://${CONFIG.BASE_URL}/api/accounts`;
+
+// Lấy thông tin room_id từ URL
+const urlParams = new URLSearchParams(window.location.search);
+const roomId = urlParams.get('room_id');
+
 // Lấy các phần tử trong DOM
 const localVideo = document.getElementById("local-video");
 const remoteVideo = document.getElementById("remote-video");
@@ -16,7 +21,6 @@ let peerConnection;
 let isMicMuted = false;
 let isScreenSharing = false;
 
-const roomId = 1;
 const username = localStorage.getItem("username");
 console.log(username);
 
