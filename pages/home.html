@@ -20,7 +20,7 @@
 
         <div class="main-content">
             <div class="search-bar">
-                <input placeholder="Search..." type="text" />
+                <input id="search-input" placeholder="Search..." type="text" />
             </div>
             <div class="welcome-banner">
                 <img alt="Welcome banner image" height="100"
@@ -28,7 +28,7 @@
                     width="100" />
                 <div>
                     <h2>
-                        Hi, light46! <br>
+                        Hi, <span id="username">light46!</span> <br>
                         Welcome back to our web
                     </h2>
                     <p>
@@ -43,11 +43,11 @@
             <div class="main-section">
 
                 <div class="section-title">
-                    Popular
+                    Rooms
                     <i class="fas fa-fire">
                     </i>
                 </div>
-                <div class="card-container">
+                <div id="results" class="card-container">
                     <div data-room-id="1" class="card">
                         <!-- Nút Join -->
                         <button class="join-button">Join</button>
@@ -142,191 +142,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="section-title">
-                    Rooms
-                </div>
-                <div class="card-container">
-                    <div class="card">
-                        <button class="join-button">Join</button>
-                        <div class="card-content">
-                            <h3>
-                                Let's get it
-                            </h3>
-                            <div class="card-timer">
-                                <i class="fas fa-clock"></i>
-                                <span>3h ago</span>
-                            </div>
-                            <div class="tags">
-                                <span>
-                                    Python
-                                </span>
-                                <span>
-                                    Code
-                                </span>
-                                <span>
-                                    ...
-                                </span>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <span>
-                                15
-                            </span>
-                            <i class="fas fa-users">
-                            </i>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <button class="join-button">Join</button>
-                        <div class="card-content">
-                            <h3>
-                                Let's get it
-                            </h3>
-                            <div class="card-timer">
-                                <i class="fas fa-clock"></i>
-                                <span>3h ago</span>
-                            </div>
-                            <div class="tags">
-                                <span>
-                                    Python
-                                </span>
-                                <span>
-                                    Code
-                                </span>
-                                <span>
-                                    ...
-                                </span>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <span>
-                                15
-                            </span>
-                            <i class="fas fa-users">
-                            </i>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <button class="join-button">Join</button>
-                        <div class="card-content">
-                            <h3>
-                                Let's get it
-                            </h3>
-                            <div class="card-timer">
-                                <i class="fas fa-clock"></i>
-                                <span>3h ago</span>
-                            </div>
-                            <div class="tags">
-                                <span>
-                                    Python
-                                </span>
-                                <span>
-                                    Code
-                                </span>
-                                <span>
-                                    ...
-                                </span>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <span>
-                                15
-                            </span>
-                            <i class="fas fa-users">
-                            </i>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <button class="join-button">Join</button>
-                        <div class="card-content">
-                            <h3>
-                                Let's get it
-                            </h3>
-                            <div class="card-timer">
-                                <i class="fas fa-clock"></i>
-                                <span>3h ago</span>
-                            </div>
-                            <div class="tags">
-                                <span>
-                                    Python
-                                </span>
-                                <span>
-                                    Code
-                                </span>
-                                <span>
-                                    ...
-                                </span>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <span>
-                                15
-                            </span>
-                            <i class="fas fa-users">
-                            </i>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <button class="join-button">Join</button>
-                        <div class="card-content">
-                            <h3>
-                                Let's get it
-                            </h3>
-                            <div class="card-timer">
-                                <i class="fas fa-clock"></i>
-                                <span>3h ago</span>
-                            </div>
-                            <div class="tags">
-                                <span>
-                                    Python
-                                </span>
-                                <span>
-                                    Code
-                                </span>
-                                <span>
-                                    ...
-                                </span>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <span>
-                                15
-                            </span>
-                            <i class="fas fa-users">
-                            </i>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <button class="join-button">Join</button>
-                        <div class="card-content">
-                            <h3>
-                                Let's get it
-                            </h3>
-                            <div class="card-timer">
-                                <i class="fas fa-clock"></i>
-                                <span>3h ago</span>
-                            </div>
-                            <div class="tags">
-                                <span>
-                                    Python
-                                </span>
-                                <span>
-                                    Code
-                                </span>
-                                <span>
-                                    ...
-                                </span>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <span>
-                                15
-                            </span>
-                            <i class="fas fa-users">
-                            </i>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -334,6 +149,7 @@
     </div>
 
     <script src="/js/pages/home.js"></script>
+    <script type="module" src="/js/services/home.js"></script>
     <script src="/js/components/sidebar.js"></script>
 </body>
 
