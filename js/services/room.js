@@ -170,16 +170,26 @@ shareScreenButton.addEventListener('click', async function() {
 });
 
 
-// Gửi tin nhắn chat
-sendMessageButton.addEventListener('click', function() {
-    const message = chatInput.value;
-    if (message.trim() !== '') {
-        socket.send(JSON.stringify({
-            type: 'message',
-            content: message,
-            user: username
-        }));
-        chatInput.value = '';
+// Hàm gửi tin nhắn
+function sendChatMessage() {
+  const message = chatInput.value;
+  if (message.trim() !== '') {
+      socket.send(JSON.stringify({
+          type: 'message',
+          content: message,
+          user: username
+      }));
+      chatInput.value = '';  // Xóa nội dung input sau khi gửi tin nhắn
+  }
+}
+
+// Gửi tin nhắn khi nhấn nút Send
+sendMessageButton.addEventListener('click', sendChatMessage);
+
+// Gửi tin nhắn khi nhấn phím Enter
+chatInput.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        sendChatMessage();
     }
 });
 
