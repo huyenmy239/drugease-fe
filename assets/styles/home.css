@@ -126,7 +126,7 @@ body {
 /* Hiệu ứng làm mờ khi hover */
 .card:hover::before {
     background: rgba(255, 255, 255, 0); /* Làm mờ với lớp phủ màu trắng trong suốt */
-    backdrop-filter: blur(3px); /* Hiệu ứng blur */
+    backdrop-filter: blur(1px); /* Hiệu ứng blur */
 }
 
 /* Nút Join */
