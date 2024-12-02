@@ -153,26 +153,61 @@ toggleMicButton.addEventListener('click', function() {
     isMicMuted = !isMicMuted;
 });
 
+// Cập nhật biến để chứa nút tắt chia sẻ
+const stopShareScreenButton = document.getElementById("stop-share-screen");
+
 // Chia sẻ màn hình
 shareScreenButton.addEventListener('click', async function() {
     try {
+        // Thêm class active khi người dùng bắt đầu thao tác chia sẻ màn hình
+        shareScreenButton.classList.add('active');
+        
+        // Yêu cầu quyền truy cập màn hình để chia sẻ
         const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
-        // Thay thế stream video hiện tại bằng stream chia sẻ màn hình
-        localStream.getTracks().forEach(track => track.stop());  // Dừng tất cả các track hiện tại
+        
+        // Dừng tất cả các track video hiện tại
+        localStream.getTracks().forEach(track => track.stop());
+        
+        // Cập nhật stream màn hình mới cho video local
         localStream = screenStream;
         localVideo.srcObject = screenStream;
 
         // Cập nhật trạng thái chia sẻ màn hình
         isScreenSharing = true;
 
-        // Cập nhật stream mới vào peer connection
+        // Cập nhật peer connection với stream mới
         peerConnection.getSenders().forEach(sender => sender.replaceTrack(screenStream.getTracks()[0]));
 
+        // Hiển thị nút tắt chia sẻ màn hình
+        stopShareScreenButton.style.display = 'inline-block';
+        shareScreenButton.style.display = 'none';  // Ẩn nút chia sẻ khi đang chia sẻ màn hình
+
+        // Xóa class active khi chia sẻ màn hình đã hoàn tất
+        screenStream.getVideoTracks()[0].addEventListener('ended', function() {
+            shareScreenButton.classList.remove('active'); // Xóa class active khi người dùng dừng chia sẻ màn hình
+        });
     } catch (err) {
         console.error("Error sharing screen: ", err);
+
+        // Xóa class active nếu có lỗi trong quá trình chia sẻ
+        shareScreenButton.classList.remove('active');
     }
 });
 
+
+// Dừng chia sẻ màn hình
+stopShareScreenButton.addEventListener('click', function() {
+    // Dừng chia sẻ màn hình
+    localStream.getTracks().forEach(track => track.stop());
+    
+    // Quay lại với video từ camera
+    getUserMedia();  // Gọi lại getUserMedia để bắt lại stream từ camera
+    
+    // Ẩn nút tắt chia sẻ và hiển thị lại nút chia sẻ
+    stopShareScreenButton.style.display = 'none';
+    shareScreenButton.style.display = 'inline-block';
+    shareScreenButton.classList.remove('active');
+});
 
 // Hàm gửi tin nhắn
 function sendChatMessage() {

@@ -40,10 +40,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     meetingChat.style.display = 'none'; // Ẩn khung chat
                 }
             } 
-            // Xử lý cho các nút khác
-            else {
-                button.classList.toggle('active'); // Bật/tắt trạng thái các button khác
-            }
         });
     });
     
