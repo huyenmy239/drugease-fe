@@ -74,6 +74,12 @@
             </div>
             
         </div>
+
+        <!-- Video Container -->
+        <div id="video-container">
+            <video id="local-video" autoplay muted></video>
+            <video id="remote-video" autoplay></video>
+        </div>
     
         <img class="background-image" 
              src="/assets/images/background/cover1.jpg" 
@@ -81,7 +87,7 @@
     
         <div class="meeting-controls">
             <!-- Microphone button -->
-            <button class="control-button control-button-microphone">
+            <button id="toggle-mic" class="control-button control-button-microphone">
                 <i class="fas fa-microphone-slash"></i> <!-- Trạng thái tắt -->
                 <i class="fas fa-microphone active-icon"></i> <!-- Trạng thái bật -->
             </button>
@@ -92,9 +98,9 @@
             </button>
             
             <!-- Share screen button -->
-            <button class="control-button control-button-share">
+            <button id="share-screen" class="control-button control-button-share">
                     <i class="fas fa-share-square"></i>
-                </button>
+            </button>
             
             <!-- Hangup button -->
             <button class="control-button control-button-hangup">
@@ -113,39 +119,19 @@
                 </button>
             </div>
             
-            <div class="chat-messages-container">
+            <div id="chat-box" class="chat-messages-container">
                 <!-- Tin nhắn ví dụ -->
-                <div class="chat-message">
-                    <img src="/assets/images/avatar/avtgin.jpg" alt="Avatar" class="chat-avatar">
-                    <div class="chat-content">
-                        <span class="chat-name">Gin</span>
-                        <p class="chat-text">Hello everyone!</p>
-                    </div>
-                </div>
-                <div class="chat-message">
-                    <img src="/assets/images/avatar/avtchianti.jpg" alt="Avatar" class="chat-avatar">
-                    <div class="chat-content">
-                        <span class="chat-name">Chianti</span>
-                        <img src="/assets/images/avatar/avtsherry.jpg" alt="Image Message" class="chat-image">
-                    </div>
-                </div>
-                <div class="chat-message">
-                    <img src="/assets/images/avatar/avtsherry.jpg" alt="Avatar" class="chat-avatar">
-                    <div class="chat-content">
-                        <span class="chat-name">Sherry</span>
-                        <a href="/files/maifia.txt" class="chat-file" download>mafia.txt</a>
-                    </div>
-                </div>
+
             </div>
             
             
             <!-- Hộp chat -->
             <div class="chat-input-area">
-                <input type="text" class="chat-input" placeholder="Nhập tin nhắn của bạn..." />
+                <input id="chat-input" type="text" class="chat-input" placeholder="Nhập tin nhắn của bạn..." />
                 <button class="chat-file-btn">
                     <i class="fas fa-file-upload"></i>
                 </button>
-                <button class="chat-send-btn">
+                <button id="send-message" class="chat-send-btn">
                     <i class="fas fa-paper-plane"></i>
                 </button>
             </div>
@@ -182,8 +168,9 @@
         </div>
 
     </div>
-
+    
     <script src="/js/components/sidebar.js"></script>
-    <script src="/js/pages/room.js"></script>
+    <script type="module" src="/js/services/room.js"></script>
+    <script type="module" src="/js/pages/room.js"></script>
 </body>
 </html>

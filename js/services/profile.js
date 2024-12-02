@@ -1,4 +1,8 @@
-const baseURL = "http://127.0.0.1:8000/api/accounts/users/";
+import CONFIG from '../utils/settings.js';
+
+
+// const baseURL = "http://127.0.0.1:8000/api/accounts/users/";
+const baseURL = `http://${CONFIG.BASE_URL}/api/accounts/users/`;
 
 async function loadProfile() {
     const token = localStorage.getItem("token");
@@ -85,6 +89,7 @@ async function updateProfile() {
 
         if (response.ok) {
             const data = await response.json();
+            localStorage.setItem('username', username);
             alert("Profile updated successfully!");
             loadProfile();
         } else {
@@ -97,6 +102,8 @@ async function updateProfile() {
         alert("An error occurred while updating the profile.");
     }
 }
+
+document.getElementById('update-profile-btn').addEventListener('click', updateProfile);
 
 function renderHistory(history) {
     const logContainer = document.querySelector('.log-body');
