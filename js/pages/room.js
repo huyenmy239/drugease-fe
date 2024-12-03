@@ -24,7 +24,8 @@ document.addEventListener('DOMContentLoaded', function () {
         button.addEventListener('click', () => {
             // Xử lý riêng cho microphone
             if (button.classList.contains('control-button-microphone')) {
-                button.classList.toggle('active'); // Bật/tắt trạng thái microphone
+                // button.classList.toggle('active');
+                
             } 
             // Xử lý riêng cho nút hangup
             else if (button.classList.contains('control-button-hangup')) {

@@ -6,6 +6,43 @@ const baseURL = `http://${CONFIG.BASE_URL}/api/accounts`;
 const urlParams = new URLSearchParams(window.location.search);
 const roomId = urlParams.get('room_id');
 
+// Claa room oject --------------------------------------
+// Kiểm tra nếu roomId hợp lệ
+if (roomId) {
+  // Gọi API với roomId
+  fetch(`http://${CONFIG.BASE_URL}/api/rooms/room/${roomId}/`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Dữ liệu phòng:', data);
+
+      // Xử lý dữ liệu từ response API
+      const roomData = data;
+      const title = roomData.title;
+      const description = roomData.description;
+      const createdBy = roomData.created_by;
+      const createdAt = roomData.created_at;
+      const isPrivate = roomData.is_private;
+      const background = roomData.background;
+      const subjects = roomData.subjects;
+
+      // Hiển thị dữ liệu trên UI hoặc xử lý theo cách bạn muốn
+      document.getElementById('meeting-title').innerText = title;
+
+      // Cập nhật background, mic enable, v.v.
+      // Các phần khác của UI cũng có thể được cập nhật tương tự
+    })
+    .catch(error => {
+      console.error('Có lỗi khi gọi API:', error);
+    });
+} else {
+  console.error('Room ID không hợp lệ!');
+}
+
 // Lấy các phần tử trong DOM
 const localVideo = document.getElementById("local-video");
 const remoteVideo = document.getElementById("remote-video");
@@ -142,15 +179,41 @@ async function startCall() {
     }));
 }
 
+function updateMicState(micState) {
+    fetch(`http://${CONFIG.BASE_URL}/api/rooms/${roomId}/mic/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,  // Thêm token vào header
+        },
+        body: JSON.stringify({
+            mic_allow: micState,  // Trạng thái mic (true: cho phép, false: tắt)
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Mic state updated:', data);
+    })
+    .catch(error => {
+        console.error('Error updating mic state:', error);
+    });
+}
+
 // Chuyển đổi trạng thái micro (mute/unmute)
 toggleMicButton.addEventListener('click', function() {
-    const audioTrack = localStream.getAudioTracks()[0];
+    // const audioTrack = localStream.getAudioTracks()[0];
+    // Chuyển trạng thái mute/unmute
     if (isMicMuted) {
-        audioTrack.enabled = true;
+        // audioTrack.enabled = true;
+        toggleMicButton.classList.remove('active');
+        updateMicState(true);  // Gọi API để bật mic
     } else {
-        audioTrack.enabled = false;
+        // audioTrack.enabled = false;
+        toggleMicButton.classList.add('active');
+        updateMicState(false);  // Gọi API để tắt mic
     }
     isMicMuted = !isMicMuted;
+    
 });
 
 // Cập nhật biến để chứa nút tắt chia sẻ
@@ -287,7 +350,211 @@ function displayMessage(data) {
 }
 
 
+
 // Bắt đầu cuộc gọi khi trang web tải
 window.onload = function() {
     startCall();
 };
+
+// User list section ------------------------------->
+// Hàm để tạo phần tử li cho mỗi người dùng
+function createUserList(userData) {
+    const ul = document.getElementById('user-list');
+    const memberCount = document.getElementById('member-count');
+    ul.innerHTML = '';  // Xóa nội dung cũ trong danh sách trước khi thêm mới
+
+    // Cập nhật số lượng thành viên
+    memberCount.textContent = userData.length;
+
+    userData.forEach(userObj => {
+        const li = document.createElement('li');
+        
+        // Tạo hình đại diện người dùng
+        const img = document.createElement('img');
+        let avtUrl = userObj.user.avatar;
+        if (avtUrl && avtUrl.includes('/media/')) {
+            avtUrl = avtUrl.replace('/media/', '/api/accounts/media/');
+        }
+        img.src = avtUrl;
+        console.log(img.src);
+        img.alt = userObj.user.username;
+        img.classList.add('member-avatar');
+        
+        // Tạo tên người dùng
+        const span = document.createElement('span');
+        span.textContent = userObj.user.username;
+        
+        console.log(userObj.user.id);
+        console.log(userObj.room_owner);
+
+        li.appendChild(img);
+        li.appendChild(span);
+        // Kiểm tra nếu người dùng là host, thêm biểu tượng vương miện
+        if (userObj.user.id === userObj.room_owner[0]) { // Giả sử id của host là 1
+            const crownIcon = document.createElement('i');
+            crownIcon.classList.add('fas', 'fa-crown');
+            crownIcon.id = 'host';
+            li.appendChild(crownIcon);
+        } else {            
+            // Tạo phần tử hiển thị mic
+            const micIcon = document.createElement('i');
+            micIcon.classList.add('fas');  // Thêm lớp chung cho tất cả các icon
+            
+            if (userObj.mic_allow) {
+                // Nếu mic được phép, dùng icon mic bật
+                micIcon.classList.add('fa-microphone');
+            } else {
+                // Nếu mic bị tắt, dùng icon mic tắt
+                micIcon.classList.add('fa-microphone-slash');
+            }
+            micIcon.id = `mic-${userObj.user.id}`;
+            
+            const blockIcon = document.createElement('i');
+            blockIcon.classList.add('fas', 'fa-ban');
+            blockIcon.id = `block-${userObj.user.id}`;
+    
+            // Tạo phần tử block (biểu tượng "cấm")
+            li.appendChild(micIcon);  // Thêm mic vào list
+            li.appendChild(blockIcon);  // Thêm block vào list
+
+            micIcon.addEventListener('click', () => toggleMicPermission(userObj.user.id, micIcon));
+            blockIcon.addEventListener('click', () => toggleBlockPermission(userObj.user.id, blockIcon));
+        }
+
+        // Thêm hình đại diện và tên người dùng vào li
+        
+        // Thêm li vào ul
+        ul.appendChild(li);
+
+
+    });
+}
+
+// Hàm gọi API để lấy danh sách người dùng
+function fetchUserList() {
+    fetch(`http://${CONFIG.BASE_URL}/api/rooms/room/${roomId}/members-in-room/`)
+        .then(function(response) {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();  // Chuyển đổi dữ liệu thành JSON
+        })
+        .then(function(data) {
+            createUserList(data);  // Gọi hàm xử lý dữ liệu
+        })
+        .catch(function(error) {
+            console.error('Error fetching user list:', error);  // Xử lý lỗi nếu có
+        });
+}
+
+
+const editPermissionUrl = `http://${CONFIG.BASE_URL}/api/rooms/room/${roomId}/edit-permissions/`;
+
+// Giả sử token được lưu trong localStorage (có thể thay đổi tùy vào cách bạn lưu trữ token)
+const token = localStorage.getItem('token');  // Lấy token từ localStorage
+
+function toggleMicPermission(userId, micIcon) {
+    const currentState = micIcon.classList.contains('fa-microphone'); // Kiểm tra mic hiện tại
+    const newMicState = !currentState;  // Lấy trạng thái ngược lại (bật/tắt)
+
+    // Gửi yêu cầu tới API để cập nhật mic permission
+    fetch(editPermissionUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,  // Thêm token vào header
+        },
+        body: JSON.stringify({
+            user_id: userId,
+            mic_allow: newMicState,  // Cập nhật trạng thái mic
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Cập nhật icon mic dựa trên trạng thái mới
+        if (newMicState) {
+            micIcon.classList.remove('fa-microphone-slash');
+            micIcon.classList.add('fa-microphone');
+        } else {
+            micIcon.classList.remove('fa-microphone');
+            micIcon.classList.add('fa-microphone-slash');
+        }
+    })
+    .catch(error => {
+        console.error('Error updating mic permission:', error);
+    });
+}
+
+function toggleBlockPermission(userId, blockIcon) {
+
+    // Hiển thị hộp thoại xác nhận
+    const confirmation = window.confirm("Bạn có chắc chắn muốn block người dùng này?");
+
+    if (!confirmation) {
+        // Nếu người dùng không đồng ý (nhấn 'Cancel'), không thực hiện gì
+        return;
+    }
+
+    const currentState = blockIcon.classList.contains('blocked'); // Kiểm tra block hiện tại
+    const newBlockState = !currentState; // Lấy trạng thái ngược lại (block/unblock)
+
+    // Gửi yêu cầu tới API để cập nhật block permission
+    fetch(editPermissionUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,  // Thêm token vào header
+        },
+        body: JSON.stringify({
+            user_id: userId,
+            is_blocked: 1,  // Cập nhật trạng thái block
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        fetchUserList();
+    })
+    .catch(error => {
+        console.error('Error updating block permission:', error);
+    });
+}
+
+// Hàm để lấy trạng thái mic khi tải trang
+function loadMicState() {
+    fetch(`http://${CONFIG.BASE_URL}/api/rooms/${roomId}/mic/`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,  // Thêm token vào header
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.mic_allow !== undefined) {
+            // Cập nhật giao diện tùy thuộc vào trạng thái mic_allow
+            const micButton = document.querySelector('.control-button-microphone');
+            if (data.mic_allow) {
+                micButton.classList.add('active');
+                isMicMuted = true;
+            } else {
+                micButton.classList.remove('active');
+                isMicMuted = false;
+            }
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching mic state:', error);
+    });
+}
+
+
+
+// Gọi hàm khi trang được tải
+window.onload = function () {
+    // Lấy room_id và user_id từ URL hoặc từ các giá trị khác nếu có
+    fetchUserList();
+    loadMicState();
+};
+
+// window.onload = fetchUserList;

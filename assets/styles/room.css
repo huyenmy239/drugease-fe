@@ -131,10 +131,6 @@
     text-align: left;
 }
 
-.dropdown-menu li:hover {
-    background-color: #eaeaea; /* Đổi nền khi hover */
-}
-
 .member-avatar {
     width: 30px; /* Kích thước avatar */
     height: 30px;
@@ -594,4 +590,29 @@
     max-height: 100%;
     object-fit: cover; /* Chỉnh sửa từ contain sang cover */
     z-index: 2; /* Đảm bảo chia sẻ màn hình hiển thị ở trên cùng */
+}
+
+
+/* Màu mặc định cho biểu tượng mic */
+#user-list .fa-microphone {
+    color: #27A4F2;
+    transition: transform 0.2s ease, color 0.2s ease;  /* Thêm hiệu ứng chuyển đổi cho hover */
+}
+
+/* Hiệu ứng hover cho mic */
+#user-list .fa-microphone:hover {
+    color: #1E81D1; /* Màu khi hover */
+    transform: scale(1.2); /* Tăng kích thước biểu tượng */
+}
+
+/* Màu mặc định cho biểu tượng block */
+#user-list .fa-ban {
+    color: #FF3A3ABF;
+    transition: transform 0.2s ease, color 0.2s ease;  /* Thêm hiệu ứng chuyển đổi cho hover */
+}
+
+/* Hiệu ứng hover cho block */
+#user-list .fa-ban:hover {
+    color: #FF2A2A; /* Màu khi hover */
+    transform: scale(1.2); /* Tăng kích thước biểu tượng */
 }
