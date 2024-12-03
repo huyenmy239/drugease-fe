@@ -18,20 +18,25 @@ if (roomId) {
       return response.json();
     })
     .then(data => {
-      console.log('Dữ liệu phòng:', data);
 
-      // Xử lý dữ liệu từ response API
-      const roomData = data;
-      const title = roomData.title;
-      const description = roomData.description;
-      const createdBy = roomData.created_by;
-      const createdAt = roomData.created_at;
-      const isPrivate = roomData.is_private;
-      const background = roomData.background;
-      const subjects = roomData.subjects;
+        // Xử lý dữ liệu từ response API
+        const roomData = data;
+        const title = roomData.title;
+        const description = roomData.description;
+        const createdBy = roomData.created_by;
+        const createdAt = roomData.created_at;
+        const isPrivate = roomData.is_private;
+        let background = roomData.background.bg;
+        const subjects = roomData.subjects;
 
-      // Hiển thị dữ liệu trên UI hoặc xử lý theo cách bạn muốn
-      document.getElementById('meeting-title').innerText = title;
+        // Hiển thị dữ liệu trên UI hoặc xử lý theo cách bạn muốn
+        document.getElementById('meeting-title').innerText = title;
+
+        console.log(background);
+        if (background && background.includes('/media/')) {
+            background = background.replace('/media/', '/api/rooms/media/');
+        }
+        document.getElementById('background-img').src = background;
 
       // Cập nhật background, mic enable, v.v.
       // Các phần khác của UI cũng có thể được cập nhật tương tự
@@ -59,7 +64,6 @@ let isMicMuted = false;
 let isScreenSharing = false;
 
 const username = localStorage.getItem("username");
-console.log(username);
 
 const socket = new WebSocket(`ws://${CONFIG.BASE_URL}/ws/room/${roomId}/`);
 
@@ -376,16 +380,12 @@ function createUserList(userData) {
             avtUrl = avtUrl.replace('/media/', '/api/accounts/media/');
         }
         img.src = avtUrl;
-        console.log(img.src);
         img.alt = userObj.user.username;
         img.classList.add('member-avatar');
         
         // Tạo tên người dùng
         const span = document.createElement('span');
         span.textContent = userObj.user.username;
-        
-        console.log(userObj.user.id);
-        console.log(userObj.room_owner);
 
         li.appendChild(img);
         li.appendChild(span);
@@ -512,7 +512,6 @@ function toggleBlockPermission(userId, blockIcon) {
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
         fetchUserList();
     })
     .catch(error => {
