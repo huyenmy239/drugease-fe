@@ -187,18 +187,16 @@
 
                     <!-- Topic (Combobox) -->
                     <label for="room-topic">Topic:</label>
-                    <select id="room-topic" name="topic">
-                        <option value="general">General</option>
-                        <option value="education">Education</option>
-                        <option value="business">Business</option>
-                        <option value="entertainment">Entertainment</option>
+                    <select id="room-topic" name="topic" multiple required>
+                    <!-- Thêm các option khác ở đây -->
                     </select>
-                    <div id="selected-topics"></div>
+
+                    <div id="selected-topics" class="selected-topics"></div>
 
                     <!-- Background (Image selection) -->
                     <label for="background-options">Background:</label>
                     <div id="background-options">
-                        <label>
+                        <!-- <label>
                             <input type="radio" name="background" value="blue" data-bg-img="blue.jpg">
                             <img src="/assets/images/background/cover5.jpg" class="background-image" alt="cover5" />
                         </label>
@@ -209,7 +207,7 @@
                         <label>
                             <input type="radio" name="background" value="red" data-bg-img="red.jpg">
                             <img src="/assets/images/background/cover6.jpg" class="background-image" alt="cover6" />
-                        </label>
+                        </label> -->
                     </div>
 
                     <!-- Submit and Cancel Buttons -->

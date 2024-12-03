@@ -156,110 +156,152 @@ window.onload = function () {
     searchRooms('');
 };
 
-// Function to fetch room data from the API and display it on the page
-// function fetchRoomData() {
-//     // Define the API endpoint
-//     const apiUrl = 'http://192.168.1.15:8000/api/rooms/room/room-active';
-
-//     // Fetch data from the API
-//     fetch(apiUrl)
-//         .then(response => response.json())
-//         .then(data => {
-//             // Assuming we have a room data array, process each room
-//             data.forEach(room => {
-//                 // Create the card for each room dynamically
-//                 const roomCard = document.createElement('div');
-//                 roomCard.classList.add('card');
-//                 roomCard.setAttribute('data-room-id', room.id); // Add the data-room-id attribute
-
-//                 // Add the 'Join' button
-//                 const joinButton = document.createElement('button');
-//                 joinButton.classList.add('join-button');
-//                 joinButton.innerText = 'Join';
-//                 roomCard.appendChild(joinButton);
-
-//                 // Create the card content
-//                 const cardContent = document.createElement('div');
-//                 cardContent.classList.add('card-content');
-
-//                 // Add room title and conditionally add lock icon for private rooms
-//                 const roomTitle = document.createElement('h3');
-//                 roomTitle.innerHTML = room.title;
-//                 if (room.is_private) {
-//                     roomTitle.innerHTML += ' <i class="fas fa-lock"></i>'; // Add lock icon for private rooms
-//                 }
-//                 cardContent.appendChild(roomTitle);
-
-//                 // Add room creation time
-//                 const cardTimer = document.createElement('div');
-//                 cardTimer.classList.add('card-timer');
-//                 const clockIcon = document.createElement('i');
-//                 clockIcon.classList.add('fas', 'fa-clock');
-//                 cardTimer.appendChild(clockIcon);
-//                 const creationTime = document.createElement('span');
-//                 creationTime.innerText = `${formatRelativeTime(room.created_at)}`; // Use relative time format
-//                 cardTimer.appendChild(creationTime);
-//                 cardContent.appendChild(cardTimer);
-
-//                 // Add the tags (topics) of the room
-//                 const tagsContainer = document.createElement('div');
-//                 tagsContainer.classList.add('tags');
-
-//                 // Show only the first two tags
-//                 const visibleTags = room.subjects.slice(0, 2); // Get the first two subjects
-//                 visibleTags.forEach(subject => {
-//                     const tag = document.createElement('span');
-//                     tag.innerText = `${subject.name}`;
-//                     tagsContainer.appendChild(tag);
-//                 });
-
-//                 // Show remaining tags when hover over '...'
-//                 const moreTags = room.subjects.slice(2); // Get the remaining subjects
-//                 const moreTagSpan = document.createElement('span');
-//                 moreTagSpan.innerText = '...';
-//                 moreTags.forEach(subject => {
-//                     const tag = document.createElement('span');
-//                     tag.innerText = `${subject.name}`;
-//                     tag.classList.add('hidden-tag'); // Initially hide these tags
-//                     tagsContainer.appendChild(tag);
-//                 });
-//                 tagsContainer.appendChild(moreTagSpan);
-
-//                 // Add hover functionality to show more tags
-//                 moreTagSpan.addEventListener('mouseenter', () => {
-//                     const hiddenTags = tagsContainer.querySelectorAll('.hidden-tag');
-//                     hiddenTags.forEach(tag => tag.style.display = 'inline-block'); // Show the hidden tags
-//                 });
-//                 moreTagSpan.addEventListener('mouseleave', () => {
-//                     const hiddenTags = tagsContainer.querySelectorAll('.hidden-tag');
-//                     hiddenTags.forEach(tag => tag.style.display = 'none'); // Hide the hidden tags again
-//                 });
-
-//                 cardContent.appendChild(tagsContainer);
 
 
-//                 // Append card content to the room card
-//                 roomCard.appendChild(cardContent);
+// Call API to create a room
+document.addEventListener("DOMContentLoaded", function () {
+    // Lấy nút tạo phòng và popup
+    const createRoomBtn = document.querySelector('.create-room-btn');
+    const popup = document.getElementById('popup');
+    const overlay = document.getElementById('overlay');
+    const form = document.getElementById('create-room-form');
 
-//                 // Create and append the card footer (showing members count)
-//                 const cardFooter = document.createElement('div');
-//                 cardFooter.classList.add('card-footer');
-//                 const memberCount = document.createElement('span');
-//                 memberCount.innerText = room.members;
-//                 cardFooter.appendChild(memberCount);
-//                 const usersIcon = document.createElement('i');
-//                 usersIcon.classList.add('fas', 'fa-users');
-//                 cardFooter.appendChild(usersIcon);
-//                 roomCard.appendChild(cardFooter);
+    // Lắng nghe sự kiện khi nhấn nút "+ Create"
+    createRoomBtn.addEventListener('click', function () {
+        // Fetch dữ liệu topics và backgrounds khi người dùng nhấn "Create"
+        fetchTopicsAndBackgrounds().then(() => {
+            // Sau khi fetch xong dữ liệu, mở form để người dùng có thể nhập dữ liệu phòng
+            popup.classList.remove('hidden'); // Hiển thị form
+        }).catch(error => {
+            console.error('Error fetching topics or backgrounds:', error);
+        });
+    });
 
-//                 // Add the room card to the card container
-//                 document.querySelector('.card-container').appendChild(roomCard);
-//             });
-//         })
-//         .catch(error => {
-//             console.error('Error fetching room data:', error);
-//         });
-// }
+    // Hàm lấy token từ localStorage hoặc sessionStorage
+    function getAuthToken() {
+        return localStorage.getItem('token'); // Hoặc sessionStorage.getItem('auth_token');
+    }
 
-// Call the function to fetch and display room data when the page loads
-// window.onload = fetchRoomData;
+    // Hàm gọi API lấy danh sách topic và background
+    function fetchTopicsAndBackgrounds() {
+        return new Promise((resolve, reject) => {
+            // Lấy token
+            const token = getAuthToken();
+            
+            // Fetch topics và backgrounds cùng lúc, thêm token vào header
+            Promise.all([
+                fetch(`http://${CONFIG.BASE_URL}/api/rooms/subjects`, {
+                    headers: {
+                        'Authorization': `Token ${token}`
+                    }
+                }).then(response => response.json()),
+                fetch(`http://${CONFIG.BASE_URL}/api/rooms/backgrounds`, {
+                    headers: {
+                        'Authorization': `Token ${token}`
+                    }
+                }).then(response => response.json())
+            ])
+            .then(([topicsData, backgroundsData]) => {
+                // Xử lý dữ liệu topic
+                const topicSelect = document.getElementById('room-topic');
+                topicsData.forEach(topic => {
+                    const option = document.createElement('option');
+                    option.value = topic.id;
+                    option.textContent = topic.name;
+                    topicSelect.appendChild(option);
+                });
+
+                // Xử lý dữ liệu backgrounds
+                const backgroundOptions = document.getElementById('background-options');
+                backgroundsData.forEach((background, index) => {
+                    const label = document.createElement('label');
+                    const input = document.createElement('input');
+                    input.type = 'radio';
+                    input.name = 'background';
+                    input.value = background.id;
+                    input.dataset.bgImg = background.bg;
+                    label.appendChild(input);
+
+                    if (background.bg && background.bg.includes('/media/')) {
+                        background.bg = background.bg.replace('/media/', '/api/rooms/media/');
+                    }
+                    console.log(background.bg);
+
+                    const img = document.createElement('img');
+                    img.src = background.bg;
+                    img.classList.add('background-image');
+                    img.alt = `cover${index + 1}`;
+                    label.appendChild(img);
+
+                    backgroundOptions.appendChild(label);
+                });
+
+                resolve();
+            })
+            .catch(error => reject(error));
+        });
+    }
+
+    // Hàm lấy giá trị background đã chọn
+    function getSelectedBackground() {
+        const selectedBackground = document.querySelector('input[name="background"]:checked');
+        return selectedBackground ? parseInt(selectedBackground.value) : null;
+    }
+
+    // Lắng nghe sự kiện submit của form
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Lấy dữ liệu từ form
+        const title = document.getElementById('room-title').value;
+        const description = document.getElementById('room-description').value.trim() || '';
+        const isPrivate = document.querySelector('input[name="mode"]:checked').value === "private";
+        const enableMic = document.querySelector('input[name="mic"]:checked').value === "enable";
+        const topic = Array.from(document.querySelectorAll('select[name="topic"] option:checked')).map(option => parseInt(option.value));
+        const background = getSelectedBackground(); // Hàm để lấy background đã chọn
+        
+        const data = {
+            title: title,
+            description: description,
+            is_private: isPrivate,
+            background: background,
+            enable_mic: enableMic,
+            subject: topic
+        };
+
+        // Gọi API để tạo phòng
+        createRoom(data);
+    });
+
+    // Hàm gọi API tạo phòng
+    function createRoom(data) {
+        // Lấy token
+        const token = getAuthToken();
+
+        fetch(`http://${CONFIG.BASE_URL}/api/rooms/room/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}` // Thêm token vào header
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(result => {
+            console.log('Room created successfully:', result);
+            // Hiển thị thông báo hoặc thực hiện các hành động sau khi tạo phòng thành công
+            if (result && result.id) {
+                // Redirect người dùng vào phòng mới
+                window.location.href = `room.html?room_id=${result.id}`;
+            } else {
+                alert('Room created successfully, but no room URL returned.');
+                popup.classList.add('hidden'); // Đóng form
+                overlay.classList.add('hidden'); // Đóng overlay
+            }
+        })
+        .catch(error => {
+            console.error('Error creating room:', error);
+            alert('Error creating room');
+        });
+    }
+});

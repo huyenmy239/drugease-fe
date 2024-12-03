@@ -70,16 +70,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Handle topic selection
     topicSelect.addEventListener("change", () => {
-        const topic = topicSelect.options[topicSelect.selectedIndex].text;
-        if (![...selectedTopics.children].some((span) => span.textContent === topic)) {
-            const span = document.createElement("span");
-            span.textContent = topic;
-            selectedTopics.appendChild(span);
-
-            // Allow removal of topics by clicking on them
-            span.addEventListener("click", () => {
-                selectedTopics.removeChild(span);
-            });
-        }
+        const selectedOptions = Array.from(topicSelect.selectedOptions);
+        selectedTopics.innerHTML = ""; // Clear previous selected topics
+    
+        selectedOptions.forEach(option => {
+            const topic = option.text;
+    
+            if (![...selectedTopics.children].some((span) => span.textContent === topic)) {
+                const span = document.createElement("span");
+                span.textContent = topic;
+                selectedTopics.appendChild(span);
+    
+                // Allow removal of topics by clicking on them
+                span.addEventListener("click", () => {
+                    selectedTopics.removeChild(span);
+                    
+                    // Deselect the option in the select element
+                    const optionToRemove = Array.from(topicSelect.options).find(opt => opt.text === topic);
+                    if (optionToRemove) {
+                        optionToRemove.selected = false;
+                    }
+                });
+            }
+        });
     });
 });
