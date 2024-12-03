@@ -1,0 +1,191 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f5f5f5;
+}
+
+.main-content {
+    flex-grow: 1; /* Để main-content chiếm phần còn lại của không gian */
+    padding: 10px;
+    margin-left: 290px;
+}
+
+/* Banner Container */
+.manage-banner {
+    background: #fff;
+    color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column; /* Sắp xếp các phần tử theo cột */
+    align-items: center;
+    margin-bottom: 20px;
+    height: 20vh;
+}
+
+/* Button Container */
+.manage-button {
+    display: flex;
+    justify-content: center; /* Căn giữa các nút */
+    margin: 5px auto; /* Căn giữa tổng thể và tạo khoảng cách trên/dưới */
+    width: 80%; /* Chiều ngang của container */
+    padding-bottom: 10px;
+    
+}
+
+.manage-btn {
+    flex: 1; /* Các nút chiếm đều không gian */
+    background-color: transparent;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 0; /* Loại bỏ bo góc để viền nối liền */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    border-bottom: 1px solid #333; /* Thêm viền dưới */
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.manage-btn.active {
+    color: #27A4F2;
+    border-bottom: 1px solid #27A4F2; /* Viền dưới cùng màu với nút khi active */
+}
+
+.manage-btn::hover {
+    color: #27A4F2;
+    border-bottom: 1px solid #27A4F2;
+}
+
+/* Content */
+.manage-content {
+    width: 80%; /* Chiều rộng full bằng banner */
+    text-align: left; /* Căn nội dung sang trái */
+    padding-left: 0; /* Đảm bảo không có padding thừa */
+}
+
+.manage-content label {
+    font-size: 14px;
+    font-weight: bold;
+}
+.content {
+    display: none; /* Ẩn nội dung mặc định */
+    text-align: left; /* Nội dung bên trong căn lề trái */
+    padding-left: 0; /* Bỏ padding mặc định */
+}
+
+.content.visible {
+    display: block; /* Hiển thị khi được kích hoạt */
+    padding-top: 0; /* Khoảng cách phía trên nội dung */
+    text-align: left; /* Đảm bảo nội dung căn lề trái */
+}
+
+.add-btn {
+    padding: 10px;
+    border-radius: 20px;
+    background-color: #27A4F2;
+    color: #fff;
+    border: none;
+    margin-top: 15px; /* Thêm khoảng cách phía trên */
+    margin-bottom: 10px; /* Thêm khoảng cách phía dưới */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.manage-list {
+    position: relative;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    height: 74vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.manage-list h2 {
+    text-align: left; /* Căn trái tiêu đề */
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.list-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+    table-layout: fixed; /* Cố định chiều rộng các cột */
+}
+
+.list-table th, .list-table td {
+    padding: 8px;
+    text-align: center; /* Căn giữa nội dung các ô dữ liệu */
+    word-wrap: break-word;
+}
+
+.list-table th {
+    background-color: transparent;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+}
+
+.list-table td {
+    text-align: center;
+}
+
+.list-bgr img {
+    width: 132px;  /* Đặt chiều rộng cố định */
+    height: 74px;  /* Đặt chiều cao cố định */
+    object-fit: cover;  /* Đảm bảo ảnh được cắt và co giãn sao cho phù hợp với khung */
+    border-radius: 20px;
+}
+
+
+.pagination {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.pagination button {
+    background-color: transparent;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.list-subject, .list-bgr {
+    display: none; /* Ẩn tất cả phần danh sách mặc định */
+}
+
+.manage-list.active .list-subject,
+.manage-list.active .list-bgr {
+    display: block; /* Hiển thị khi phần đó được kích hoạt */
+}
+
+
+.pagination {
+    position: fixed; /* Cố định vị trí của phần tử */
+    bottom: 20px; /* Cách đáy của cửa sổ trình duyệt 20px */
+    right: 20px; /* Cách lề phải 20px */
+    display: flex;
+    gap: 10px; /* Khoảng cách giữa hai nút */
+}
+
+.pagination button {
+    padding: 5px 10px;
+    background-color: transparent;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.pagination button:hover {
+    background-color: #c2c2c2;
+}
