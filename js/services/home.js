@@ -60,6 +60,17 @@ async function searchRooms(query) {
         joinButton.id = 'join-btn';
         roomCard.appendChild(joinButton);
 
+        // Thay đổi background image của roomCard
+        // if (profileData.avatar && profileData.avatar.includes('/media/')) {
+        //     profileData.avatar = profileData.avatar.replace('/media/', '/api/accounts/media/');
+        // }
+        if (room.background.bg) {
+            let bg = room.background.bg;
+            bg = bg.replace('/media/', '/api/rooms/media/');
+            bg = `http://${CONFIG.BASE_URL}` + bg;
+            roomCard.style.backgroundImage = `url(${bg})`;
+        }
+
         // Create the card content
         const cardContent = document.createElement('div');
         cardContent.classList.add('card-content');
