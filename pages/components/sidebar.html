@@ -11,10 +11,10 @@
       </a>
     </li>
     <li>
-      <a href="/pages/test-n.html">
+      <span class="note-button" id="note-link">
         <i class="fas fa-sticky-note"> </i>
         Note
-      </a>
+      </span>
     </li>
     <li>
       <a href="/pages/profile.html">
@@ -29,4 +29,46 @@
       </a>
     </li>
   </ul>
+
+  <!-- Modal Structure -->
+  <div class="overlay"></div>
+  <div class="note-modal">
+    <div class="note-container">
+      <div class="note-header">
+          <h1>Note</h1>
+          <i class="fas fa-times close-icon"></i>
+      </div>
+      <div class="search-container">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search...">
+      </div>
+      <div class="add-note">
+          <i class="fas fa-plus add-icon"></i>
+      </div>
+      <div class="note-list">
+          <div class="note-item">
+              <div class="note-text">
+                  Cấu trúc dữ liệu
+                  <input type="text" class="note-body">
+                  <div class="note-time">12:09 AM 10/27/2024</div>
+              </div>
+              <i class="fas fa-trash delete-icon"></i>
+          </div>
+          <div class="note-item">
+              <div class="note-text">
+                  Django
+                  <div class="note-time">12:00 AM 10/27/2024</div>
+              </div>
+              <i class="fas fa-trash delete-icon"></i>
+          </div>
+          <div class="note-item">
+              <div class="note-text">
+                  Java
+                  <div class="note-time">11:09 PM 10/26/2024</div>
+              </div>
+              <i class="fas fa-trash delete-icon"></i>
+          </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -37,7 +37,6 @@ function debounce(func, delay) {
     };
 }
 
-// Hàm gọi API
 async function searchRooms(query) {
 
     query = query.trim();
@@ -46,91 +45,85 @@ async function searchRooms(query) {
     const data = await response.json();
 
     const resultsContainer = document.getElementById('results');
-    resultsContainer.innerHTML = ''; // Clear previous results
+    resultsContainer.innerHTML = '';
 
     data.forEach(room => {
         const roomCard = document.createElement('div');
         roomCard.classList.add('card');
-        roomCard.setAttribute('data-room-id', room.id); // Add the data-room-id attribute
+        roomCard.setAttribute('data-room-id', room.id);
 
-        // Add the 'Join' button
         const joinButton = document.createElement('button');
         joinButton.classList.add('join-button');
         joinButton.innerText = 'Join';
+        joinButton.id = 'join-btn';
         roomCard.appendChild(joinButton);
 
-        // Create the card content
+        if (room.background.bg) {
+            let bg = room.background.bg;
+            bg = bg.replace('/media/', '/api/rooms/media/');
+            bg = `http://${CONFIG.BASE_URL}` + bg;
+            roomCard.style.backgroundImage = `url(${bg})`;
+        }
+
         const cardContent = document.createElement('div');
         cardContent.classList.add('card-content');
 
-        // Add room title and conditionally add lock icon for private rooms
         const roomTitle = document.createElement('h3');
         roomTitle.innerHTML = room.title;
         if (room.is_private) {
-            roomTitle.innerHTML += ' <i class="fas fa-lock"></i>'; // Add lock icon for private rooms
+            roomTitle.innerHTML += ' <i class="fas fa-lock"></i>';
         }
         cardContent.appendChild(roomTitle);
 
-        // Add room creation time
         const cardTimer = document.createElement('div');
         cardTimer.classList.add('card-timer');
         const clockIcon = document.createElement('i');
         clockIcon.classList.add('fas', 'fa-clock');
         cardTimer.appendChild(clockIcon);
         const creationTime = document.createElement('span');
-        creationTime.innerText = `${formatRelativeTime(room.created_at)}`; // Use relative time format
+        creationTime.innerText = `${formatRelativeTime(room.created_at)}`;
         cardTimer.appendChild(creationTime);
         cardContent.appendChild(cardTimer);
 
-        // Add the tags (topics) of the room
         const tagsContainer = document.createElement('div');
         tagsContainer.classList.add('tags');
 
-        // Show only the first two tags
-        const visibleTags = room.subjects.slice(0, 2); // Get the first two subjects
+        const visibleTags = room.subjects.slice(0, 2);
         visibleTags.forEach(subject => {
             const tag = document.createElement('span');
             tag.innerText = `${subject.name}`;
             tagsContainer.appendChild(tag);
         });
 
-        // Only show the "..." if there are more than 2 tags
         if (room.subjects.length > 2) {
-            const moreTags = room.subjects.slice(2); // Get the remaining subjects
+            const moreTags = room.subjects.slice(2);
             const moreTagSpan = document.createElement('span');
             moreTagSpan.innerText = '...';
 
-            // Add hidden tags
             moreTags.forEach(subject => {
                 const tag = document.createElement('span');
                 tag.innerText = `${subject.name}`;
-                tag.classList.add('hidden-tag'); // Initially hide these tags
+                tag.classList.add('hidden-tag');
                 tagsContainer.appendChild(tag);
             });
 
-            // Append the '...' and handle hover functionality
             tagsContainer.appendChild(moreTagSpan);
 
-            // Add hover functionality to show more tags
             moreTagSpan.addEventListener('mouseenter', () => {
                 const hiddenTags = tagsContainer.querySelectorAll('.hidden-tag');
-                hiddenTags.forEach(tag => tag.style.display = 'inline-block'); // Show the hidden tags
+                hiddenTags.forEach(tag => tag.style.display = 'inline-block');
             });
 
             moreTagSpan.addEventListener('mouseleave', () => {
                 const hiddenTags = tagsContainer.querySelectorAll('.hidden-tag');
-                hiddenTags.forEach(tag => tag.style.display = 'none'); // Hide the hidden tags again
+                hiddenTags.forEach(tag => tag.style.display = 'none');
             });
         }
 
-        // Append the tags container to the card content
         cardContent.appendChild(tagsContainer);
 
-
-        // Append card content to the room card
         roomCard.appendChild(cardContent);
 
-        // Create and append the card footer (showing members count)
         const cardFooter = document.createElement('div');
         cardFooter.classList.add('card-footer');
         const memberCount = document.createElement('span');
@@ -141,18 +134,15 @@ async function searchRooms(query) {
         cardFooter.appendChild(usersIcon);
         roomCard.appendChild(cardFooter);
 
-        // Add the room card to the card container
         document.querySelector('.card-container').appendChild(roomCard);
     });
 }
 
-// Sự kiện khi người dùng gõ vào thanh tìm kiếm
 document.getElementById('search-input').addEventListener('input', debounce(function (event) {
     searchRooms(event.target.value);
-}, 500)); // 500ms delay trước khi gọi API
+}, 500));
 
 window.onload = function () {
-    // You can either call it with an empty string or a specific query, for example:
     searchRooms('');
 };
 

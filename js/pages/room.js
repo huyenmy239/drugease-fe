@@ -24,14 +24,9 @@ document.addEventListener('DOMContentLoaded', function () {
         button.addEventListener('click', () => {
             // Xử lý riêng cho microphone
             if (button.classList.contains('control-button-microphone')) {
-                button.classList.toggle('active'); // Bật/tắt trạng thái microphone
-            } 
-            // Xử lý riêng cho nút hangup
-            else if (button.classList.contains('control-button-hangup')) {
-                window.location.href = 'home.html';
-            } 
-            // Xử lý riêng cho nút chat
-            else if (button.classList.contains('control-button-chat')) {
+                // button.classList.toggle('active');
+                
+            } else if (button.classList.contains('control-button-chat')) {
                 button.classList.toggle('active'); // Bật/tắt trạng thái nút chat
                 // Hiển thị hoặc ẩn khung chat
                 if (button.classList.contains('active')) {

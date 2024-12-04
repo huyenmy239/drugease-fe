@@ -14,12 +14,12 @@
 
     <div class="meeting-screen">
         <div class="meeting-header">
-            <h3 class="meeting-title">Let's get it
+            <h3 id="meeting-title" class="meeting-title">
                 <span>-</span>
             </h3>
             <div class="member-count">
                 <i class="fas fa-users"></i>
-                <span>3</span>
+                <span id="member-count"></span>
             </div>
             <div class="dropdown-container">
                 <button class="dropdown-button">
@@ -29,48 +29,10 @@
                     <i class="fas fa-chevron-up"></i>
                 </button>
                 <div class="dropdown-menu" style="display: none;">
-                    <ul>
-                        <li>
-                            <img src="/assets/images/avatar/avtgin.jpg" alt="Avatar 1" class="member-avatar">
-                            <span>Gin</span>
-                            <i id="host" class="fas fa-crown"></i>
-                        </li>
-                        <li>
-                            <img src="/assets/images/avatar/avtchianti.jpg" alt="Avatar 2" class="member-avatar">
-                            <span>Chianti</span>
-                        </li>
-                        <li>
-                            <img src="/assets/images/avatar/avtlight.jpg" alt="Avatar 3" class="member-avatar">
-                            <span>Light</span>
-                        </li>
-                        <li>
-                            <img src="/assets/images/avatar/avtsherry.jpg" alt="Avatar 4" class="member-avatar">
-                            <span>Sherry</span>
-                        </li>
-                        <li>
-                            <img src="/assets/images/avatar/avtvermouth.jpg" alt="Avatar 5" class="member-avatar">
-                            <span>Vermouth</span>
-                        </li>
-                        <li>
-                            <img src="/assets/images/avatar/avtvodka.jpg" alt="Avatar 6" class="member-avatar">
-                            <span>Vodka</span>
-                        </li>
-                        <li>
-                            <img src="/assets/images/avatar/avtbourbon.jpg" alt="Avatar 7" class="member-avatar">
-                            <span>Bourbon</span>
-                        </li>
-                        <li>
-                            <img src="/assets/images/avatar/avtkir.jpg" alt="Avatar 8" class="member-avatar">
-                            <span>Kir</span>
-                        </li>
-                        <li>
-                            <img src="/assets/images/avatar/avtkorn.jpg" alt="Avatar 9" class="member-avatar">
-                            <span>Korn</span>
-                        </li>
-                        <!-- Thêm các thành viên khác -->
+                    <ul id="user-list">
+                        <!-- Danh sách người dùng sẽ được chèn vào đây -->
                     </ul>
                 </div>
-                
             </div>
             
         </div>
@@ -81,8 +43,8 @@
             <video id="remote-video" autoplay></video>
         </div>
     
-        <img class="background-image" 
-             src="/assets/images/background/cover1.jpg" 
+        <img id="background-img" class="background-image" 
+             src="" 
              alt="Meeting Background" />
     
         <div class="meeting-controls">
@@ -108,7 +70,7 @@
             </button>
             
             <!-- Hangup button -->
-            <button class="control-button control-button-hangup">
+            <button id="hangup-button" class="control-button control-button-hangup">
                 <i class="fas fa-phone fa-rotate-by" style="--fa-rotate-angle: 225deg;"></i>
             </button>
         </div>
