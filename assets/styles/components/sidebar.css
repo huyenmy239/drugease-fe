@@ -44,11 +44,123 @@
     align-items: center;
 }
 
+.sidebar .menu li span {
+    text-decoration: none;
+    color: #999999;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+}
+
 .sidebar .menu li a:hover {
     color: #27a4f2;
+}
+
+.sidebar .menu li span:hover {
+    color: #27a4f2;
+    cursor: pointer;
 }
 
 .sidebar .menu li a i {
     margin-right: 30px;
     font-size: 25px;
+}
+
+.sidebar .menu li span i {
+    margin-right: 30px;
+    font-size: 25px;
+}
+
+.overlay {
+    display: none; /* Mặc định ẩn overlay */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Nền mờ đen */
+    z-index: 1000;
+  }
+
+/* Định kiểu cho modal */
+.note-modal {
+    display: none; /* Mặc định ẩn modal */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    z-index: 1001; /* Đặt modal phía trên overlay */
+  }
+
+.note-container {
+    display: none;
+    min-width: 300px;
+    width: 20%;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    position: relative;
+}
+.note-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+.note-header h1 {
+    font-size: 18px;
+    margin: 0;
+}
+.note-header .close-icon {
+    font-size: 18px;
+    cursor: pointer;
+}
+.search-container {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+.search-container input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.add-note {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+.add-note .add-icon {
+    font-size: 24px;
+    cursor: pointer;
+}
+.note-list {
+    padding: 10px;
+}
+.note-item {
+    background-color: #5bc0de;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+.note-item .note-text {
+    flex-grow: 1;
+}
+.note-item .note-time {
+    font-size: 10px;
+    margin-top: 5px;
+}
+.note-item .delete-icon {
+    font-size: 18px;
+    cursor: pointer;
+    color: rgb(253, 103, 103);
 }
