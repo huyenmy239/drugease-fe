@@ -57,6 +57,7 @@ async function searchRooms(query) {
         const joinButton = document.createElement('button');
         joinButton.classList.add('join-button');
         joinButton.innerText = 'Join';
+        joinButton.id = 'join-btn';
         roomCard.appendChild(joinButton);
 
         // Create the card content

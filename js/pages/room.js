@@ -26,13 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (button.classList.contains('control-button-microphone')) {
                 // button.classList.toggle('active');
                 
-            } 
-            // Xử lý riêng cho nút hangup
-            else if (button.classList.contains('control-button-hangup')) {
-                window.location.href = 'home.html';
-            } 
-            // Xử lý riêng cho nút chat
-            else if (button.classList.contains('control-button-chat')) {
+            } else if (button.classList.contains('control-button-chat')) {
                 button.classList.toggle('active'); // Bật/tắt trạng thái nút chat
                 // Hiển thị hoặc ẩn khung chat
                 if (button.classList.contains('active')) {

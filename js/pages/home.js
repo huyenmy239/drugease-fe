@@ -1,3 +1,44 @@
+import CONFIG from '../utils/settings.js';
+
+// Hàm để gọi API tham gia phòng
+function joinRoom(roomId) {
+    // Lấy thông tin user (ví dụ từ localStorage)
+    const token = localStorage.getItem('token');
+    
+    // Kiểm tra nếu không có token
+    if (!token) {
+        alert("Bạn cần đăng nhập để tham gia phòng.");
+        return;
+    }
+
+    // Gửi yêu cầu POST đến API 'join'
+    fetch(`http://${CONFIG.BASE_URL}/api/rooms/room/${roomId}/join/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,  // Đính kèm token xác thực
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            alert(data.message);  // Hiển thị thông báo trả về từ server
+
+            // Nếu tham gia thành công, có thể thực hiện các hành động như:
+            // - Chuyển hướng người dùng đến phòng
+            // - Cập nhật giao diện người dùng
+            if (data.message === "Bạn đã tham gia phòng thành công.") {
+                // Chuyển hướng đến trang phòng học hoặc thực hiện hành động khác
+                window.location.href = `room.html?room_id=${roomId}`; // Ví dụ chuyển hướng đến trang phòng học
+            }
+        }
+    })
+    .catch(error => {
+        console.error('Error joining room:', error);
+        alert('Có lỗi xảy ra khi tham gia phòng.');
+    });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     // Event delegation on the card-container for "Join" buttons
     document.querySelector('.card-container').addEventListener('click', function (event) {
@@ -10,7 +51,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log('Room ID from Join button click:', roomId);
 
                 // Redirect to room page with the room id
-                window.location.href = `room.html?room_id=${roomId}`;
+                joinRoom(roomId);
+                // window.location.href = `room.html?room_id=${roomId}`;
             }
         }
     });

@@ -556,4 +556,50 @@ window.onload = function () {
     loadMicState();
 };
 
-// window.onload = fetchUserList;
+
+// Leave room -----------------------
+// Lấy phần tử nút "Rời phòng"
+const hangupButton = document.getElementById("hangup-button");
+
+// Thêm sự kiện nhấn nút
+hangupButton.addEventListener("click", function () {
+    // Gọi API khi người dùng nhấn nút rời phòng
+    leaveRoom();
+});
+
+// Hàm gửi yêu cầu POST đến API để người dùng rời phòng
+function leaveRoom() {
+
+    // Xác thực người dùng (ví dụ: lấy token từ localStorage)
+    const token = localStorage.getItem('token');
+
+    // Đảm bảo rằng có token trước khi gửi yêu cầu
+    if (!token) {
+        alert("Bạn cần đăng nhập để rời phòng.");
+        return;
+    }
+
+    // Gửi yêu cầu rời phòng
+    fetch(`http://${CONFIG.BASE_URL}/api/rooms/room/${roomId}/leave/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,  // Đính kèm token
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Xử lý phản hồi từ API
+        if (data.message) {
+            alert(data.message);  // Hiển thị thông báo
+            // Sau khi người dùng rời phòng, có thể thực hiện các hành động như:
+            // - Chuyển hướng người dùng ra khỏi trang
+            // - Cập nhật giao diện người dùng
+            window.location.href = 'home.html';
+        }
+    })
+    .catch(error => {
+        console.error('Error leaving room:', error);
+        alert('Có lỗi xảy ra khi rời phòng.');
+    });
+}
