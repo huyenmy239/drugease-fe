@@ -37,6 +37,8 @@ function debounce(func, delay) {
     };
 }
 
+let autoSearchInterval;
+
 async function searchRooms(query) {
 
     query = query.trim();
@@ -138,14 +140,30 @@ async function searchRooms(query) {
     });
 }
 
+function autoSearchRooms() {
+    const defaultQuery = ''; // Tìm kiếm tất cả các phòng, hoặc bạn có thể thay đổi query mặc định
+    autoSearchInterval = setInterval(() => {
+        searchRooms(defaultQuery); // Gọi hàm tìm kiếm với query mặc định
+    }, 3000); // Mỗi 10 giây 
+}
+
+// Dừng tìm kiếm tự động khi người dùng nhập liệu
 document.getElementById('search-input').addEventListener('input', debounce(function (event) {
-    searchRooms(event.target.value);
+    clearInterval(autoSearchInterval); // Dừng tự động tìm kiếm khi có người dùng nhập
+    searchRooms(event.target.value); // Tìm kiếm theo giá trị người dùng nhập
 }, 500));
 
-window.onload = function () {
-    searchRooms('');
-};
+// Kích hoạt lại tìm kiếm tự động sau khi không có nhập liệu trong 1 khoảng thời gian
+document.getElementById('search-input').addEventListener('blur', () => {
+    setTimeout(() => {
+        autoSearchRooms(); // Kích hoạt lại autoSearch sau khi người dùng ngừng nhập
+    }, 1000); // Sau 1 giây không nhập liệu
+});
 
+// Gọi autoSearchRooms khi trang được load
+document.addEventListener("DOMContentLoaded", function() {
+    autoSearchRooms();
+});
 
 
 // Call API to create a room
@@ -281,7 +299,7 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log('Room created successfully:', result);
             // Hiển thị thông báo hoặc thực hiện các hành động sau khi tạo phòng thành công
             if (result && result.id) {
-                // Redirect người dùng vào phòng mới
+                    // Gửi thông tin về phòng mới qua WebSocket
                 window.location.href = `room.html?room_id=${result.id}`;
             } else {
                 alert('Room created successfully, but no room URL returned.');
@@ -295,3 +313,4 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+

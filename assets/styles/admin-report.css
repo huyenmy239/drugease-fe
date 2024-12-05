@@ -13,6 +13,7 @@ body {
     flex-grow: 1; /* Để main-content chiếm phần còn lại của không gian */
     padding: 10px;
     margin-left: 290px;
+    height: 100vh;
 }
 
 .stats-banner {

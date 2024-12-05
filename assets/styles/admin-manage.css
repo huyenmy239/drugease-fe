@@ -13,6 +13,7 @@ body {
     flex-grow: 1; /* Để main-content chiếm phần còn lại của không gian */
     padding: 10px;
     margin-left: 290px;
+    height: 100vh;
 }
 
 /* Banner Container */
@@ -138,24 +139,50 @@ body {
     text-align: center;
 }
 
+/* Thêm hiệu ứng khi click vào dòng */
+.manage-list table tbody tr.selected {
+    background-color: #d0eaff; /* Màu nền thay đổi khi click */
+}
+
+
+/* Tạo hiệu ứng hover để dễ nhận biết khi di chuột */
+.manage-list table tbody tr:hover {
+    background-color: #f1f1f1; /* Màu nền khi hover chuột lên dòng */
+}
+
+
+.editable-table td[contenteditable="true"] {
+    border: 1px solid #4CAF50; /* Highlight ô được chỉnh sửa */
+    outline: none;
+}
+
+.action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.action-btn  {
+    margin: 0 5px;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.action-btn {
+    border: none;
+}
+#edit-btn {
+    color: #27A4F2;
+}
+
+#delete-btn {
+    color: #FF3A3A;
+}
+
 .list-bgr img {
     width: 132px;  /* Đặt chiều rộng cố định */
     height: 74px;  /* Đặt chiều cao cố định */
     object-fit: cover;  /* Đảm bảo ảnh được cắt và co giãn sao cho phù hợp với khung */
     border-radius: 20px;
-}
-
-
-.pagination {
-    text-align: center;
-    margin-top: 10px;
-}
-
-.pagination button {
-    background-color: transparent;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
 }
 
 .list-subject, .list-bgr {

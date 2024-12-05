@@ -39,6 +39,98 @@ document.addEventListener('DOMContentLoaded', () => {
     // Thiết lập trạng thái mặc định (focus vào Subject)
     document.querySelector('.subject-btn').click();
 
+    // Lặp qua từng dòng trong bảng
+    document.querySelectorAll("table tbody tr").forEach((row) => {
+        const editBtn = row.querySelector("#edit-btn");
+        const deleteBtn = row.querySelector("#delete-btn");
+    
+        // Kích hoạt nút Edit và Delete khi click vào dòng
+        row.addEventListener("click", () => {
+            // Vô hiệu hóa các nút Edit và Delete của các dòng khác
+            document.querySelectorAll("table tbody tr").forEach((otherRow) => {
+                const otherEditBtn = otherRow.querySelector("#edit-btn");
+                const otherDeleteBtn = otherRow.querySelector("#delete-btn");
+    
+                if (otherRow !== row) {
+                    if (otherEditBtn) otherEditBtn.disabled = true;
+                    if (otherDeleteBtn) otherDeleteBtn.disabled = true;
+                }
+            });
+    
+            document.querySelectorAll("table tbody tr").forEach((r) => {
+                r.classList.remove("selected");
+            });
+    
+            // Thêm lớp 'selected' vào dòng hiện tại
+            row.classList.add("selected");
+            // Kích hoạt nút Edit và Delete của dòng hiện tại
+            if (editBtn && deleteBtn) {
+                editBtn.disabled = false;
+                deleteBtn.disabled = false;
+            } else if(deleteBtn){
+                deleteBtn.disabled = false;
+            }
+        });
+    
+        // Xử lý nút Edit/Save
+        if (editBtn) {
+            editBtn.addEventListener("click", () => {
+                const icon = editBtn.querySelector("i"); // Lấy phần tử <i> chứa icon
+        
+                if (icon.classList.contains("fa-edit")) { // Nếu icon là "fa-edit" (chỉnh sửa)
+                    // Chuyển sang chế độ chỉnh sửa
+                    enableEditing(row);
+                    icon.classList.remove("fa-edit");
+                    icon.classList.add("fa-save"); // Thay icon thành "fa-save"
+                } else if (icon.classList.contains("fa-save")) { // Nếu icon là "fa-save" (lưu)
+                    // Lưu thông tin và tắt chế độ chỉnh sửa
+                    disableEditing(row);
+                    icon.classList.remove("fa-save");
+                    icon.classList.add("fa-edit"); // Thay icon trở lại thành "fa-edit"
+                    alert("Row updated successfully!");
+                }
+            });
+        }
+        
+    
+        // Xử lý nút Delete
+        if (deleteBtn) {
+            deleteBtn.addEventListener("click", (e) => {
+                e.stopPropagation(); // Ngăn không cho sự kiện click của dòng được kích hoạt
+    
+                if (confirm("Are you sure you want to delete this row?")) {
+                    row.remove();
+                    alert("Row deleted successfully!");
+                } else {
+                    alert("Row deletion cancelled.");
+                }
+            });
+        }
+    });
+    
+    // Hàm bật chế độ chỉnh sửa
+    function enableEditing(row) {
+        row.querySelectorAll("td").forEach((cell) => {
+            // Cho phép chỉnh sửa các ô, trừ nút Action
+            if (!cell.querySelector("button")) {
+                cell.setAttribute("contenteditable", "true");
+                cell.style.backgroundColor = "#f9fff9"; // Đổi màu nền để dễ nhận biết
+            }
+        });
+    }
+    
+    // Hàm tắt chế độ chỉnh sửa
+    function disableEditing(row) {
+        row.querySelectorAll("td").forEach((cell) => {
+            if (cell.getAttribute("contenteditable") === "true") {
+                cell.setAttribute("contenteditable", "false");
+                cell.style.backgroundColor = ""; // Khôi phục màu nền ban đầu
+            }
+        });
+    }
+    
+
+    //Ngắt trang
     const paginateTable = (tableSelector) => {
         const table = document.querySelector(tableSelector);
         const rows = table.querySelectorAll('tbody tr');
