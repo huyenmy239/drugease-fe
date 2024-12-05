@@ -242,6 +242,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     label.appendChild(img);
 
                     backgroundOptions.appendChild(label);
+                    // Thêm sự kiện khi chọn radio button
+                    input.addEventListener('change', () => {
+                        // Xóa lớp 'selected' khỏi tất cả các label
+                        const allLabels = backgroundOptions.querySelectorAll('label');
+                        allLabels.forEach(label => {
+                            label.classList.remove('selected');
+                        });
+
+                        // Thêm lớp 'selected' cho label của background được chọn
+                        label.classList.add('selected');
+                    });
                 });
 
                 resolve();
@@ -253,7 +264,14 @@ document.addEventListener("DOMContentLoaded", function () {
     // Hàm lấy giá trị background đã chọn
     function getSelectedBackground() {
         const selectedBackground = document.querySelector('input[name="background"]:checked');
-        return selectedBackground ? parseInt(selectedBackground.value) : null;
+        // Nếu có background được chọn, trả về giá trị của nó
+        if (selectedBackground) {
+            return parseInt(selectedBackground.value);
+        }
+
+        // Nếu không có background nào được chọn, mặc định lấy background đầu tiên
+        const firstBackground = document.querySelector('input[name="background"]');
+        return firstBackground ? parseInt(firstBackground.value) : null;
     }
 
     // Lắng nghe sự kiện submit của form

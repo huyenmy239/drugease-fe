@@ -499,7 +499,7 @@ label {
   }
   
   .selected-topics span:hover {
-    background-color: #ff5733;
+    background-color: #27A4F2;
     transform: scale(1.05);
   }
   
@@ -507,7 +507,7 @@ label {
     content: "×";
     font-size: 16px;
     margin-left: 5px;
-    color: #ff5733;
+    color: #27A4F2;
     cursor: pointer;
   }
   
@@ -522,11 +522,11 @@ label {
   
   #room-topic:focus {
     outline: none;
-    border-color: #ff5733;
+    border-color: #27A4F2;
   }
   
   #room-topic option:checked {
-    background-color: #ffebcd;
+    background-color: #93d5ff;
   }
   
 
@@ -544,7 +544,7 @@ button[type="submit"], button#close-popup {
 }
 
 button[type="submit"] {
-    background-color: #007bff;
+    background-color: #27A4F2;
     color: white;
 }
 
@@ -558,4 +558,10 @@ button#close-popup {
 
 #overlay.hidden {
     display: none;
+}
+
+/* Cấu hình bo viền cho background được chọn */
+.selected {
+    border: 3px solid #27A4F2;  /* Màu viền xanh */
+    padding: 2px;                /* Khoảng cách giữa viền và ảnh */
 }
