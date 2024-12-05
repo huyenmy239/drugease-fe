@@ -53,3 +53,131 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => console.error('Error fetching room active report:', error));
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Gọi API room-created-report với POST
+    const fromDateInput = document.getElementById('from-date');
+    const toDateInput = document.getElementById('to-date');
+
+    const fetchReport = () => {
+        // Lấy giá trị từ các trường date input
+        const startDate = fromDateInput.value;
+        const endDate = toDateInput.value;
+
+        // Kiểm tra nếu người dùng đã chọn cả hai ngày
+        if (startDate && endDate) {
+            fetch(`http://${CONFIG.BASE_URL}/api/rooms/admin/reports/room-created-report/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    start_date: startDate,
+                    end_date: endDate
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const roomsCreated = data.rooms_created;
+                const tableBody = document.querySelector('.stats-creation .stats-table tbody');
+                tableBody.innerHTML = ''; // Xóa dữ liệu mẫu
+
+                roomsCreated.forEach(room => {
+                    const tr = document.createElement('tr');
+                    // Chuyển đổi thời gian theo định dạng dễ nhìn
+                    const createdAt = new Date(room.created_at);  // Chuyển đổi chuỗi thời gian thành đối tượng Date
+                    
+                    // Định dạng ngày tháng giờ (DD/MM/YYYY HH:MM:SS)
+                    const formattedDate = `${createdAt.getDate().toString().padStart(2, '0')}/${(createdAt.getMonth() + 1).toString().padStart(2, '0')}/${createdAt.getFullYear()} ${createdAt.getHours().toString().padStart(2, '0')}:${createdAt.getMinutes().toString().padStart(2, '0')}:${createdAt.getSeconds().toString().padStart(2, '0')}`;
+
+                    tr.innerHTML = `
+                        <td>${room.title}</td>
+                        <td>${room.created_by}</td>
+                        <td>${formattedDate}</td>
+                    `;
+                    tableBody.appendChild(tr);
+                });
+            })
+            .catch(error => console.error('Error fetching report:', error));
+        } else {
+            console.log("Vui lòng chọn cả ngày bắt đầu và ngày kết thúc.");
+        }
+    };
+
+    // Thêm sự kiện khi người dùng thay đổi ngày
+    fromDateInput.addEventListener('change', fetchReport);
+    toDateInput.addEventListener('change', fetchReport);
+
+    // fetch(`http://${CONFIG.BASE_URL}/api/rooms/admin/reports/room-created-report/`, {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({
+    //         start_date: startDate,
+    //         end_date: endDate
+    //     })
+    // })
+    // .then(response => response.json())
+    // .then(data => {
+    //     const roomsCreated = data.rooms_created;
+    //     const tableBody = document.querySelector('.stats-creation .stats-table tbody');
+    //     tableBody.innerHTML = ''; // Xóa dữ liệu mẫu
+
+    //     roomsCreated.forEach(room => {
+    //         const tr = document.createElement('tr');
+    //         // Chuyển đổi thời gian theo định dạng dễ nhìn
+    //         const createdAt = new Date(room.created_at);  // Chuyển đổi chuỗi thời gian thành đối tượng Date
+            
+    //         // Định dạng ngày tháng giờ (DD/MM/YYYY HH:MM:SS)
+    //         const formattedDate = `${createdAt.getDate().toString().padStart(2, '0')}/${(createdAt.getMonth() + 1).toString().padStart(2, '0')}/${createdAt.getFullYear()} ${createdAt.getHours().toString().padStart(2, '0')}:${createdAt.getMinutes().toString().padStart(2, '0')}:${createdAt.getSeconds().toString().padStart(2, '0')}`;
+
+    //         tr.innerHTML = `
+    //             <td>${room.title}</td>
+    //             <td>${room.created_by}</td>
+    //             <td>${formattedDate}</td>
+    //         `;
+    //         tableBody.appendChild(tr);
+    //     });
+    // })
+    // .catch(error => console.error('Error fetching room created report:', error));
+
+    // 2. Gọi API room-popular-report với GET
+    const popularRoomsCount = 10; // Số lượng phòng phổ biến cần lấy
+    fetch(`http://${CONFIG.BASE_URL}/api/rooms/admin/reports/room-popular-report?n=${popularRoomsCount}`)
+    .then(response => response.json())
+    .then(data => {
+        const rooms = data.rooms;
+        const tableBody = document.querySelector('.stats-top .stats-table tbody');
+        tableBody.innerHTML = ''; // Xóa dữ liệu mẫu
+
+        rooms.forEach(room => {
+            const tr = document.createElement('tr');
+            const createdAt = new Date(room.created_at);  // Chuyển đổi chuỗi thời gian thành đối tượng Date
+            
+            // Định dạng ngày tháng giờ (DD/MM/YYYY HH:MM:SS)
+            const formattedDate = `${createdAt.getDate().toString().padStart(2, '0')}/${(createdAt.getMonth() + 1).toString().padStart(2, '0')}/${createdAt.getFullYear()} ${createdAt.getHours().toString().padStart(2, '0')}:${createdAt.getMinutes().toString().padStart(2, '0')}:${createdAt.getSeconds().toString().padStart(2, '0')}`;
+
+            tr.innerHTML = `
+                <td>${room.title}</td>
+                <td>${room.created_by}</td>
+                <td>${room.members}</td>
+                <td>${formattedDate}</td>
+            `;
+            tableBody.appendChild(tr);
+        });
+    })
+    .catch(error => console.error('Error fetching room popular report:', error));
+    
+    // 3. Xử lý phân trang (Pagination) nếu cần
+    const prevButton = document.querySelector('.pagination .prev-page');
+    const nextButton = document.querySelector('.pagination .next-page');
+
+    prevButton.addEventListener('click', () => {
+        // Logic phân trang trang trước
+    });
+
+    nextButton.addEventListener('click', () => {
+        // Logic phân trang trang sau
+    });
+});
