@@ -71,6 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (response.status === 200) {
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("username", username);
+                localStorage.setItem("role", data.role);
                 alert("Login successful!");
 
                 window.location.href = "home.html";

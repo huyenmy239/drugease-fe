@@ -1,48 +1,69 @@
 function loadComponent(selector, filePath) {
-    fetch(filePath)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Failed to load ${filePath}: ${response.status}`);
-            }
-            return response.text();
-        })
-        .then(data => {
-            document.querySelector(selector).innerHTML = data;
-        })
-        .catch(error => {
-            console.error('Error loading component:', error);
-        });
+  fetch(filePath)
+      .then(response => {
+          if (!response.ok) {
+              throw new Error(`Failed to load ${filePath}: ${response.status}`);
+          }
+          return response.text();
+      })
+      .then(data => {
+          const container = document.querySelector(selector);
+          container.innerHTML = data;
+
+          // Gắn lại sự kiện sau khi nội dung được tải vào
+          setupSidebarEvents();  // Hàm này sẽ chứa mã để gắn lại các sự kiện trong sidebar
+      })
+      .catch(error => {
+          console.error('Error loading component:', error);
+      });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    loadComponent('#sidebar-placeholder', '/pages/components/sidebar.html');
+// Load sidebar component
+  loadComponent('#sidebar-placeholder', '/pages/components/sidebar.html');
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    const noteLink = document.getElementById("note-link");
-    const noteModal = document.querySelector(".note-modal");
-    const noteContainer = document.querySelector(".note-container");
-    const closeIcon = document.querySelector(".close-icon");
-    const overlay = document.querySelector(".overlay");
-  
-    // Mở modal khi click vào "Note"
-    noteLink.addEventListener("click", () => {
-      noteModal.style.display = "flex"; // Hiển thị modal
-      noteContainer.style.display = "flex"; // Hiển thị note-container
-      overlay.style.display = "block"; // Hiển thị overlay
-    });
-  
-    // Đóng modal khi click vào biểu tượng đóng (x)
-    closeIcon.addEventListener("click", () => {
-      noteModal.style.display = "none";  // Ẩn modal
-      overlay.style.display = "none";  // Ẩn overlay
-      noteContainer.style.display = "none";
-    });
-  
-    // Đóng modal khi click vào overlay
-    overlay.addEventListener("click", () => {
-      noteModal.style.display = "none";  // Ẩn modal
-      noteContainer.style.display = "none";
-      overlay.style.display = "none";  // Ẩn overlay
-    });
-  });
+// Hàm setup sự kiện trong sidebar
+function setupSidebarEvents() {
+  const role = localStorage.getItem('role');  // Hoặc có thể lấy từ sessionStorage hoặc API
+
+  // Lấy menu
+  const menu = document.querySelector('.menu');
+    
+  // Kiểm tra nếu phần tử menu tồn tại
+  if (!menu) {
+      console.error('Menu not found');
+      return;  // Dừng thực thi nếu menu không tồn tại
+  }
+
+  // Tạo phần tử "Report"
+  const reportItem = document.createElement('li');
+  reportItem.innerHTML = `
+      <a class="admin-report" href="/pages/admin-report.html">
+          <i class="fas fa-flag"> </i>
+          Report
+      </a>
+  `;
+
+  // Tạo phần tử "Settings"
+  const settingsItem = document.createElement('li');
+  settingsItem.innerHTML = `
+      <a class="admin-setting" href="/pages/admin-manage.html">
+          <i class="fas fa-cogs"> </i>
+          Settings
+      </a>
+  `;
+
+  // Tìm thẻ "Log out"
+  const logoutItem = document.querySelector(".log-out");
+
+  // Kiểm tra nếu "Log out" tồn tại
+  if (logoutItem) {
+      // Lấy phần tử li chứa "Log out"
+      const logoutLi = logoutItem.closest('li');
+
+      // Chèn "Report" và "Settings" trước "Log out"
+      menu.insertBefore(reportItem, logoutLi);
+      menu.insertBefore(settingsItem, logoutLi);
+  }
+}
