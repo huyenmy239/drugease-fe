@@ -23,12 +23,12 @@
                     <div class="add-subject content visible">
                         <label for="subject">Subject: </label>
                         <input type="text" class="subject-input" name="subject" placeholder="Enter Subject" />
-                        <button class="add-btn">+ Add new</button>
+                        <button class="add-subject add-btn">+ Add new</button>
                     </div>
                     <div class="add-background content hidden">
                         <label for="background-upload" class="background-label">Background:</label>
                         <input type="file" id="background-upload" class="background-upload" multiple accept="image/*" />
-                        <button class="add-btn">+ Add new</button>
+                        <button class="add-background add-btn">+ Add new</button>
                     </div>
                 </div>
             </div>
@@ -65,46 +65,12 @@
                             <tr>
                                 <th>Image</th>
                                 <th>Name</th>
-                                <th>Creator</th>
-                                <th>Created At</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <!-- Sample Data -->
-                            <tr>
-                                <td><img src="/assets/images/background/cover1.jpg" alt="cover1"></td>
-                                <td>cover1.jpg</td>
-                                <td>user1</td>
-                                <td>2024-01-03</td>
-                                <td>
-                                    <button id="delete-btn" class="action-btn" disabled>
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><img src="/assets/images/background/cover1.jpg" alt="cover1"></td>
-                                <td>cover1</td>
-                                <td>user2</td>
-                                <td>2024-01-03</td>
-                                <td>
-                                    <button id="delete-btn" class="action-btn" disabled>
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><img src="/assets/images/background/cover1.jpg" alt="cover1"></td>
-                                <td>cover1</td>
-                                <td>user2</td>
-                                <td>2024-01-03</td>
-                                <td>
-                                    <button id="delete-btn" class="action-btn" disabled>
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                            
                         </tbody>
                     </table>
                     <div class="pagination">
