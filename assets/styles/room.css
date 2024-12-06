@@ -14,7 +14,6 @@
     align-items: center;
     justify-content: flex-end;
     padding: 20px;
-    margin-left: 290px;
     height: 100vh;
 }
 
@@ -215,7 +214,7 @@
 /* Phần khung chat */
 .meeting-chat {
     display: none; /* Ẩn chat khi chưa bật */
-    width: 33%; /* Chiếm 1/3 màn hình */
+    width: 27%; /* Chiếm 1/3 màn hình */
     height: 100%; /* Chiều cao bằng meeting-screen */
     position: absolute;
     right: 0; /* Gắn vào bên phải màn hình */
@@ -400,7 +399,7 @@
     border-top: 1px solid #ccc; /* Đường viền phía trên */
     height: 60px; /* Đặt chiều cao cố định */
     box-sizing: border-box;
-    width: calc(33*(100vw - 290px)/100);
+    width: 27%;
     position: fixed;
     bottom: 0;
     right: 0;
