@@ -1,8 +1,16 @@
 import CONFIG from '../utils/settings.js';
 
+const token = localStorage.getItem('token');
+
 document.addEventListener('DOMContentLoaded', () => {
     // Gọi API tổng hợp thông tin người dùng
-    fetch(`http://${CONFIG.BASE_URL}/api/rooms/admin/reports/account-report`)
+    fetch(`http://${CONFIG.BASE_URL}/api/rooms/admin/reports/account-report`, {
+        method: 'GET',  // Hoặc phương thức khác nếu cần, ví dụ 'POST'
+        headers: {
+          'Authorization': `Token ${token}`,  // Thêm token vào header Authorization
+          'Content-Type': 'application/json',  // Thêm Content-Type nếu cần
+        },
+      })
         .then(response => response.json())
         .then(data => {
             const totalAccount = data.total_account;
@@ -19,7 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => console.error('Error fetching account report:', error));
 
     // Gọi API tổng hợp thông tin loại phòng
-    fetch(`http://${CONFIG.BASE_URL}/api/rooms/admin/reports/type-room-report`)
+    fetch(`http://${CONFIG.BASE_URL}/api/rooms/admin/reports/type-room-report`, {
+        method: 'GET',  // Hoặc phương thức khác nếu cần
+        headers: {
+          'Authorization': `Token ${token}`,  // Thêm token vào header Authorization
+          'Content-Type': 'application/json',  // Thêm Content-Type nếu cần thiết
+        },
+      })
         .then(response => response.json())
         .then(data => {
             console.log(data);
@@ -37,7 +51,13 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => console.error('Error fetching type room report:', error));
 
     // Gọi API tổng hợp thông tin phòng hoạt động
-    fetch(`http://${CONFIG.BASE_URL}/api/rooms/admin/reports/room-active-report`)
+    fetch(`http://${CONFIG.BASE_URL}/api/rooms/admin/reports/room-active-report`, {
+        method: 'GET',  // Hoặc phương thức khác nếu cần
+        headers: {
+          'Authorization': `Token ${token}`,  // Thêm token vào header Authorization
+          'Content-Type': 'application/json',  // Thêm Content-Type nếu cần thiết
+        },
+      })
         .then(response => response.json())
         .then(data => {
             const totalRoom = data.total_room;
@@ -70,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Token ${token}`,
                 },
                 body: JSON.stringify({
                     start_date: startDate,
@@ -144,7 +165,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. Gọi API room-popular-report với GET
     const popularRoomsCount = 10; // Số lượng phòng phổ biến cần lấy
-    fetch(`http://${CONFIG.BASE_URL}/api/rooms/admin/reports/room-popular-report?n=${popularRoomsCount}`)
+    fetch(`http://${CONFIG.BASE_URL}/api/rooms/admin/reports/room-popular-report?n=${popularRoomsCount}`, {
+        method: 'GET',  // Phương thức có thể là 'GET' hoặc 'POST' nếu yêu cầu
+        headers: {
+          'Authorization': `Token ${token}`,  // Thêm token vào header Authorization
+          'Content-Type': 'application/json',  // Thêm Content-Type nếu cần thiết
+        },
+      })
     .then(response => response.json())
     .then(data => {
         const rooms = data.rooms;

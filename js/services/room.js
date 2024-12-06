@@ -5,18 +5,19 @@ const baseURL = `http://${CONFIG.BASE_URL}/api/accounts`;
 // Lấy thông tin room_id từ URL
 const urlParams = new URLSearchParams(window.location.search);
 const roomId = urlParams.get('room_id');
+const token = localStorage.getItem('token');
 
 // Claa room oject --------------------------------------
 // Kiểm tra nếu roomId hợp lệ
 if (roomId) {
   // Gọi API với roomId
-  fetch(`http://${CONFIG.BASE_URL}/api/rooms/room/${roomId}/`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
+  fetch(`http://${CONFIG.BASE_URL}/api/rooms/room/${roomId}/`, {
+    method: 'GET',  // Hoặc 'POST', tùy vào phương thức của API
+    headers: {
+      'Authorization': `Token ${token}`,  // Thêm token vào header Authorization
+      'Content-Type': 'application/json',  // Nếu cần thiết, có thể thêm Content-Type
+    },
+  })
     .then(data => {
 
         // Xử lý dữ liệu từ response API
@@ -432,12 +433,12 @@ function createUserList(userData) {
 
 // Hàm gọi API để lấy danh sách người dùng
 function fetchUserList() {
-    fetch(`http://${CONFIG.BASE_URL}/api/rooms/room/${roomId}/members-in-room/`)
-        .then(function(response) {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();  // Chuyển đổi dữ liệu thành JSON
+    fetch(`http://${CONFIG.BASE_URL}/api/rooms/room/${roomId}/members-in-room/`, {
+        method: 'GET',  // Hoặc phương thức khác như 'POST' nếu cần
+        headers: {
+          'Authorization': `Token ${token}`,  // Thêm token vào header Authorization
+          'Content-Type': 'application/json',  // Nếu cần thiết, thêm Content-Type cho JSON
+            },
         })
         .then(function(data) {
             createUserList(data);  // Gọi hàm xử lý dữ liệu
@@ -451,7 +452,6 @@ function fetchUserList() {
 const editPermissionUrl = `http://${CONFIG.BASE_URL}/api/rooms/room/${roomId}/edit-permissions/`;
 
 // Giả sử token được lưu trong localStorage (có thể thay đổi tùy vào cách bạn lưu trữ token)
-const token = localStorage.getItem('token');  // Lấy token từ localStorage
 
 function toggleMicPermission(userId, micIcon) {
     const currentState = micIcon.classList.contains('fa-microphone'); // Kiểm tra mic hiện tại

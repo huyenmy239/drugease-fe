@@ -43,7 +43,15 @@ async function searchRooms(query) {
 
     query = query.trim();
 
-    const response = await fetch(`http://${CONFIG.BASE_URL}/api/rooms/room/room-active/?query=${query}`);
+    const token = localStorage.getItem('token');
+
+    const response = await fetch(`http://${CONFIG.BASE_URL}/api/rooms/room/room-active/?query=${query}`, {
+        method: 'GET',  // Hoặc phương thức khác nếu cần, ví dụ POST
+        headers: {
+          'Authorization': `Token ${token}`,  // Thêm token vào header Authorization
+          'Content-Type': 'application/json',  // Nếu cần thiết, có thể thêm Content-Type cho JSON
+        },
+      });
     const data = await response.json();
 
     const resultsContainer = document.getElementById('results');
