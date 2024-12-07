@@ -18,10 +18,17 @@ if (roomId) {
       'Content-Type': 'application/json',  // Nếu cần thiết, có thể thêm Content-Type
     },
   })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
     .then(data => {
 
         // Xử lý dữ liệu từ response API
         const roomData = data;
+        console.log(roomData);
         const title = roomData.title;
         const description = roomData.description;
         const createdBy = roomData.created_by;
@@ -195,7 +202,13 @@ function updateMicState(micState) {
             mic_allow: micState,  // Trạng thái mic (true: cho phép, false: tắt)
         }),
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            // Nếu server trả về lỗi (status không phải 2xx), ném lỗi
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();  // Chuyển đổi dữ liệu trả về thành JSON
+    })
     .then(data => {
         console.log('Mic state updated:', data);
     })
@@ -438,7 +451,13 @@ function fetchUserList() {
         headers: {
           'Authorization': `Token ${token}`,  // Thêm token vào header Authorization
           'Content-Type': 'application/json',  // Nếu cần thiết, thêm Content-Type cho JSON
-            },
+        },
+      })
+        .then(function(response) {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();  // Chuyển đổi dữ liệu thành JSON
         })
         .then(function(data) {
             createUserList(data);  // Gọi hàm xử lý dữ liệu

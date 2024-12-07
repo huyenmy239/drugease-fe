@@ -1,17 +1,14 @@
 import CONFIG from '../utils/settings.js';
 
-// Lấy token từ localStorage hoặc sessionStorage (tuỳ thuộc vào cách bạn lưu trữ token)
 const token = localStorage.getItem('token');  // Hoặc sessionStorage.getItem('authToken');
 
 const SUBJECT_URL = `http://${CONFIG.BASE_URL}/api/rooms/subjects/`; // Thay URL phù hợp với API của bạn
 
-// Tạo header với token
 const headers = {
     'Content-Type': 'application/json',
     'Authorization': `Token ${token}` // Thêm token vào header Authorization
 };
 
-// Lấy danh sách các subjects từ API
 function fetchSubjects() {
     fetch(SUBJECT_URL, { headers })
         .then(response => response.json())
@@ -32,7 +29,6 @@ function fetchSubjects() {
                     </td>
                 `;
 
-                // Xử lý sự kiện cho các button chỉnh sửa và xóa
                 row.querySelector('.delete-btn').addEventListener('click', () => deleteSubject(subject.id));
 
                 subjectList.appendChild(row);
@@ -41,22 +37,19 @@ function fetchSubjects() {
         .catch(error => console.error('Error fetching subjects:', error));
 }
 
-// Lắng nghe sự kiện click vào nút "Add new"
 document.querySelector('.add-btn').addEventListener('click', function() {
     const subjectInput = document.querySelector('.subject-input');
-    const subjectName = subjectInput.value.trim(); // Lấy giá trị và loại bỏ khoảng trắng thừa
+    const subjectName = subjectInput.value.trim();
 
-    // Kiểm tra nếu trường nhập subject không trống
     if (subjectName) {
         const subjectData = { name: subjectName };
-        addSubject(subjectData); // Gọi hàm addSubject với dữ liệu subject
-        subjectInput.value = ''; // Xóa input sau khi thêm thành công
+        addSubject(subjectData);
+        subjectInput.value = '';
     } else {
-        alert('Please enter a subject name'); // Hiển thị thông báo nếu người dùng chưa nhập subject
+        alert('Please enter a subject name');
     }
 });
 
-// Thêm subject mới
 function addSubject(subjectData) {
     fetch(SUBJECT_URL, {
         method: 'POST',
@@ -67,11 +60,10 @@ function addSubject(subjectData) {
         .then(() => {
             alert('Added subject successfully');
             fetchSubjects();
-        }) // Sau khi thêm thành công, gọi lại fetchSubjects để cập nhật danh sách
+        })
         .catch(error => console.error('Error adding subject:', error));
 }
 
-// Xóa subject
 function deleteSubject(subjectId) {
     fetch(`${SUBJECT_URL}${subjectId}/`, {
         method: 'DELETE',
@@ -79,7 +71,6 @@ function deleteSubject(subjectId) {
     })
         .then(response => {
             if (!response.ok) {
-                // Nếu phản hồi không thành công, trả về lỗi
                 return response.json().then(data => {
                     throw new Error(data.detail || 'Unable to delete subject');
                 });
@@ -88,29 +79,23 @@ function deleteSubject(subjectId) {
             return;
         })
         .then(() => {
-            fetchSubjects(); // Cập nhật lại danh sách sau khi xóa thành công
+            fetchSubjects();
         })
         .catch(error => {
-            // Hiển thị thông báo lỗi cho người dùng
-            alert(error.message); // Hoặc có thể hiển thị thông báo lỗi ở đâu đó trong UI
+            alert(error.message);
             console.error('Error deleting subject:', error);
         });
 }
 
 
-// Gọi fetchSubjects để hiển thị danh sách subject khi trang được tải
 document.addEventListener('DOMContentLoaded', fetchSubjects);
 
-// Ví dụ gọi addSubject để thêm subject mới
-// addSubject({ name: 'New Subject', creator: 'Admin' });
 
-
-const BG_URL = `http://${CONFIG.BASE_URL}/api/rooms/backgrounds/`; // Thay URL phù hợp với API của bạn
+const BG_URL = `http://${CONFIG.BASE_URL}/api/rooms/backgrounds/`;
 
 const addButton = document.querySelector('.add-background');
 const backgroundUploadInput = document.querySelector('#background-upload');
 
-// Lấy danh sách các backgrounds từ API
 function fetchBackgrounds() {
     fetch(BG_URL, { headers })
         .then(response => response.json())
@@ -137,7 +122,6 @@ function fetchBackgrounds() {
                     </td>
                 `;
 
-                // Xử lý sự kiện nút xóa
                 row.querySelector('.delete-btn').addEventListener('click', () => deleteBackground(background.id));
 
                 bgrTableBody.appendChild(row);
@@ -146,7 +130,6 @@ function fetchBackgrounds() {
         .catch(error => console.error('Error fetching backgrounds:', error));
 }
 
-// Xóa background
 function deleteBackground(backgroundId) {
     fetch(`${BG_URL}${backgroundId}/`, {
         method: 'DELETE',
@@ -162,10 +145,10 @@ function deleteBackground(backgroundId) {
             return;
         })
         .then(() => {
-            fetchBackgrounds(); // Cập nhật danh sách sau khi xóa thành công
+            fetchBackgrounds();
         })
         .catch(error => {
-            alert(error.message); // Thông báo lỗi nếu không xóa được
+            alert(error.message);
             console.error('Error deleting background:', error);
         });
 }
@@ -177,15 +160,14 @@ function addBackground(backgroundFile) {
     fetch(BG_URL, {
         method: 'POST',
         headers: {
-            // Chỉ cần thêm token nếu có yêu cầu xác thực
-            'Authorization': `Token ${token}`,  // Ví dụ với token lưu trong localStorage
+            'Authorization': `Token ${token}`,
         },
-        body: formData,  // Gửi dữ liệu với FormData (để gửi file)
+        body: formData,
     })
     .then(response => response.json())
     .then(data => {
         if (data && data.id) {
-            fetchBackgrounds(); // Sau khi thêm thành công, gọi lại fetchBackgrounds để cập nhật danh sách
+            fetchBackgrounds();
             alert('Added background successfully');
             backgroundUploadInput.value = ''; 
         } else {
@@ -198,16 +180,13 @@ function addBackground(backgroundFile) {
     });
 }
 
-// Sự kiện khi nhấn nút "Add new"
 addButton.addEventListener('click', () => {
-    const backgroundFile = backgroundUploadInput.files[0]; // Lấy tệp đầu tiên mà người dùng chọn
+    const backgroundFile = backgroundUploadInput.files[0];
 
     if (backgroundFile) {
-        addBackground(backgroundFile); // Gọi API thêm background
+        addBackground(backgroundFile);
     } else {
-        // alert('Please select a file to upload');
     }
 });
 
-// Gọi fetchBackgrounds để hiển thị danh sách khi trang được tải
 document.addEventListener('DOMContentLoaded', fetchBackgrounds);

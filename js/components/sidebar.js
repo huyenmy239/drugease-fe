@@ -10,8 +10,7 @@ function loadComponent(selector, filePath) {
             const container = document.querySelector(selector);
             container.innerHTML = data;
 
-            // Gắn lại sự kiện sau khi nội dung được tải vào
-            setupSidebarEvents();  // Hàm này sẽ chứa mã để gắn lại các sự kiện trong sidebar
+            setupSidebarEvents();
         })
         .catch(error => {
             console.error('Error loading component:', error);
@@ -19,26 +18,20 @@ function loadComponent(selector, filePath) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Load sidebar component
     loadComponent('#sidebar-placeholder', '/pages/components/sidebar.html');
 });
 
-// Hàm setup sự kiện trong sidebar
 function setupSidebarEvents() {
-    const role = localStorage.getItem('role');  // Hoặc có thể lấy từ sessionStorage hoặc API
+    const role = localStorage.getItem('role');
 
-    // Lấy menu
     const menu = document.querySelector('.menu');
 
-    // Kiểm tra nếu phần tử menu tồn tại
     if (!menu) {
         console.error('Menu not found');
-        return;  // Dừng thực thi nếu menu không tồn tại
+        return;
     }
 
-    // Tạo phần tử "Report"
     if (role === 'Admin') {
-        // Tạo phần tử "Report"
         const reportItem = document.createElement('li');
         reportItem.innerHTML = `
         <a class="admin-report" href="/pages/admin-report.html">
@@ -47,7 +40,6 @@ function setupSidebarEvents() {
         </a>
     `;
 
-        // Tạo phần tử "Settings"
         const settingsItem = document.createElement('li');
         settingsItem.innerHTML = `
         <a class="admin-setting" href="/pages/admin-manage.html">
@@ -56,15 +48,11 @@ function setupSidebarEvents() {
         </a>
     `;
 
-        // Tìm thẻ "Log out"
         const logoutItem = document.querySelector(".log-out");
 
-        // Kiểm tra nếu "Log out" tồn tại
         if (logoutItem) {
-            // Lấy phần tử li chứa "Log out"
             const logoutLi = logoutItem.closest('li');
 
-            // Chèn "Report" và "Settings" trước "Log out"
             menu.insertBefore(reportItem, logoutLi);
             menu.insertBefore(settingsItem, logoutLi);
         }

@@ -8,15 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const statsCreation = document.querySelector('.stats-creation');
     const statsTop = document.querySelector('.stats-top');
 
-    // Mặc định hiển thị stats-creation
     statsCreation.style.display = 'block';
     statsTop.style.display = 'none';
 
-    // Thêm hiệu ứng active cho nút mặc định
     creationBtn.classList.add('active');
     topBtn.classList.remove('active');
 
-    // Toggle giữa hai bảng
     creationBtn.addEventListener('click', () => {
         statsCreation.style.display = 'block';
         statsTop.style.display = 'none';
@@ -33,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
         datePicker.style.display = 'none';
     });
 
-    // Pagination
     const paginateTable = (tableSelector, rowsPerPage = 9) => {
         const table = document.querySelector(tableSelector);
         const rows = table.querySelectorAll('tbody tr');

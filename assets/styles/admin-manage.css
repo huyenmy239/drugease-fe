@@ -10,52 +10,50 @@ body {
 }
 
 .main-content {
-    flex-grow: 1; /* Để main-content chiếm phần còn lại của không gian */
+    flex-grow: 1;
     padding: 10px;
     margin-left: 290px;
     height: 100vh;
 }
 
-/* Banner Container */
 .manage-banner {
     background: #fff;
     color: #333;
     padding: 20px;
     border-radius: 10px;
     display: flex;
-    flex-direction: column; /* Sắp xếp các phần tử theo cột */
+    flex-direction: column;
     align-items: center;
     margin-bottom: 20px;
     height: 20vh;
 }
 
-/* Button Container */
 .manage-button {
     display: flex;
-    justify-content: center; /* Căn giữa các nút */
-    margin: 5px auto; /* Căn giữa tổng thể và tạo khoảng cách trên/dưới */
-    width: 80%; /* Chiều ngang của container */
+    justify-content: center;
+    margin: 5px auto;
+    width: 80%;
     padding-bottom: 10px;
     
 }
 
 .manage-btn {
-    flex: 1; /* Các nút chiếm đều không gian */
+    flex: 1;
     background-color: transparent;
     border: none;
     padding: 10px 20px;
-    border-radius: 0; /* Loại bỏ bo góc để viền nối liền */
+    border-radius: 0;
     cursor: pointer;
     transition: background-color 0.3s ease;
     text-align: center;
-    border-bottom: 1px solid #333; /* Thêm viền dưới */
+    border-bottom: 1px solid #333;
     font-size: 16px;
     font-weight: bold;
 }
 
 .manage-btn.active {
     color: #27A4F2;
-    border-bottom: 1px solid #27A4F2; /* Viền dưới cùng màu với nút khi active */
+    border-bottom: 1px solid #27A4F2;
 }
 
 .manage-btn::hover {
@@ -63,11 +61,10 @@ body {
     border-bottom: 1px solid #27A4F2;
 }
 
-/* Content */
 .manage-content {
-    width: 80%; /* Chiều rộng full bằng banner */
-    text-align: left; /* Căn nội dung sang trái */
-    padding-left: 0; /* Đảm bảo không có padding thừa */
+    width: 80%;
+    text-align: left;
+    padding-left: 0;
 }
 
 .manage-content label {
@@ -75,15 +72,15 @@ body {
     font-weight: bold;
 }
 .content {
-    display: none; /* Ẩn nội dung mặc định */
-    text-align: left; /* Nội dung bên trong căn lề trái */
-    padding-left: 0; /* Bỏ padding mặc định */
+    display: none;
+    text-align: left;
+    padding-left: 0;
 }
 
 .content.visible {
-    display: block; /* Hiển thị khi được kích hoạt */
-    padding-top: 0; /* Khoảng cách phía trên nội dung */
-    text-align: left; /* Đảm bảo nội dung căn lề trái */
+    display: block;
+    padding-top: 0;
+    text-align: left;
 }
 
 .add-btn {
@@ -92,8 +89,8 @@ body {
     background-color: #27A4F2;
     color: #fff;
     border: none;
-    margin-top: 15px; /* Thêm khoảng cách phía trên */
-    margin-bottom: 10px; /* Thêm khoảng cách phía dưới */
+    margin-top: 15px;
+    margin-bottom: 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
@@ -110,7 +107,7 @@ body {
 }
 
 .manage-list h2 {
-    text-align: left; /* Căn trái tiêu đề */
+    text-align: left;
     margin-bottom: 10px;
     font-size: 20px;
 }
@@ -119,12 +116,12 @@ body {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 10px;
-    table-layout: fixed; /* Cố định chiều rộng các cột */
+    table-layout: fixed;
 }
 
 .list-table th, .list-table td {
     padding: 8px;
-    text-align: center; /* Căn giữa nội dung các ô dữ liệu */
+    text-align: center;
     word-wrap: break-word;
 }
 
@@ -139,9 +136,8 @@ body {
     text-align: center;
 }
 
-/* Thêm hiệu ứng khi click vào dòng */
 .manage-list table tbody tr.selected {
-    background-color: #d0eaff; /* Màu nền thay đổi khi click */
+    background-color: #d0eaff;
 }
 
 

@@ -1,7 +1,6 @@
 import CONFIG from '../utils/settings.js';
 
 
-// const baseURL = "http://127.0.0.1:8000/api/accounts/users/";
 const baseURL = `http://${CONFIG.BASE_URL}/api/accounts/users/`;
 
 async function loadProfile() {
@@ -14,7 +13,6 @@ async function loadProfile() {
     }
 
     try {
-        // Gọi API để lấy thông tin hồ sơ
         const profileResponse = await fetch(`${baseURL}profile/`, {
             method: "GET",
             headers: {
@@ -38,7 +36,6 @@ async function loadProfile() {
         document.getElementById("profile-username").value = profileData.username;
         document.getElementById("profile-email").value = profileData.email;
 
-        // Gọi API để lấy lịch sử sau khi tải hồ sơ thành công
         const historyResponse = await fetch(`${baseURL}history/`, {
             method: "GET",
             headers: {
@@ -107,7 +104,7 @@ document.getElementById('update-profile-btn').addEventListener('click', updatePr
 
 function renderHistory(history) {
     const logContainer = document.querySelector('.log-body');
-    logContainer.innerHTML = ""; // Xóa lịch sử cũ trước khi thêm mới
+    logContainer.innerHTML = "";
 
     history.forEach(item => {
         const logItem = document.createElement('div');
@@ -129,63 +126,6 @@ function formatTime(timestamp) {
     const date = new Date(timestamp);
     return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
 }
-
-
-// document.addEventListener("DOMContentLoaded", () => {
-//     const token = localStorage.getItem("token"); // Định nghĩa token trong sự kiện DOMContentLoaded
-
-//     if (!token) {
-//         alert("You need to login first!");
-//         window.location.href = "login.html";
-//         return;
-//     }
-
-//     fetch(`${baseURL}history/`, {
-//         method: 'GET',
-//         headers: {
-//             "Authorization": `Token ${token}`,
-//             "Content-Type": "application/json"
-//         }
-//     })
-//     .then(response => {
-//         if (!response.ok) {
-//             throw new Error('Failed to fetch history');
-//         }
-//         return response.json();
-//     })
-//     .then(data => {
-//         console.log(data);
-//         renderHistory(data);
-//     })
-//     .catch(error => {
-//         console.error('Error fetching history:', error);
-//     });
-// });
-
-// function renderHistory(history) {
-//     const logContainer = document.querySelector('.log');
-
-//     history.forEach(item => {
-//         const logItem = document.createElement('div');
-//         logItem.className = 'log-item';
-
-//         logItem.innerHTML = `
-//         <div class="text">
-//           You joined the '
-//           <b class="room">${item.room_title}</b>
-//           ' room at
-//           <b>${formatTime(item.time_in)}</b>.
-//         </div>
-//       `;
-//         logContainer.appendChild(logItem);
-//     });
-// }
-
-// function formatTime(timestamp) {
-//     const date = new Date(timestamp);
-//     return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
-// }
-
 
 // ----------------------
 
