@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .form-container {
+            margin-bottom: 20px;
+        }
+        input, button {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test API</h1>
+
+    <div class="form-container">
+        <h2>Register</h2>
+        <input type="text" id="register-username" placeholder="Username" />
+        <input type="password" id="register-password" placeholder="Password" />
+        <input type="text" id="register-role" placeholder="Role (doctor, pharmacist, admin, staff)" />
+        <input type="number" id="register-employee-id" placeholder="Employee ID" />
+        <button onclick="register()">Register</button>
+        <p id="register-response"></p>
+    </div>
+
+    <div class="form-container">
+        <h2>Login</h2>
+        <input type="text" id="login-username" placeholder="Username" />
+        <input type="password" id="login-password" placeholder="Password" />
+        <button onclick="login()">Login</button>
+        <p id="login-response"></p>
+    </div>
+
+    <script>
+        const API_BASE_URL = "http://127.0.0.1:8000/api/accounts/accounts";
+
+        async function register() {
+            const username = document.getElementById('register-username').value;
+            const password = document.getElementById('register-password').value;
+            const role = document.getElementById('register-role').value;
+            const employee_id = document.getElementById('register-employee-id').value;
+
+            const responseElement = document.getElementById('register-response');
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/register/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username,
+                        password,
+                        role,
+                        employee: employee_id
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    responseElement.textContent = "Registration successful!";
+                } else {
+                    responseElement.textContent = `Error: ${JSON.stringify(data)}`;
+                }
+            } catch (error) {
+                responseElement.textContent = `Error: ${error.message}`;
+            }
+        }
+
+        async function login() {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+
+            const responseElement = document.getElementById('login-response');
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/login/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username,
+                        password
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    responseElement.textContent = `Login successful! Role: ${data.role}`;
+                } else {
+                    responseElement.textContent = `Error: ${JSON.stringify(data)}`;
+                }
+            } catch (error) {
+                responseElement.textContent = `Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
