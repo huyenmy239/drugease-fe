@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>drug management system</title>
+    <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/styles/login.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="/assets/images/logowhite.png" alt="logo white">
+            <span>drug management system</span>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="left-side">
+                <div class="slogan">
+                    <img src="/assets/images/2.png" alt="Stethoscope">
+                    <p>Every Dose Counts Keep The Trust, Ensure The Care.</p>
+                </div>
+            </div>
+    
+            <div class="right-side">
+                <h2 class="login-title">Login</h2>
+                <form id="login-form" class="auth-form">
+                    <div class="input-field">
+                        <span class="icon">
+                            <i class="fa-solid fa-user"></i>
+                        </span>
+                        <input type="username" placeholder="Username" required name="username">
+                    </div>
+                    <div class="input-field">
+                        <span class="icon">
+                            <i class="fa-solid fa-lock"></i>
+                        </span>
+                        <input type="password" placeholder="Password" required name="password">
+                    </div>
+    
+                    <p class="forgot-password">
+                        <a href="#" id="forgot-password-link">Forgot Password?</a>
+                    </p>
+                    
+                    <button class="submit-form" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="introduction">
+            <img src="/assets/images/human.png" alt="human">
+            <div class="chat-bubble">
+                Doctor, have you double-checked the medication schedule
+for today’s patients?
+            </div>
+            <div class="chat-bubble">
+                Yes, I did. Accuracy is crucial. We can't afford any mistakes.
+            </div>
+            <div class="chat-bubble">
+                Absolutely. Every dose counts for their safety.
+            </div>
+            <div class="chat-bubble">
+                Let’s ensure we provide the best care possible.
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024</p>
+    </footer>
+    <script type="module" src="/js/pages/login.js"></script>
+</body>
+</html>
