@@ -32,20 +32,20 @@
                         <span class="icon">
                             <i class="fa-solid fa-user"></i>
                         </span>
-                        <input type="username" placeholder="Username" required name="username">
+                        <input id="login-username" type="username" placeholder="Username" required name="username">
                     </div>
                     <div class="input-field">
                         <span class="icon">
                             <i class="fa-solid fa-lock"></i>
                         </span>
-                        <input type="password" placeholder="Password" required name="password">
+                        <input id="login-password" type="password" placeholder="Password" required name="password">
                     </div>
     
                     <p class="forgot-password">
                         <a href="#" id="forgot-password-link">Forgot Password?</a>
                     </p>
                     
-                    <button class="submit-form" type="submit">Submit</button>
+                    <button id="login-button" class="submit-form" type="submit">Submit</button>
                 </form>
             </div>
         </div>
@@ -71,6 +71,7 @@ for today’s patients?
     <footer>
         <p>&copy; 2024</p>
     </footer>
-    <script type="module" src="/js/pages/login.js"></script>
+    <script type="module" src="/js/services/login.js"></script>
+    <!-- <script type="module" src="/js/pages/login.js"></script> -->
 </body>
 </html>
