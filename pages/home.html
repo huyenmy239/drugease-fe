@@ -1,0 +1,179 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>
+       Drug management system
+    </title>
+    <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/styles/components/sidebar.css">
+    <link rel="stylesheet" href="/assets/styles/home.css">
+</head>
+
+<body>
+    <div class="sidebar" id="sidebar-placeholder"></div>
+    <div class="container">
+        <div class="manage-banner">
+            <h1>Prescription</h1>
+
+            <!-- Disease Information Section -->
+            <section class="disease-infor">
+                <h2>Disease Information</h2>
+                        <div class="form">
+                            <div class="patient-select">
+                                <label for="patient-select">Patient:</label>
+                                <select id="patient-select" name="patient">
+                                    <option value="patient1">Patient 1</option>
+                                    <option value="patient2">Patient 2</option>
+                                    <option value="patient3">Patient 3</option>
+                                </select>
+                            </div>
+            
+                            <!-- Patient Details (to be shown after selecting a patient) -->
+                            <div class="patient-details">
+                                <div class="detail">
+                                    <label for="dob">Date of Birth:</label>
+                                    <span id="dob">N/A</span>
+                                </div>
+                                <div class="detail">
+                                    <label for="gender">Gender:</label>
+                                    <span id="gender">N/A</span>
+                                </div>
+                                <div class="detail">
+                                    <label for="address">Address:</label>
+                                    <span id="address">N/A</span>
+                                </div>
+                                <div class="detail">
+                                    <label for="insurance">Health Insurance:</label>
+                                    <span id="insurance">N/A</span>
+                                </div>
+                            </div>
+            
+                            <!-- Disease Name Input -->
+                            <div class="disease-name-input">
+                                <label for="disease-name">Disease:</label>
+                                <input type="text" id="disease-name" name="disease-name" placeholder="Type...">
+                            </div>
+            
+                            <button class="add-btn">+ Add</button>
+
+                            <div class="medicine-add">
+                                <div class="medicine-select">
+                                    <label for="medicine-select">Medicine:</label>
+                                    <select id="medicine-select" name="medicine">
+                                        <option value="medicine1">Adalimumab</option>
+                                        <option value="medicine2">Broncho Vacxom</option>
+                                        <option value="medicine3">Paracetamol</option>
+                                    </select>
+                                </div>
+
+                                <div class="quantity-container">
+                                    <label for="quantity">Quantity:</label>
+                                    <div class="quantity-input">
+                                        <button class="quantity-btn" onclick="changeQuantity(-1)">-</button>
+                                        <input type="number" id="quantity" name="quantity" min="1" value="1" step="1">
+                                        <button class="quantity-btn" onclick="changeQuantity(1)">+</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="note-input">
+                                    <label for="note">Note:</label>
+                                    <input type="text" id="note" name="note" placeholder="Type...">
+                                </div>
+                
+                                <button class="add-medicine-btn">+ Add</button>
+                                
+                            </div>
+                        </div>
+            </section>
+
+        <div class="medicine-infor">
+            <h2 class="h-prescription">Prescriptions</h2>
+            <div class="list-prescription">
+                <table class="patient-table list-table">
+                    <thead>
+                        <tr>
+                            <th>PATIENT ID</th>
+                            <th>PATIENT NAME</th>
+                            <th>DISEASE</th>
+                            <th>DATE</th>
+                            <th>ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody id="patient-list">
+                        <!-- Sample Data -->
+                        <tr>
+                            <td>001</td>
+                            <td>John Doe</td>
+                            <td>Flu</td>
+                            <td>2024-12-12</td>
+                            <td>
+                                <button id="edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button id="print-btn"><i class="fa-solid fa-print"></i></button>
+                                <button id="delete-btn"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>002</td>
+                            <td>Jane Smith</td>
+                            <td>Cold</td>
+                            <td>2024-12-11</td>
+                            <td>
+                                <button id="edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button id="print-btn"><i class="fa-solid fa-print"></i></button>
+                                <button id="delete-btn"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+
+
+            <h2 class="h-details">Prescription Details</h2>
+            <div class="list-details">
+                <table class="detail-medicine-table list-table">
+                    <thead>
+                        <tr>
+                            <th>PATIENT ID</th>
+                            <th>PATIENT NAME</th>
+                            <th>DISEASE</th>
+                            <th>DATE</th>
+                            <th>ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody id="detail-medicine-list">
+                        <!-- Sample Data -->
+                        <tr>
+                            <td>001</td>
+                            <td>John Doe</td>
+                            <td>Flu</td>
+                            <td>2024-12-12</td>
+                            <td>
+                                <button id="delete-btn"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>002</td>
+                            <td>Jane Smith</td>
+                            <td>Cold</td>
+                            <td>2024-12-11</td>
+                            <td>
+                                <button id="delete-btn"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/components/sidebar.js"></script>
+    <script src="/js/pages/home.js"></script>
+</body>
+
+</html>

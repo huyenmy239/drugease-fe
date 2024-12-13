@@ -1,165 +1,91 @@
+/* General Styles */
 .sidebar {
-    font-family: 'Roboto', sans-serif;
-    width: 290px;
+    font-family: 'Inter', sans-serif;
+    width: 25%;
     height: 100vh;
-    background-color: #ffffff;
+    background-color: #F9FAFB;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     padding: 20px 0 0 0;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 1000;
+    color: #333;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-.sidebar-body {
-    width: 100%;
-    padding: 0 0 0 40px;
-}
-
-.sidebar .logo {
+.logo {
     display: flex;
     align-items: center;
-    margin-bottom: 30px;
+    padding: 10px;
+    border-bottom: 1px solid #AFAFAF;
 }
 
-.sidebar .logo img {
-    width: 70%;
+.logo img {
+    width: 30px;
+    height: 30px;
     margin-right: 10px;
 }
 
-.sidebar .menu {
+.logo span {
+    font-size: 16px;
+    font-weight: bold;
+    color: #005EB5;
+}
+
+.menu {
     list-style: none;
     padding: 0;
-}
-
-.sidebar .menu li {
-    margin: 50px 0;
-}
-
-.sidebar .menu li a {
-    text-decoration: none;
-    color: #999999;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-}
-
-.sidebar .menu li span {
-    text-decoration: none;
-    color: #999999;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-}
-
-.sidebar .menu li a:hover {
-    color: #27a4f2;
-}
-
-.sidebar .menu li span:hover {
-    color: #27a4f2;
-    cursor: pointer;
-}
-
-.sidebar .menu li a i {
-    margin-right: 30px;
-    font-size: 25px;
-}
-
-.sidebar .menu li span i {
-    margin-right: 30px;
-    font-size: 25px;
-}
-
-.overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-  }
-
-.note-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
-    z-index: 1001;
-  }
-
-.note-container {
-    display: none;
-    min-width: 300px;
-    width: 20%;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    position: relative;
-}
-.note-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-}
-.note-header h1 {
-    font-size: 18px;
     margin: 0;
-}
-.note-header .close-icon {
-    font-size: 18px;
-    cursor: pointer;
-}
-.search-container {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-}
-.search-container input {
-    width: 100%;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-.add-note {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-}
-.add-note .add-icon {
-    font-size: 24px;
-    cursor: pointer;
-}
-.note-list {
-    padding: 10px;
-}
-.note-item {
-    background-color: #5bc0de;
-    border-radius: 10px;
-    padding: 10px;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: white;
-}
-.note-item .note-text {
     flex-grow: 1;
+    overflow-y: auto;
 }
-.note-item .note-time {
-    font-size: 10px;
-    margin-top: 5px;
-}
-.note-item .delete-icon {
-    font-size: 18px;
+
+.menu li {
+    padding: 10px 20px;
+    font-size: 14px;
     cursor: pointer;
-    color: rgb(253, 103, 103);
+}
+
+.menu li:not(:first-child):not(:nth-child(5)):not(:nth-child(10)):not(:nth-child(12)):hover {
+    background-color: rgba(0, 94, 181, 0.17);
+}
+
+
+.menu li a {
+    text-decoration: none;
+    color: #646464;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.menu li a:hover {
+    color: #005EB5;
+}
+
+.menu li i {
+    font-size: 16px;
+}
+
+/* Section Headers */
+.menu li:not(:first-child):not(:nth-child(5)):not(:nth-child(10)):not(:nth-child(12)) {
+    padding-left: 40px;
+}
+
+.menu li:nth-child(1), 
+.menu li:nth-child(5), 
+.menu li:nth-child(10), 
+.menu li:nth-child(12) {
+    font-weight: bold;
+    font-size: 14px;
+    padding: 15px 20px;
+    color: #AFAFAF;
+}
+
+.menu li:last-child {
+    padding: 20px;
+    border-top: 1px solid #AFAFAF;
 }
