@@ -125,6 +125,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 60vh;
+    overflow: hidden;
 }
 
 .medicine-infor h2 {
@@ -133,11 +134,29 @@ body {
     font-size: 18px;
 }
 
+
+.list-prescription {
+    overflow-y: auto; /* Kích hoạt thanh cuộn dọc */
+    flex-grow: 1; /* Cho phép bảng mở rộng chiếm phần còn lại */
+}
+
+.list-details {
+    overflow-y: auto; /* Kích hoạt thanh cuộn dọc */
+    flex-grow: 1; /* Cho phép bảng mở rộng chiếm phần còn lại */
+}
+
 .list-table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 10px;
     table-layout: fixed;
+}
+
+.list-table thead {
+    position: sticky; /* Giữ cố định phần tiêu đề */
+    top: 0;
+    background-color: white; /* Đặt nền cho tiêu đề để không bị chồng lên các dòng */
+    z-index: 1; /* Đảm bảo tiêu đề nằm trên các phần khác */
 }
 
 .list-table th, .list-table td {
@@ -176,9 +195,10 @@ body {
 
 /*add medicine*/
 .quantity-container {
-    margin: 10px 0;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
+    
 }
 
 .quantity-container label {
@@ -194,7 +214,7 @@ body {
 .quantity-input input {
     width: 50px;
     padding: 5px;
-    font-size: 16px;
+    font-size: 15px;
     text-align: center;
     border: 1px solid #ccc;
 }
@@ -203,8 +223,9 @@ body {
     background-color: #f0f0f0;
     border: 1px solid #ccc;
     padding: 5px 10px;
-    font-size: 16px;
+    font-size: 15px;
     cursor: pointer;
+    
 }
 
 .quantity-btn:hover {
@@ -279,6 +300,7 @@ body {
     border: none;
     border-radius: 15px;
     cursor: pointer;
+    margin: 0 30% 20px 30%;
 }
 
 .add-medicine-btn:hover {
