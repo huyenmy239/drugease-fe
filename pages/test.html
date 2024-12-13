@@ -39,7 +39,7 @@
     </div>
 
     <script>
-        const API_BASE_URL = "http://127.0.0.1:8000/api/accounts/accounts";
+        const API_BASE_URL = "http://192.168.1.6:8000/api/accounts/accounts";
 
         async function register() {
             const username = document.getElementById('register-username').value;
@@ -97,6 +97,7 @@
 
                 if (response.ok) {
                     responseElement.textContent = `Login successful! Role: ${data.role}`;
+                    console.log(data);
                 } else {
                     responseElement.textContent = `Error: ${JSON.stringify(data)}`;
                 }

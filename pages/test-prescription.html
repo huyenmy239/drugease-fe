@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prescription Management</title>
+</head>
+<body>
+    <h1>Prescription Management</h1>
+
+    <!-- Add Prescription -->
+    <h2>Add Prescription</h2>
+    <form id="add-prescription-form">
+        <label>Patient ID: <input type="text" name="patient" required></label><br>
+        <label>Doctor ID: <input type="text" name="doctor" required></label><br>
+        <label>Diagnosis: <input type="text" name="diagnosis" required></label><br>
+        <label>Instruction: <input type="text" name="instruction" required></label><br>
+        <label>Details (Medicine ID, Quantity, Usage Instruction):</label><br>
+        <textarea name="details" placeholder="Example: [{&quot;medicine&quot;:1, &quot;quantity&quot;:2, &quot;usage_instruction&quot;:&quot;Take twice daily&quot;}]" required></textarea><br>
+        <button type="submit">Add Prescription</button>
+    </form>
+    <hr>
+
+    <!-- Edit Prescription -->
+    <h2>Edit Prescription</h2>
+    <form id="edit-prescription-form">
+        <label>Prescription ID: <input type="text" name="id" required></label><br>
+        <label>Diagnosis: <input type="text" name="diagnosis"></label><br>
+        <label>Instruction: <input type="text" name="instruction"></label><br>
+        <label>Details (Medicine ID, Quantity, Usage Instruction):</label><br>
+        <textarea name="details" placeholder="Example: [{&quot;id&quot;:1, &quot;medicine&quot;:1, &quot;quantity&quot;:3, &quot;usage_instruction&quot;:&quot;Take once daily&quot;}]" required></textarea><br>
+        <button type="submit">Edit Prescription</button>
+    </form>
+    <hr>
+
+    <!-- Delete Prescription -->
+    <h2>Delete Prescription</h2>
+    <form id="delete-prescription-form">
+        <label>Prescription ID: <input type="text" name="id" required></label><br>
+        <button type="submit">Delete Prescription</button>
+    </form>
+    <hr>
+
+    <script>
+        const apiUrl = "http://192.168.1.6:8000/api/prescriptions/";
+
+        // Add Prescription
+        document.getElementById('add-prescription-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                data.details = JSON.parse(data.details); // Convert JSON string to array
+                const response = await fetch(apiUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                });
+
+                if (response.ok) {
+                    alert("Prescription added successfully!");
+                    e.target.reset();
+                } else {
+                    const errorData = await response.json();
+                    alert("Error adding prescription: " + JSON.stringify(errorData));
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        });
+
+        // Edit Prescription
+        document.getElementById('edit-prescription-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const id = formData.get('id');
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                data.details = JSON.parse(data.details); // Convert JSON string to array
+                const response = await fetch(`${apiUrl}${id}/`, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                });
+
+                if (response.ok) {
+                    alert("Prescription updated successfully!");
+                } else {
+                    const errorData = await response.json();
+                    alert("Error updating prescription: " + JSON.stringify(errorData));
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        });
+
+        // Delete Prescription
+        document.getElementById('delete-prescription-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const id = formData.get('id');
+
+            try {
+                const response = await fetch(`${apiUrl}${id}/`, {
+                    method: "DELETE",
+                });
+
+                if (response.ok) {
+                    alert("Prescription deleted successfully!");
+                } else {
+                    const errorData = await response.json();
+                    alert("Error deleting prescription: " + JSON.stringify(errorData));
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        });
+    </script>
+</body>
+</html>

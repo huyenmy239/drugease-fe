@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Patients</title>
+    <script>
+        // Hàm tìm kiếm được gọi ngay lập tức khi người dùng gõ vào ô input
+        async function searchPatients() {
+            // Lấy giá trị từ input search
+            const searchQuery = document.getElementById("search_query").value;
+
+            let url = 'http://192.168.1.6:8000/api/prescriptions/patients/?';
+            if (searchQuery) url += `search=${searchQuery}`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                if (response.ok) {
+                    displayResults(data);
+                } else {
+                    alert("Error: " + data.detail);
+                }
+            } catch (error) {
+                alert("Error: " + error.message);
+            }
+        }
+
+        function displayResults(data) {
+            const resultContainer = document.getElementById("results");
+            resultContainer.innerHTML = "";
+
+            if (data.length === 0) {
+                resultContainer.innerHTML = "<p>No patients found.</p>";
+                return;
+            }
+
+            const table = document.createElement("table");
+            const headerRow = document.createElement("tr");
+            headerRow.innerHTML = "<th>ID</th><th>Full Name</th><th>Date of Birth</th><th>Phone Number</th><th>Email</th>";
+            table.appendChild(headerRow);
+
+            data.forEach(patient => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${patient.id}</td>
+                    <td>${patient.full_name}</td>
+                    <td>${patient.date_of_birth}</td>
+                    <td>${patient.phone_number}</td>
+                    <td>${patient.email || 'N/A'}</td>
+                `;
+                table.appendChild(row);
+            });
+
+            resultContainer.appendChild(table);
+        }
+
+        window.onload = function() {
+            searchPatients();
+        };
+    </script>
+</head>
+<body>
+
+    <h1>Search Patients</h1>
+    <label for="search_query">Search (Name, ID Card, Phone, Email, etc.):</label>
+    <input type="text" id="search_query" name="search_query" placeholder="Enter search term..." oninput="searchPatients()"><br><br>
+
+    <div id="results">
+    </div>
+
+</body>
+</html>

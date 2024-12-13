@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test</title>
+    <script>
+        // Hàm gọi API và hiển thị danh sách bệnh nhân
+        async function fetchPatients() {
+            try {
+                const response = await fetch('http://192.168.1.6:8000/api/prescriptions/patient-list/');
+                const patients = await response.json();
+                const patientList = document.getElementById('patient-list');
+                patientList.innerHTML = ''; // Xóa nội dung cũ
+                patients.forEach(patient => {
+                    const li = document.createElement('li');
+                    li.textContent = `${patient.full_name} - ${patient.phone_number}`;
+                    patientList.appendChild(li);
+                });
+            } catch (error) {
+                console.error('Error fetching patients:', error);
+            }
+        }
+
+        // Hàm gọi API và hiển thị danh sách bác sĩ
+        async function fetchDoctors() {
+            try {
+                const response = await fetch('http://192.168.1.6:8000/api/prescriptions/doctors/');
+                const doctors = await response.json();
+                const doctorList = document.getElementById('doctor-list');
+                doctorList.innerHTML = ''; // Xóa nội dung cũ
+                doctors.forEach(doctor => {
+                    const li = document.createElement('li');
+                    li.textContent = `${doctor.full_name} - ${doctor.phone_number}`;
+                    doctorList.appendChild(li);
+                });
+            } catch (error) {
+                console.error('Error fetching doctors:', error);
+            }
+        }
+
+        // Hàm gọi API và hiển thị danh sách thuốc
+        async function fetchMedicines() {
+            try {
+                const response = await fetch('http://192.168.1.6:8000/api/prescriptions/medicines/');
+                const medicines = await response.json();
+                const medicineList = document.getElementById('medicine-list');
+                medicineList.innerHTML = ''; // Xóa nội dung cũ
+                medicines.forEach(medicine => {
+                    const li = document.createElement('li');
+                    li.textContent = `${medicine.medicine_name} - ${medicine.unit} - ${medicine.sale_price} VND`;
+                    medicineList.appendChild(li);
+                });
+            } catch (error) {
+                console.error('Error fetching medicines:', error);
+            }
+        }
+
+        // Gọi tất cả các API khi tải trang
+        window.onload = function () {
+            fetchPatients();
+            fetchDoctors();
+            fetchMedicines();
+        }
+    </script>
+</head>
+<body>
+    <h1>API Test Page</h1>
+
+    <section>
+        <h2>Danh sách bệnh nhân (Patients)</h2>
+        <ul id="patient-list">
+            <!-- Danh sách bệnh nhân sẽ được hiển thị ở đây -->
+        </ul>
+    </section>
+
+    <section>
+        <h2>Danh sách bác sĩ (Doctors)</h2>
+        <ul id="doctor-list">
+            <!-- Danh sách bác sĩ sẽ được hiển thị ở đây -->
+        </ul>
+    </section>
+
+    <section>
+        <h2>Danh sách thuốc (Medicines)</h2>
+        <ul id="medicine-list">
+            <!-- Danh sách thuốc sẽ được hiển thị ở đây -->
+        </ul>
+    </section>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Management</title>
+</head>
+<body>
+    <h1>Patient Management</h1>
+
+    <!-- Add Patient -->
+    <h2>Add Patient</h2>
+    <form id="add-patient-form">
+        <label>Full Name: <input type="text" name="full_name" required></label><br>
+        <label>Date of Birth: <input type="date" name="date_of_birth" required></label><br>
+        <label>Gender: 
+            <select name="gender">
+                <option value="0">Male</option>
+                <option value="1">Female</option>
+            </select>
+        </label><br>
+        <label>ID Card: <input type="text" name="id_card"></label><br>
+        <label>Phone Number: <input type="text" name="phone_number" required></label><br>
+        <label>Address: <input type="text" name="address" required></label><br>
+        <label>Email: <input type="email" name="email"></label><br>
+        <button type="submit">Add Patient</button>
+    </form>
+    <hr>
+
+    <!-- Edit Patient -->
+    <h2>Edit Patient</h2>
+    <form id="edit-patient-form">
+        <label>Patient ID: <input type="text" name="id" required></label><br>
+        <label>Phone Number: <input type="text" name="phone_number"></label><br>
+        <label>Email: <input type="email" name="email"></label><br>
+        <button type="submit">Edit Patient</button>
+    </form>
+    <hr>
+
+    <!-- Delete Patient -->
+    <h2>Delete Patient</h2>
+    <form id="delete-patient-form">
+        <label>Patient ID: <input type="text" name="id" required></label><br>
+        <button type="submit">Delete Patient</button>
+    </form>
+    <hr>
+
+    <script>
+        const apiUrl = "http://192.168.1.6:8000/api/prescriptions/patients/";
+
+        // Add Patient
+        document.getElementById('add-patient-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            data.employee = 1;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                });
+
+                if (response.ok) {
+                    alert("Patient added successfully!");
+                    e.target.reset();
+                } else {
+                    const errorData = await response.json();
+                    alert("Error adding patient: " + JSON.stringify(errorData));
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        });
+
+        // Edit Patient
+        document.getElementById('edit-patient-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const id = formData.get('id');
+            const data = {
+                phone_number: formData.get('phone_number'),
+                email: formData.get('email'),
+            };
+
+            try {
+                const response = await fetch(`${apiUrl}${id}/`, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                });
+
+                if (response.ok) {
+                    alert("Patient updated successfully!");
+                } else {
+                    const errorData = await response.json();
+                    alert("Error updating patient: " + JSON.stringify(errorData));
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        });
+
+        // Delete Patient
+        document.getElementById('delete-patient-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const id = formData.get('id');
+
+            try {
+                const response = await fetch(`${apiUrl}${id}/`, {
+                    method: "DELETE",
+                });
+
+                if (response.ok) {
+                    alert("Patient deleted successfully!");
+                } else {
+                    const errorData = await response.json();
+                    alert("Error deleting patient: " + JSON.stringify(errorData));
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        });
+    </script>
+</body>
+</html>
