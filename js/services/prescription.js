@@ -1,5 +1,7 @@
 import CONFIG from '../utils/settings.js';
 
+const API_URL = `http://${CONFIG.BASE_URL}/api/prescriptions`;
+
 const doctorId = localStorage.getItem('employee_id');
 const addButton = document.querySelector(".add-btn");
 const listDetails = document.querySelector(".list-details");
@@ -53,25 +55,19 @@ async function handleEditButtonClick(patient, diagnosis, instruction, details) {
 }
 
 function getOptionTextByValue(selectId, value) {
-    // Lấy phần tử <select>
     const select = document.getElementById(selectId);
     console.log(value);
     
-    // Kiểm tra nếu phần tử tồn tại
     if (select) {
-        // Lấy tất cả các option
         const options = select.options;
         
-        // Lặp qua các option
         for (let i = 0; i < options.length; i++) {
             console.log(`Value: ${options[i].value}`);
             if (options[i].value === value) {
-                // Trả về text của option tìm thấy
                 return options[i].textContent || options[i].innerText;
             }
         }
     }
-    // Nếu không tìm thấy value tương ứng, trả về null
     return null;
 }
 
@@ -113,7 +109,7 @@ function populateMedicineTable(details) {
 
 async function fetchPatients() {
     try {
-        const response = await fetch(`http://${CONFIG.BASE_URL}/api/prescriptions/patient-list/`);
+        const response = await fetch(`${API_URL}/patient-list/`);
         if (!response.ok) {
             throw new Error('Failed to fetch patients');
         }
@@ -125,7 +121,7 @@ async function fetchPatients() {
 }
 
 async function fetchMedicines() {
-    const response = await fetch(`http://${CONFIG.BASE_URL}/api/prescriptions/medicines/`);
+    const response = await fetch(`${API_URL}/medicines/`);
     const data = await response.json();
 
     const medicineSelect = document.getElementById('medicine-select');
@@ -161,7 +157,7 @@ function populatePatientDropdown(patients) {
 
 async function fetchPatientDetails(patientId) {
     try {
-        const response = await fetch(`http://${CONFIG.BASE_URL}/api/prescriptions/patients/${patientId}/`);
+        const response = await fetch(`${API_URL}/patients/${patientId}/`);
         if (!response.ok) {
             throw new Error('Failed to fetch patient details');
         }
@@ -193,7 +189,7 @@ document.getElementById('patient-select').addEventListener('change', (event) => 
 
 async function fetchPrescriptions() {
     try {
-        const response = await fetch(`http://${CONFIG.BASE_URL}/api/prescriptions/prescription-list/?doctor=${doctorId}`);
+        const response = await fetch(`${API_URL}/prescription-list/?doctor=${doctorId}`);
         if (!response.ok) {
             throw new Error('Failed to fetch prescriptions');
         }
@@ -245,7 +241,7 @@ function populatePrescriptionTable(prescriptions) {
         button.addEventListener('click', async function () {
             prescriptionId = button.id.split('-')[1];
             try {
-                const response = await fetch(`http://${CONFIG.BASE_URL}/api/prescriptions/prescriptions/${prescriptionId}/`, {
+                const response = await fetch(`${API_URL}/prescriptions/${prescriptionId}/`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -280,7 +276,7 @@ function populatePrescriptionTable(prescriptions) {
             }
 
             try {
-                const response = await fetch(`http://${CONFIG.BASE_URL}/api/prescriptions/prescriptions/${prescriptionId}/`, {
+                const response = await fetch(`${API_URL}/prescriptions/${prescriptionId}/`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -305,41 +301,6 @@ function populatePrescriptionTable(prescriptions) {
 }
 
 
-
-// const editBtn = document.querySelectorAll('edit-btn');
-// editBtn.addEventListener('click', async function () {
-//     const editId = editBtn.id;
-//     const prescriptionId = editId.split('-')[1];
-//     console.log(prescriptionId);
-//     try {
-//         const response = await fetch(`http://${CONFIG.BASE_URL}/api/prescriptions/prescriptions/${prescriptionId}/`, {
-//             method: 'GET',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 'Authorization': 'Token ' + localStorage.getItem('token')
-//             }
-//         });
-
-//         const result = await response.json();
-
-//         if (response.ok) {
-//             // Chỉnh sửa đơn thuốc thành công, có thể mở modal hoặc làm gì đó với dữ liệu
-//             console.log('Prescription to edit:', result);
-
-//             // Ví dụ: bạn có thể mở một form chỉnh sửa và điền dữ liệu vào đó
-//             // populateEditForm(result); // Hàm này giả định bạn có một form để chỉnh sửa dữ liệu
-
-//         } else {
-//             alert('Failed to fetch prescription details: ' + result.detail);
-//         }
-//     } catch (error) {
-//         console.error('Error fetching prescription:', error);
-//         alert('An error occurred while fetching the prescription details.');
-//     }
-// });
-
-
-
 async function addPrescription() {
     const patientId = document.getElementById('patient-select').value;
     const diagnosis = document.getElementById('disease-name').value;
@@ -362,7 +323,7 @@ async function addPrescription() {
     };
 
     try {
-        const response = await fetch(`http://${CONFIG.BASE_URL}/api/prescriptions/prescriptions/`, {
+        const response = await fetch(`${API_URL}/prescriptions/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -432,7 +393,7 @@ document.getElementById('save-btn').addEventListener('click', async function () 
     };
 
     try {
-        const response = await fetch(`http://${CONFIG.BASE_URL}/api/prescriptions/prescriptions/${prescriptionId}/`, {
+        const response = await fetch(`${API_URL}/prescriptions/${prescriptionId}/`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
