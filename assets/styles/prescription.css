@@ -95,6 +95,17 @@ body {
     border: 1px solid #ccc;
 }
 
+.advice-input {
+    margin-bottom: 20px;
+}
+
+.advice-input input {
+    width: 40%;
+    padding: 5px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+}
+
 .add-btn {
     padding: 10px 20px;  /* Điều chỉnh kích thước padding */
     font-size: 16px;     /* Điều chỉnh kích thước font chữ */
