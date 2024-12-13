@@ -95,6 +95,17 @@ body {
     border: 1px solid #ccc;
 }
 
+.advice-input {
+    margin-bottom: 20px;
+}
+
+.advice-input input {
+    width: 40%;
+    padding: 5px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+}
+
 .add-btn {
     padding: 10px 20px;  /* Điều chỉnh kích thước padding */
     font-size: 16px;     /* Điều chỉnh kích thước font chữ */
@@ -313,4 +324,36 @@ body {
 
 .list-details, .h-details{
     display: none;
+}
+
+.btn-save {
+    background-color: #28a745; /* Màu xanh lá cho nút Save */
+    color: white; /* Màu chữ trắng */
+    border: none; /* Xóa viền */
+    border-radius: 5px; /* Bo tròn góc */
+    padding: 10px 15px; /* Khoảng cách trong nút */
+    font-size: 14px; /* Kích thước chữ */
+    display: inline-flex; /* Căn giữa icon và chữ */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    gap: 8px; /* Khoảng cách giữa icon và chữ */
+    cursor: pointer; /* Con trỏ chuột dạng tay khi hover */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Hiệu ứng hover */
+    position: absolute; /* Định vị nút trong container */
+    top: 10px; /* Cách mép trên 10px */
+    right: 2%; /* Cách mép phải 10px */
+    z-index: 10; /* Đảm bảo nút nằm trên các thành phần khác */
+}
+
+.btn-save i {
+    font-size: 16px; /* Kích thước icon */
+}
+
+.btn-save:hover {
+    background-color: #218838; /* Màu đậm hơn khi hover */
+    transform: scale(1.05); /* Hiệu ứng phóng to nhẹ khi hover */
+}
+
+.btn-save:active {
+    background-color: #1e7e34; /* Màu đậm hơn khi bấm */
+    transform: scale(0.95); /* Hiệu ứng thu nhỏ nhẹ khi bấm */
 }
