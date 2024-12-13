@@ -24,6 +24,8 @@ async function login() {
             localStorage.setItem('username', data.username);
             localStorage.setItem('role', data.role);
             localStorage.setItem('employee_id', data.employee_id);
+
+            window.location.href = "home.html";
         } else {
             console.log(`Error: ${JSON.stringify(data)}`);
             alert('Đăng nhập thất bại: ' + data.error);

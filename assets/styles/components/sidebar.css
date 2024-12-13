@@ -62,7 +62,7 @@
     gap: 10px;
 }
 
-.menu li a:hover {
+.menu li:hover a {
     color: #005EB5;
 }
 

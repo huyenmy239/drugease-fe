@@ -196,11 +196,11 @@ body {
     background-color: transparent;
 }
 
-#edit-btn, #print-btn {
+.edit-btn, .print-btn {
     color: #005EB5;
 }
 
-#delete-btn {
+.delete-btn {
     color: #F53C3F;
 }
 
