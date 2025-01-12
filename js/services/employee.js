@@ -60,7 +60,10 @@ function applyFilters() {
                 const matchesStatus = status 
                     ? (status === "Active" ? employee.is_active === true : employee.is_active === false)
                     : true;
-                const matchesSearch = employee.full_name.toLowerCase().includes(search);
+                const matchesSearch = 
+                    employee.full_name.toLowerCase().includes(search) || 
+                    employee.id_card.toLowerCase().includes(search) || 
+                    employee.phone_number.includes(search);
                 return matchesRole && matchesStatus && matchesSearch;
             });
             populateTable(filteredEmployees);
