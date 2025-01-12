@@ -3,108 +3,232 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API Test</title>
+    <title>Drug Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+        /* General styles */
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            background-color: #f5f5f5;
         }
-        .form-container {
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+        .sidebar h1 {
+            font-size: 18px;
             margin-bottom: 20px;
         }
-        input, button {
-            margin: 5px;
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+        .content .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .content .header button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Modal styles */
+        .form-container {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 400px;
+            height: 100%;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 1001;
+            overflow-y: auto;
+        }
+        .form-container h2 {
+            margin-top: 0;
+        }
+        .form-container form {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        .form-container .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-container .form-group label {
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        .form-container .form-group input,
+        .form-container .form-group select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .form-container .form-group.radio-group {
+            display: flex;
+            justify-content: flex-start;
+            gap: 20px;
+        }
+        .form-container .form-group.radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .form-container .form-group.radio-group input[type="radio"] {
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+        .form-container .buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        .form-container .buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .form-container .buttons .create {
+            background-color: #3498db;
+            color: #fff;
+        }
+        .form-container .buttons .cancel {
+            background-color: #ccc;
+            color: #333;
+        }
+
+        /* Overlay styling */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 1000;
         }
     </style>
 </head>
 <body>
-    <h1>Test API</h1>
-
-    <div class="form-container">
-        <h2>Register</h2>
-        <input type="text" id="register-username" placeholder="Username" />
-        <input type="password" id="register-password" placeholder="Password" />
-        <input type="text" id="register-role" placeholder="Role (doctor, pharmacist, admin, staff)" />
-        <input type="number" id="register-employee-id" placeholder="Employee ID" />
-        <button onclick="register()">Register</button>
-        <p id="register-response"></p>
+    <div class="sidebar">
+        <h1>Drug Management System</h1>
+        <div class="menu-item">
+            <i class="fas fa-users"></i>
+            <span>Patients</span>
+        </div>
+        <!-- Other menu items -->
+    </div>
+    <div class="content">
+        <div class="header">
+            <input type="text" placeholder="Search">
+            <div>
+                <button id="openModal">Create New Staff</button>
+            </div>
+        </div>
+        <!-- Table content -->
     </div>
 
-    <div class="form-container">
-        <h2>Login</h2>
-        <input type="text" id="login-username" placeholder="Username" />
-        <input type="password" id="login-password" placeholder="Password" />
-        <button onclick="login()">Login</button>
-        <p id="login-response"></p>
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Modal -->
+    <div class="form-container" id="formModal">
+        <h2>Create new staff</h2>
+        <form>
+            <div class="form-group">
+                <label for="role">Role:</label>
+                <select id="role">
+                    <option>Select role</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="full-name">Full name:</label>
+                <input type="text" id="full-name" placeholder="Enter full name">
+            </div>
+            <div class="form-group">
+                <label for="dob">Date of birth:</label>
+                <input type="date" id="dob">
+            </div>
+            <div class="form-group">
+                <label>Gender:</label>
+                <div class="radio-group">
+                    <label class="radio-item">
+                        <input type="radio" name="gender" value="male"> Male
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="gender" value="female" checked> Female
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="id-card">ID Card:</label>
+                <input type="text" id="id-card" placeholder="Enter ID card number">
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input type="text" id="phone" placeholder="Enter phone number">
+            </div>
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <input type="text" id="address" placeholder="Enter address">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" placeholder="Enter email">
+            </div>
+
+            <div class="buttons">
+                <button type="button" class="create">CREATE</button>
+                <button type="button" class="cancel" id="closeModal">CANCEL</button>
+            </div>
+        </form>
     </div>
 
     <script>
-        const API_BASE_URL = "http://192.168.1.6:8000/api/accounts/accounts";
+        // JavaScript for modal functionality
+        const openModal = document.getElementById('openModal');
+        const closeModal = document.getElementById('closeModal');
+        const modal = document.getElementById('formModal');
+        const overlay = document.getElementById('overlay');
 
-        async function register() {
-            const username = document.getElementById('register-username').value;
-            const password = document.getElementById('register-password').value;
-            const role = document.getElementById('register-role').value;
-            const employee_id = document.getElementById('register-employee-id').value;
+        openModal.addEventListener('click', () => {
+            modal.style.display = 'block';
+            overlay.style.display = 'block';
+        });
 
-            const responseElement = document.getElementById('register-response');
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+            overlay.style.display = 'none';
+        });
 
-            try {
-                const response = await fetch(`${API_BASE_URL}/register/`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        username,
-                        password,
-                        role,
-                        employee: employee_id
-                    }),
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    responseElement.textContent = "Registration successful!";
-                } else {
-                    responseElement.textContent = `Error: ${JSON.stringify(data)}`;
-                }
-            } catch (error) {
-                responseElement.textContent = `Error: ${error.message}`;
-            }
-        }
-
-        async function login() {
-            const username = document.getElementById('login-username').value;
-            const password = document.getElementById('login-password').value;
-
-            const responseElement = document.getElementById('login-response');
-
-            try {
-                const response = await fetch(`${API_BASE_URL}/login/`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        username,
-                        password
-                    }),
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    responseElement.textContent = `Login successful! Role: ${data.role}`;
-                    console.log(data);
-                } else {
-                    responseElement.textContent = `Error: ${JSON.stringify(data)}`;
-                }
-            } catch (error) {
-                responseElement.textContent = `Error: ${error.message}`;
-            }
-        }
+        overlay.addEventListener('click', () => {
+            modal.style.display = 'none';
+            overlay.style.display = 'none';
+        });
     </script>
 </body>
 </html>
