@@ -50,14 +50,6 @@
                 </tbody>
             </table>
         </div>
-        <div class="pagination">
-            <a href="#" class="active">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
-            <a href="#">...</a>
-            <a href="#">20</a>
-        </div>
     </div>
 
     <!-- Overlay -->
@@ -104,6 +96,10 @@
                 <label for="email">Email:</label>
                 <input type="email" id="email" placeholder="Enter email">
             </div>
+            <div class="form-group">
+                <label for="profile-image">Profile Image:</label>
+                <input type="file" id="profile-image" accept="image/*">
+            </div>            
 
             <div class="buttons">
                 <button type="button" class="create">CREATE</button>
@@ -146,6 +142,22 @@
                 <label for="email">Email:</label>
                 <input type="email" id="email-edit" placeholder="Enter email">
             </div>
+            <div class="form-group">
+                <label>Status:</label>
+                <div class="radio-group">
+                    <label class="radio-item">
+                        <input type="radio" name="active-edit" value="1"> Active
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="active-edit" value="0"> Inactive
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="profile-image-edit">Profile Image:</label>
+                <input type="file" id="profile-image-edit" accept="image/*">
+                <img id="preview-image-edit" src="https://placehold.co/150x150" alt="Profile Image" style="margin-top: 10px; width: 150px; height: 150px; object-fit: cover; border-radius: 10px;">
+            </div>            
     
             <div class="buttons">
                 <button type="button" class="editModal">Save Changes</button>

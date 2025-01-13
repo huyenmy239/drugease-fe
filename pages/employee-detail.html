@@ -1,0 +1,62 @@
+<html>
+
+<head>
+    <title>
+        Staff Profile
+    </title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/styles/components/sidebar.css">
+    <link rel="stylesheet" href="/assets/styles/employee-detail.css">
+</head>
+
+<body>
+    <div class="sidebar" id="sidebar-placeholder"></div>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="employee.html">
+                Employees
+            </a>
+            &gt;
+            <span id="employee-name">Loading...</span>
+        </div>
+        <div class="profile-container">
+            <div class="profile-header">
+                <img alt="Profile picture" id="employee-image" src="https://placehold.co/150x150" />
+                <h2 id="employee-fullname">Loading...</h2>
+                <p id="employee-role">Loading...</p>
+                <div class="profile-stats">
+                    <p>The number of prescriptions created in December:</p>
+                    <h3 id="employee-prescriptions">Loading...</h3>
+                </div>
+            </div>
+            <div class="info-section">
+                <div class="info-block">
+                    <h4>ACCOUNT INFORMATION</h4>
+                    <p id="employee-username">Username: Loading...</p>
+                    <p id="employee-status">Status: Loading...</p>
+                </div>
+                <div class="info-block">
+                    <h4>CONTACT INFORMATION</h4>
+                    <p id="employee-phone">Phone Number: Loading...</p>
+                    <p id="employee-email">Email: Loading...</p>
+                    <p id="employee-address">Address: Loading...</p>
+                </div>
+                <div class="info-block">
+                    <h4>BASIC INFORMATION</h4>
+                    <p id="employee-idcard">ID Card: Loading...</p>
+                    <p id="employee-dob">Date Of Birth: Loading...</p>
+                    <p id="employee-gender">Gender: Loading...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/components/sidebar.js"></script>
+    <script type="module" src="/js/services/employee-detail.js"></script>
+</body>
+
+</html>

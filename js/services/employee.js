@@ -27,8 +27,8 @@ function populateTable(employees) {
             <td>${employee.role}</td>
             <td class="${employee.is_active === true ? 'status-active' : 'status-inactive'}">${employee.is_active === true ? 'Active' : 'Inactive'}</td>
             <td>
-                <i class="fas fa-eye show-icon" data-id="${employee.id}"></i>
-                <i class="fas fa-pen edit-icon" data-id="${employee.id}"></i>
+                <i class="fas fa-eye show-icon" data-id="${employee.id}" data-role="${employee.role}" data-username="${employee.account}"></i>
+                <i class="fas fa-pen edit-icon" data-id="${employee.id}" data-role="${employee.role}" data-username="${employee.account}"></i>
             </td>
         `;
         tableBody.appendChild(row);
@@ -41,7 +41,26 @@ function populateTable(employees) {
             editEmployee(id);
         });
     });
+
+    const showIcons = document.querySelectorAll(".show-icon");
+    showIcons.forEach((icon) => {
+        icon.addEventListener("click", () => {
+            const id = icon.getAttribute("data-id");
+            const role = icon.getAttribute("data-role");
+            const username = icon.getAttribute("data-username");
+            showEmployee(id, role, username);
+        });
+    });
 }
+
+function showEmployee(id, role, username) {
+    localStorage.setItem("selectedEmployeeId", id);
+    localStorage.setItem("selectedEmployeeRole", role);
+    localStorage.setItem("selectedEmployeeUsername", username);
+
+    window.location.href = "employee-detail.html";
+}
+
 
 document.getElementById("role-filter").addEventListener("change", applyFilters);
 document.getElementById("status-filter").addEventListener("change", applyFilters);
@@ -80,6 +99,8 @@ function editEmployee(id) {
     document.getElementById("editModal").style.display = "block";
     document.getElementById("overlay").style.display = "block";
 
+    const fileInput = document.getElementById("profile-image-edit").value = "";
+
     fetch(`${API_URL}/employees/${id}/`)
         .then((response) => response.json())
         .then((employee) => {
@@ -90,6 +111,20 @@ function editEmployee(id) {
             document.getElementById("phone-edit").value = employee.phone_number;
             document.getElementById("address-edit").value = employee.address;
             document.getElementById("email-edit").value = employee.email;
+            const activeValue = employee.is_active ? "1" : "0";
+            document.querySelector(`input[name="active-edit"][value="${activeValue}"]`).checked = true;
+
+            let imageUrl = employee.image;
+            if (imageUrl) {
+                imageUrl = imageUrl.replace(
+                    "/media/",
+                    "/api/accounts/media/"
+                );
+            } else {
+                imageUrl = "https://placehold.co/150x150";
+            }
+            console.log(imageUrl);
+            document.getElementById("preview-image-edit").src = imageUrl;
 
             document.getElementById("editModal").style.display = "block";
             document.getElementById("overlay").style.display = "block";
@@ -104,29 +139,40 @@ function editEmployee(id) {
         });
 }
 
+document.getElementById("profile-image-edit").addEventListener("change", function (event) {
+    const file = event.target.files[0];
+
+    if (file) {
+        const previewImage = document.getElementById("preview-image-edit");
+        previewImage.src = URL.createObjectURL(file);
+    }
+});
+
 function updateEmployee(id) {
     const phone = document.getElementById("phone-edit").value;
     const address = document.getElementById("address-edit").value;
     const email = document.getElementById("email-edit").value;
+    const active = document.querySelector('input[name="active-edit"]:checked').value;
+    const profileImage = document.getElementById("profile-image-edit").files[0];
 
     if (!phone || !address || !email) {
         alert("Please fill out all required fields.");
         return;
     }
 
-    const employeeData = {
-        phone_number: phone,
-        address: address,
-        email: email,
-        image: ""
-    };
+    const formData = new FormData();
+    formData.append("phone_number", phone);
+    formData.append("address", address);
+    formData.append("email", email);
+    formData.append("is_active", active);
+
+    if (profileImage) {
+        formData.append("image", profileImage);
+    }
 
     fetch(`${API_URL}/employees/${id}/`, {
         method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(employeeData),
+        body: formData,
     })
         .then((response) => {
             if (!response.ok) {
@@ -206,29 +252,28 @@ document.querySelector('.create').addEventListener('click', () => {
     const phone = document.getElementById('phone').value;
     const address = document.getElementById('address').value;
     const email = document.getElementById('email').value;
+    const profileImage = document.getElementById('profile-image').files[0];
 
     if (!role || role === "Select role" || !fullName || !dob || !phone || !address) {
         alert("Please fill out all required fields.");
         return;
     }
 
-    const employeeData = {
-        role: role,
-        full_name: fullName,
-        date_of_birth: dob,
-        gender: gender,
-        phone_number: phone,
-        address: address,
-        email: email,
-        image: "",
-    };
+    const formData = new FormData();
+    formData.append("role", role);
+    formData.append("full_name", fullName);
+    formData.append("date_of_birth", dob);
+    formData.append("gender", gender);
+    formData.append("phone_number", phone);
+    formData.append("address", address);
+    formData.append("email", email);
+    if (profileImage) {
+        formData.append("image", profileImage);
+    }
 
     fetch(API_URL + `/employees/`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(employeeData),
+        body: formData,
     })
     .then(response => {
         if (!response.ok) {
