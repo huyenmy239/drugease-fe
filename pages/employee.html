@@ -21,21 +21,30 @@
             <button class="add-button" id="openModal">+ Employee</button>
         </div>
         <div class="search-filter">
-            <input type="text" placeholder="Search" id="search">
-            <select id="role-filter">
-
-            </select>
-            <select id="status-filter">
-                <option value="">Status</option>
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
-            </select>
+            <div class="input-with-icon">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search" id="search">
+            </div>
+            <div class="select-with-icon">
+                <i class="fas fa-user-tag"></i>
+                <select id="role-filter">
+                </select>
+            </div>
+            <div class="select-with-icon">
+                <i class="fas fa-sync-alt"></i>
+                <select id="status-filter">
+                    <option value="">Status</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                </select>
+            </div>
         </div>
+        
         <div class="table-container">
             <table>
                 <thead>
                     <tr>
-                        <th>EMPLOYEE ID</th>
+                        <th>ID CARD</th>
                         <th>FULL NAME</th>
                         <th>ACCOUNT</th>
                         <th>PHONE NUMBER</th>

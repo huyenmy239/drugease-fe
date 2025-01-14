@@ -177,7 +177,14 @@ function updateEmployee(id) {
         .then((response) => {
             if (!response.ok) {
                 return response.json().then((errorData) => {
-                    throw new Error(errorData.detail || "Failed to update employee.");
+                    if (typeof errorData === "object") {
+                        let errorMessages = [];
+                        for (const [key, value] of Object.entries(errorData)) {
+                            errorMessages.push(`${value}`);
+                        }
+                        throw new Error(errorMessages.join("\n"));
+                    }
+                    throw new Error(errorData || "Failed to update employee.");
                 });
             }
             return response.json();
@@ -277,8 +284,15 @@ document.querySelector('.create').addEventListener('click', () => {
     })
     .then(response => {
         if (!response.ok) {
-            return response.json().then(errorData => {
-                throw new Error(errorData.detail || "An error occurred");
+            return response.json().then((errorData) => {
+                if (typeof errorData === "object") {
+                    let errorMessages = [];
+                    for (const [key, value] of Object.entries(errorData)) {
+                        errorMessages.push(`${value}`);
+                    }
+                    throw new Error(errorMessages.join("\n"));
+                }
+                throw new Error(errorData || "Failed to create employee.");
             });
         }
         return response.json();
@@ -293,7 +307,7 @@ document.querySelector('.create').addEventListener('click', () => {
     })
     .catch(error => {
         console.error("Error creating employee:", error);
-        alert("Failed to create employee.");
+        alert(`Failed to create employee. ${error}`);
     });
 });
 

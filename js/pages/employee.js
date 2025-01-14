@@ -1,5 +1,6 @@
 const openModal = document.getElementById('openModal');
 const closeModal = document.getElementById('closeModal');
+const closeEditModal = document.getElementById('closeEditModal');
 const modal = document.getElementById('formModal');
 const editModal = document.getElementById('editModal');
 const overlay = document.getElementById('overlay');
@@ -11,6 +12,11 @@ openModal.addEventListener('click', () => {
 
 closeModal.addEventListener('click', () => {
     modal.style.display = 'none';
+    overlay.style.display = 'none';
+});
+
+closeEditModal.addEventListener('click', () => {
+    editModal.style.display = 'none';
     overlay.style.display = 'none';
 });
 
