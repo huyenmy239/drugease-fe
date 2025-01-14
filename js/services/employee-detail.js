@@ -43,6 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("employee-address").textContent = `Address: ${data.address}`;
 
             document.getElementById("employee-idcard").textContent = `ID Card: ${data.id_card}`;
+            document.getElementById("employee-citizenid").textContent = `Citizen ID: ${data.citizen_id}`;
             document.getElementById("employee-dob").textContent = `Date Of Birth: ${new Date(data.date_of_birth).toLocaleDateString()}`;
             document.getElementById("employee-gender").textContent = `Gender: ${data.gender ? "Male" : "Female"}`;
         })

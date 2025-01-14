@@ -109,6 +109,7 @@ function editEmployee(id) {
             const genderValue = employee.gender ? "1" : "0";
             document.querySelector(`input[name="gender-edit"][value="${genderValue}"]`).checked = true;
             document.getElementById("phone-edit").value = employee.phone_number;
+            document.getElementById("citizen-id-edit").value = employee.citizen_id;
             document.getElementById("address-edit").value = employee.address;
             document.getElementById("email-edit").value = employee.email;
             const activeValue = employee.is_active ? "1" : "0";
@@ -256,12 +257,13 @@ document.querySelector('.create').addEventListener('click', () => {
     const fullName = document.getElementById('full-name').value;
     const dob = document.getElementById('dob').value;
     const gender = document.querySelector('input[name="gender"]:checked').value;
+    const citizen_id = document.getElementById('citizen-id').value;
     const phone = document.getElementById('phone').value;
     const address = document.getElementById('address').value;
     const email = document.getElementById('email').value;
     const profileImage = document.getElementById('profile-image').files[0];
 
-    if (!role || role === "Select role" || !fullName || !dob || !phone || !address) {
+    if (!role || role === "Select role" || !fullName || !dob || !phone || !address || !citizen_id) {
         alert("Please fill out all required fields.");
         return;
     }
@@ -272,6 +274,7 @@ document.querySelector('.create').addEventListener('click', () => {
     formData.append("date_of_birth", dob);
     formData.append("gender", gender);
     formData.append("phone_number", phone);
+    formData.append("citizen_id", citizen_id);
     formData.append("address", address);
     formData.append("email", email);
     if (profileImage) {
