@@ -1,10 +1,16 @@
 import CONFIG from '../utils/settings.js';
 
 const API_URL = `http://${CONFIG.BASE_URL}/api/accounts`;
+const token = localStorage.getItem('token');
 
 async function fetchEmployees() {
     try {
-        const response = await fetch(API_URL + `/employee-list/`);
+        const response = await fetch(API_URL + `/employee-list/`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Token ${token}`,
+            }
+        });
         const employees = await response.json();
         populateTable(employees);
     } catch (error) {
@@ -71,7 +77,13 @@ function applyFilters() {
     const status = document.getElementById("status-filter").value;
     const search = document.getElementById("search").value.toLowerCase();
 
-    fetch(API_URL + `/employee-list/`)
+    fetch(API_URL + `/employee-list/`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Token ${token}`,
+            'Content-Type': 'application/json'
+        }
+    })
         .then((response) => response.json())
         .then((employees) => {
             const filteredEmployees = employees.filter((employee) => {
@@ -101,7 +113,13 @@ function editEmployee(id) {
 
     const fileInput = document.getElementById("profile-image-edit").value = "";
 
-    fetch(`${API_URL}/employees/${id}/`)
+    fetch(`${API_URL}/employees/${id}/`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Token ${token}`,
+            'Content-Type': 'application/json'
+        }
+    })
         .then((response) => response.json())
         .then((employee) => {
             document.getElementById("full-name-edit").value = employee.full_name;
@@ -173,6 +191,10 @@ function updateEmployee(id) {
 
     fetch(`${API_URL}/employees/${id}/`, {
         method: "PUT",
+        headers: {
+            'Authorization': `Token ${token}`,
+            'Content-Type': 'application/json'
+        },
         body: formData,
     })
         .then((response) => {
@@ -213,7 +235,13 @@ fetchEmployees();
 document.addEventListener('DOMContentLoaded', () => {
     const roleSelect = document.getElementById('role-filter');
 
-    fetch(API_URL + `/roles/`)
+    fetch(API_URL + `/roles/`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Token ${token}`,
+            'Content-Type': 'application/json'
+        }
+    })
         .then(response => response.json())
         .then(data => {
             roleSelect.innerHTML = '<option value="">Role</option>';
@@ -233,7 +261,13 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
     const roleSelect = document.getElementById('role');
 
-    fetch(API_URL + `/roles/`)
+    fetch(API_URL + `/roles/`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Token ${token}`,
+            'Content-Type': 'application/json'
+        }
+    })
         .then(response => response.json())
         .then(data => {
             roleSelect.innerHTML = '<option value="">Select role</option>';
@@ -283,6 +317,9 @@ document.querySelector('.create').addEventListener('click', () => {
 
     fetch(API_URL + `/employees/`, {
         method: 'POST',
+        headers: {
+            'Authorization': `Token ${token}`,
+        },
         body: formData,
     })
     .then(response => {
@@ -291,7 +328,7 @@ document.querySelector('.create').addEventListener('click', () => {
                 if (typeof errorData === "object") {
                     let errorMessages = [];
                     for (const [key, value] of Object.entries(errorData)) {
-                        errorMessages.push(`${value}`);
+                        errorMessages.push(`${key}: ${value}`);
                     }
                     throw new Error(errorMessages.join("\n"));
                 }
@@ -310,7 +347,7 @@ document.querySelector('.create').addEventListener('click', () => {
     })
     .catch(error => {
         console.error("Error creating employee:", error);
-        alert(`Failed to create employee. ${error}`);
+        alert(`Failed to create employee: ${error.message}`);
     });
 });
 

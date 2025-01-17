@@ -1,6 +1,7 @@
 import CONFIG from '../utils/settings.js';
 
 const API_URL = `http://${CONFIG.BASE_URL}/api/prescriptions`;
+const token = localStorage.getItem('token');
 
 const doctorId = localStorage.getItem('employee_id');
 const addButton = document.querySelector(".add-btn");
@@ -15,8 +16,8 @@ let prescriptionId = 1;
 
 function handleAddButtonClick() {
     document.getElementById('patient-select').disabled = true;
-    document.getElementById('disease-name').disabled = true;
-    document.getElementById('advice').disabled = true;
+    // document.getElementById('disease-name').disabled = true;
+    // document.getElementById('advice').disabled = true;
 
     addButton.style.display = "none";
     medicineAdd.style.display = "grid";
@@ -109,7 +110,12 @@ function populateMedicineTable(details) {
 
 async function fetchPatients() {
     try {
-        const response = await fetch(`${API_URL}/patient-list/`);
+        const response = await fetch(`${API_URL}/patient-list/`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Token ${token}`,
+            }
+        });
         if (!response.ok) {
             throw new Error('Failed to fetch patients');
         }
@@ -121,7 +127,12 @@ async function fetchPatients() {
 }
 
 async function fetchMedicines() {
-    const response = await fetch(`${API_URL}/medicines/`);
+    const response = await fetch(`${API_URL}/medicines/`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Token ${token}`,
+        }
+    });
     const data = await response.json();
 
     const medicineSelect = document.getElementById('medicine-select');
@@ -157,7 +168,12 @@ function populatePatientDropdown(patients) {
 
 async function fetchPatientDetails(patientId) {
     try {
-        const response = await fetch(`${API_URL}/patients/${patientId}/`);
+        const response = await fetch(`${API_URL}/patients/${patientId}/`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Token ${token}`,
+            }
+        });
         if (!response.ok) {
             throw new Error('Failed to fetch patient details');
         }
@@ -189,7 +205,12 @@ document.getElementById('patient-select').addEventListener('change', (event) => 
 
 async function fetchPrescriptions() {
     try {
-        const response = await fetch(`${API_URL}/prescription-list/?doctor=${doctorId}`);
+        const response = await fetch(`${API_URL}/prescription-list/?doctor=${doctorId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Token ${token}`,
+            }
+        });
         if (!response.ok) {
             throw new Error('Failed to fetch prescriptions');
         }
@@ -245,7 +266,7 @@ function populatePrescriptionTable(prescriptions) {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': 'Token ' + localStorage.getItem('token')
+                        'Authorization': `Token ${token}`
                     }
                 });
         
@@ -280,7 +301,7 @@ function populatePrescriptionTable(prescriptions) {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': 'Token ' + localStorage.getItem('token')
+                        'Authorization': `Token ${token}`
                     }
                 });
 
@@ -327,24 +348,32 @@ async function addPrescription() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Token ' + localStorage.getItem('token')
+                'Authorization': `Token ${token}`
             },
             body: JSON.stringify(prescriptionData)
         });
 
         const result = await response.json();
 
-        if (response.ok) {
-            alert('Prescription added successfully!');
-            handleAddButtonClick();
-            fetchMedicines();
-            prescriptionId = result.id;
-        } else {
-            alert('Failed to add prescription: ' + result.detail);
+        if (!response.ok) {
+            if (typeof result === "object") {
+                let errorMessages = [];
+                for (const [key, value] of Object.entries(result)) {
+                    errorMessages.push(`${key}: ${value}`);
+                }
+                throw new Error(errorMessages.join("\n"));
+            }
+            throw new Error(result.detail || "Failed to add prescription.");
         }
+
+        alert('Prescription added successfully!');
+        handleAddButtonClick();
+        fetchMedicines();
+        prescriptionId = result.id;
+
     } catch (error) {
         console.error('Error:', error);
-        alert('An error occurred while adding the prescription.');
+        alert('An error occurred: \n' + error.message);
     }
 }
 
@@ -397,21 +426,29 @@ document.getElementById('save-btn').addEventListener('click', async function () 
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Token ' + localStorage.getItem('token')
+                'Authorization': `Token ${token}`
             },
             body: JSON.stringify(updateData)
         });
 
         const result = await response.json();
 
-        if (response.ok) {
+        if (!response.ok) {
+            if (typeof result === "object") {
+                let errorMessages = [];
+                for (const [key, value] of Object.entries(result)) {
+                    errorMessages.push(`${key}: ${value}`);
+                }
+                throw new Error(errorMessages.join("\n"));
+            }
+            throw new Error(result.detail || "Failed to add prescription.");
+        }
+
             alert('Prescription updated successfully!');
             location.reload();
-        } else {
-            alert('Failed to update prescription: ' + result.detail);
-        }
+
     } catch (error) {
         console.error('Error:', error);
-        alert('An error occurred while updating the prescription.');
+        alert('An error occurred: \n' + error.message);
     }
 });

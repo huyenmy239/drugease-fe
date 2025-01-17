@@ -1,7 +1,8 @@
 <html>
 <head>
-    <title>Warehouse</title>
+    <title>Drug Management System</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="/assets/images/logoblue.png">
     <link rel="stylesheet" href="/assets/styles/components/sidebar.css">
     <link rel="stylesheet" href="/assets/styles/staff/warehouse.css">
 </head>
@@ -12,10 +13,7 @@
         <h1>Warehouse</h1>
         <div class="search-bar">
             <input type="text" placeholder="Search">
-            <select>
-                <option>Status</option>
-            </select>
-            <button>+ Warehouse</button>
+            <button id="add-btn">+ Warehouse</button>
         </div>
         <table>
             <thead>
@@ -38,110 +36,64 @@
                         <i class="fas fa-trash"></i>
                     </td>
                 </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Central Pharma Warehouse</td>
-                    <td>221B Baker Street, London, United Kingdom.</td>
-                    <td class="status-active">Active</td>
-                    <td class="action-icons">
-                        <i class="fas fa-pen"></i>
-                        <i class="fas fa-trash"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Kho 45 Nguyễn Trãi</td>
-                    <td>Số 45, Đường Nguyễn Trãi, Phường Thanh Xuân, Quận Thanh Xuân, Hà Nội, Việt Nam.</td>
-                    <td class="status-active">Active</td>
-                    <td class="action-icons">
-                        <i class="fas fa-pen"></i>
-                        <i class="fas fa-trash"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Kho 45 Nguyễn Trãi</td>
-                    <td>Số 45, Đường Nguyễn Trãi, Phường Thanh Xuân, Quận Thanh Xuân, Hà Nội, Việt Nam.</td>
-                    <td class="status-inactive">Inactive</td>
-                    <td class="action-icons">
-                        <i class="fas fa-pen"></i>
-                        <i class="fas fa-trash"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Kho 45 Nguyễn Trãi</td>
-                    <td>Số 45, Đường Nguyễn Trãi, Phường Thanh Xuân, Quận Thanh Xuân, Hà Nội, Việt Nam.</td>
-                    <td class="status-inactive">Inactive</td>
-                    <td class="action-icons">
-                        <i class="fas fa-pen"></i>
-                        <i class="fas fa-trash"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Kho 45 Nguyễn Trãi</td>
-                    <td>Số 45, Đường Nguyễn Trãi, Phường Thanh Xuân, Quận Thanh Xuân, Hà Nội, Việt Nam.</td>
-                    <td class="status-active">Active</td>
-                    <td class="action-icons">
-                        <i class="fas fa-pen"></i>
-                        <i class="fas fa-trash"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Kho 45 Nguyễn Trãi</td>
-                    <td>Số 45, Đường Nguyễn Trãi, Phường Thanh Xuân, Quận Thanh Xuân, Hà Nội, Việt Nam.</td>
-                    <td class="status-active">Active</td>
-                    <td class="action-icons">
-                        <i class="fas fa-pen"></i>
-                        <i class="fas fa-trash"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Kho 45 Nguyễn Trãi</td>
-                    <td>Số 45, Đường Nguyễn Trãi, Phường Thanh Xuân, Quận Thanh Xuân, Hà Nội, Việt Nam.</td>
-                    <td class="status-active">Active</td>
-                    <td class="action-icons">
-                        <i class="fas fa-pen"></i>
-                        <i class="fas fa-trash"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Kho 45 Nguyễn Trãi</td>
-                    <td>Số 45, Đường Nguyễn Trãi, Phường Thanh Xuân, Quận Thanh Xuân, Hà Nội, Việt Nam.</td>
-                    <td class="status-active">Active</td>
-                    <td class="action-icons">
-                        <i class="fas fa-pen"></i>
-                        <i class="fas fa-trash"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Kho 45 Nguyễn Trãi</td>
-                    <td>Số 45, Đường Nguyễn Trãi, Phường Thanh Xuân, Quận Thanh Xuân, Hà Nội, Việt Nam.</td>
-                    <td class="status-active">Active</td>
-                    <td class="action-icons">
-                        <i class="fas fa-pen"></i>
-                        <i class="fas fa-trash"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Kho 45 Nguyễn Trãi</td>
-                    <td>Số 45, Đường Nguyễn Trãi, Phường Thanh Xuân, Quận Thanh Xuân, Hà Nội, Việt Nam.</td>
-                    <td class="status-active">Active</td>
-                    <td class="action-icons">
-                        <i class="fas fa-pen"></i>
-                        <i class="fas fa-trash"></i>
-                    </td>
-                </tr>
             </tbody>
         </table>
     </div>
 
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Modal -->
+    <div class="form-container" id="createModal">
+        <h2>Create new warehouse</h2>
+        <form>
+            <div class="form-group">
+                <label for="name">Name of Warehouse:</label>
+                <input type="text" id="name" placeholder="Enter full name">
+            </div>
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <input type="text" id="address" placeholder="Enter citizen identification">
+            </div>    
+
+            <div class="buttons">
+                <button type="button" class="create" id="createWarehouse">CREATE</button>
+                <button type="button" class="cancel" id="closeModal">CANCEL</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="form-container" id="editModal">
+        <h2>Edit warehouse</h2>
+        <form>
+            <div class="form-group">
+                <label for="name-edit">Name of Warehouse:</label>
+                <input disabled type="text" id="name-edit" placeholder="Enter full name">
+            </div>
+            <div class="form-group">
+                <label for="address-edit">Address:</label>
+                <input type="text" id="address-edit" placeholder="Enter citizen identification">
+            </div>  
+            <div class="form-group">
+                <label>Active:</label>
+                <div class="radio-group">
+                    <label class="radio-item">
+                        <input type="radio" name="active-edit" value="1" checked> Active
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="active-edit" value="0"> Inactive
+                    </label>
+                </div>
+            </div>             
+
+            <div class="buttons">
+                <button type="button" class="save-btn" id="save">SAVE</button>
+                <button type="button" class="cancel" id="closeEditModal">CANCEL</button>
+            </div>
+        </form>
+    </div>
+
     <script type="module" src="/js/components/sidebar.js"></script>
+    <script type="module" src="/js/services/staff/warehouse.js"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@ const sidebarTemplates = {
         <div class="sidebar-body">
             <div class="logo">
                 <img alt="logo system" src="/assets/images/logoblue.png" />
-                <a href="employee.html"><span>drug management system</span></a>
+                <a href="/pages/home.html"><span>drug management system</span></a>
             </div>
 
             <ul class="menu">
@@ -77,7 +77,7 @@ const sidebarTemplates = {
         <div class="sidebar-body">
             <div class="logo">
                 <img alt="logo system" src="/assets/images/logoblue.png" />
-                <a href="employee.html"><span>drug management system</span></a>
+                <a href="/pages/home.html"><span>drug management system</span></a>
             </div>
 
             <ul class="menu">
@@ -88,7 +88,7 @@ const sidebarTemplates = {
                     </a></li>
 
                 <li class="no-hover section-header">INDIVIDUAL MANAGEMENT</li>
-                <li><a href="profile.html">
+                <li><a href="/pages/profile.html">
                         <i class="fa-solid fa-circle-user"></i>
                         Profile
                     </a></li>
@@ -103,18 +103,18 @@ const sidebarTemplates = {
         <div class="sidebar-body">
             <div class="logo">
                 <img alt="logo system" src="/assets/images/logoblue.png" />
-                <a href="employee.html"><span>drug management system</span></a>
+                <a href="/pages/home.html"><span>drug management system</span></a>
             </div>
 
             <ul class="menu">
                 <li class="no-hover section-header">RESOURCE MANAGEMENT</li>
-                <li><a href="#">
+                <li><a href="/pages/pharmacist/export.html">
                         <i class="fa-solid fa-file-export"></i>
                         Export Receipt
                     </a></li>
 
                 <li class="no-hover section-header">INDIVIDUAL MANAGEMENT</li>
-                <li><a href="profile.html">
+                <li><a href="/pages/profile.html">
                         <i class="fa-solid fa-circle-user"></i>
                         Profile
                     </a></li>
@@ -129,7 +129,7 @@ const sidebarTemplates = {
         <div class="sidebar-body">
             <div class="logo">
                 <img alt="logo system" src="/assets/images/logoblue.png" />
-                <a href="employee.html"><span>drug management system</span></a>
+                <a href="/pages/home.html"><span>drug management system</span></a>
             </div>
 
             <ul class="menu">
@@ -148,13 +148,13 @@ const sidebarTemplates = {
                         <i class="fa-solid fa-warehouse"></i>
                         Warehouse
                     </a></li>
-                <li><a href="#">
+                <li><a href="/pages/staff/import.html">
                         <i class="fa-solid fa-file-import"></i>
                         Import Receipt
                     </a></li>
 
                 <li class="no-hover section-header">INDIVIDUAL MANAGEMENT</li>
-                <li><a href="profile.html">
+                <li><a href="/pages/profile.html">
                         <i class="fa-solid fa-circle-user"></i>
                         Profile
                     </a></li>

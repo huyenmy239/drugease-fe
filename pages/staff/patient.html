@@ -1,7 +1,8 @@
 <html>
 <head>
-    <title>Patients</title>
+    <title>Drug Management System</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="/assets/images/logoblue.png">
     <link rel="stylesheet" href="/assets/styles/components/sidebar.css">
     <link rel="stylesheet" href="/assets/styles/staff/patient.css">
 </head>
@@ -15,7 +16,7 @@
                 <i class="fas fa-search"></i>
                 <input type="text" placeholder="Search">
             </div>
-            <button class="add-patient-btn"><i class="fas fa-plus"></i> Patient</button>
+            <button class="add-patient-btn" id="add-btn"><i class="fas fa-plus"></i> Patient</button>
         </div>
         <table>
             <thead>
@@ -29,118 +30,10 @@
                     <th>ACTION</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="patient-table-body">
                 <tr>
                     <td>220421</td>
-                    <td>Nguyễn Thị Thanh Huyền</td>
-                    <td>03/07/2003</td>
-                    <td>Female</td>
-                    <td>0123546987</td>
-                    <td>0.8</td>
-                    <td class="action-icons">
-                        <i class="fas fa-eye"></i>
-                        <i class="fas fa-pen"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Nguyễn Thị Thanh Huyền</td>
-                    <td>03/07/2003</td>
-                    <td>Female</td>
-                    <td>0123546987</td>
-                    <td>0.5</td>
-                    <td class="action-icons">
-                        <i class="fas fa-eye"></i>
-                        <i class="fas fa-pen"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Nguyễn Thị Thanh Huyền</td>
-                    <td>03/07/2003</td>
-                    <td>Female</td>
-                    <td>0123546987</td>
-                    <td>0.8</td>
-                    <td class="action-icons">
-                        <i class="fas fa-eye"></i>
-                        <i class="fas fa-pen"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Nguyễn Thị Thanh Huyền</td>
-                    <td>03/07/2003</td>
-                    <td>Female</td>
-                    <td>0123546987</td>
-                    <td>0.8</td>
-                    <td class="action-icons">
-                        <i class="fas fa-eye"></i>
-                        <i class="fas fa-pen"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Nguyễn Thị Thanh Huyền</td>
-                    <td>03/07/2003</td>
-                    <td>Female</td>
-                    <td>0123546987</td>
-                    <td>0.5</td>
-                    <td class="action-icons">
-                        <i class="fas fa-eye"></i>
-                        <i class="fas fa-pen"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Nguyễn Thị Thanh Huyền</td>
-                    <td>03/07/2003</td>
-                    <td>Female</td>
-                    <td>0123546987</td>
-                    <td>0.8</td>
-                    <td class="action-icons">
-                        <i class="fas fa-eye"></i>
-                        <i class="fas fa-pen"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Nguyễn Thị Thanh Huyền</td>
-                    <td>03/07/2003</td>
-                    <td>Female</td>
-                    <td>0123546987</td>
-                    <td>0.8</td>
-                    <td class="action-icons">
-                        <i class="fas fa-eye"></i>
-                        <i class="fas fa-pen"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Nguyễn Thị Thanh Huyền</td>
-                    <td>03/07/2003</td>
-                    <td>Female</td>
-                    <td>0123546987</td>
-                    <td>0.8</td>
-                    <td class="action-icons">
-                        <i class="fas fa-eye"></i>
-                        <i class="fas fa-pen"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Nguyễn Thị Thanh Huyền</td>
-                    <td>03/07/2003</td>
-                    <td>Female</td>
-                    <td>0123546987</td>
-                    <td>0.8</td>
-                    <td class="action-icons">
-                        <i class="fas fa-eye"></i>
-                        <i class="fas fa-pen"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Nguyễn Thị Thanh Huyền</td>
+                    <td>Nguyễn Thị Thanh Huyến</td>
                     <td>03/07/2003</td>
                     <td>Female</td>
                     <td>0123546987</td>
@@ -154,6 +47,116 @@
         </table>
     </div>
 
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Modal -->
+    <div class="form-container" id="createModal">
+        <h2>Create new patient</h2>
+        <form>
+            <div class="form-group">
+                <label for="full-name">Full name:</label>
+                <input type="text" id="full-name" placeholder="Enter full name">
+            </div>
+            <div class="form-group">
+                <label for="dob">Date of birth:</label>
+                <input type="date" id="dob">
+            </div>
+            <div class="form-group">
+                <label>Gender:</label>
+                <div class="radio-group">
+                    <label class="radio-item">
+                        <input type="radio" name="gender" value="1" checked> Male
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="gender" value="0"> Female
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="citizen-id">Citizen Identification:</label>
+                <input type="text" id="citizen-id" placeholder="Enter citizen identification">
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input type="text" id="phone" placeholder="Enter phone number">
+            </div>
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <input type="text" id="address" placeholder="Enter address">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <label for="insurance">Insurance</label>
+                <input type="number" id="insurance" step="0.1" min="0" max="1" value="0" placeholder="Enter insurance value (e.g., 0.5)">
+            </div>           
+
+            <div class="buttons">
+                <button type="button" class="create" id="createPatient">CREATE</button>
+                <button type="button" class="cancel" id="closeModal">CANCEL</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="form-container" id="editModal">
+        <h2>Edit patient</h2>
+        <form>
+            <div class="form-group">
+                <label for="full-name-edit">Full name:</label>
+                <input disabled type="text" id="full-name-edit" placeholder="Enter full name">
+            </div>
+            <div class="form-group">
+                <label for="dob-edit">Date of birth:</label>
+                <input disabled type="date" id="dob-edit">
+            </div>
+            <div class="form-group">
+                <label for="registration-edit">Registration Date:</label>
+                <input disabled type="date" id="registration-edit">
+            </div>
+            <div class="form-group">
+                <label>Gender:</label>
+                <div class="radio-group">
+                    <label class="radio-item">
+                        <input disabled type="radio" name="gender-edit" value="1" checked> Male
+                    </label>
+                    <label class="radio-item">
+                        <input disabled type="radio" name="gender-edit" value="0"> Female
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="citizen-id-edit">Citizen Identification:</label>
+                <input disabled type="text" id="citizen-id-edit" placeholder="Enter citizen identification">
+            </div>
+            <div class="form-group">
+                <label for="phone-edit">Phone Number:</label>
+                <input type="text" id="phone-edit" placeholder="Enter phone number">
+            </div>
+            <div class="form-group">
+                <label for="address-edit">Address:</label>
+                <input type="text" id="address-edit" placeholder="Enter address">
+            </div>
+            <div class="form-group">
+                <label for="email-edit">Email:</label>
+                <input type="email" id="email-edit" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <label for="insurance-edit">Insurance</label>
+                <input type="number" id="insurance-edit" step="0.1" min="0" max="1" placeholder="Enter insurance value (e.g., 0.5)">
+            </div>           
+
+            <div class="buttons">
+                <button type="button" class="save-btn" id="save">SAVE</button>
+                <button type="button" class="cancel" id="closeEditModal">CANCEL</button>
+            </div>
+        </form>
+    </div>
+
     <script type="module" src="/js/components/sidebar.js"></script>
+    <script type="module" src="/js/services/staff/patient.js"></script>
+    <script src="/js/pages/staff/patient.js"></script>
 </body>
 </html>

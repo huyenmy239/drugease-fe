@@ -3,15 +3,46 @@
 
 <head>
     <title>
-        Drug management system
+        Drug Management System
     </title>
     <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="/assets/images/logoblue.png">
     <link rel="stylesheet" href="/assets/styles/components/sidebar.css">
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh; /* Đảm bảo chiều cao toàn màn hình */
+        }
+
+        .main-content {
+            flex-grow: 1; /* Chiếm toàn bộ không gian còn lại */
+            padding: 20px;
+            background-color: #f4f4f4; /* Màu nền cho nội dung chính */
+            background-image: url('/assets/images/background.jpg');
+            background-size: cover; /* Hình nền bao phủ toàn bộ vùng main-content */
+            background-position: center; /* Căn giữa hình nền */
+            background-repeat: no-repeat; /* Không lặp hình nền */
+        }
+
+    </style>
 </head>
 
 <body>
-    <div class="sidebar" id="sidebar-placeholder"></div>
+    <div class="container">
+        <div class="sidebar" id="sidebar-placeholder"></div>
+        <div class="main-content">
+        </div>
+    </div>
+
     <script src="/js/components/sidebar.js"></script>
 
 </body>

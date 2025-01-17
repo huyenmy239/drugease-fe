@@ -1,7 +1,8 @@
 <html>
 <head>
-    <title>Medicine</title>
+    <title>Drug Management System</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="/assets/images/logoblue.png">
     <link rel="stylesheet" href="/assets/styles/components/sidebar.css">
     <link rel="stylesheet" href="/assets/styles/staff/medicine.css">
 </head>
@@ -12,10 +13,7 @@
         <h1>Medicine</h1>
         <div class="search-bar">
             <input type="text" placeholder="Search">
-            <select>
-                <option value="status">Status</option>
-            </select>
-            <button class="add-medicine">+ Medicine</button>
+            <button id="add-btn" class="add-medicine">+ Medicine</button>
         </div>
         <table>
             <thead>
@@ -26,11 +24,10 @@
                     <th>UNIT</th>
                     <th>DESCRIPTION</th>
                     <th>PRICE</th>
-                    <th>STATUS</th>
                     <th>ACTION</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody  id="medicine-list">
                 <tr>
                     <td>220421</td>
                     <td>Abobotulinum Toxin A</td>
@@ -38,147 +35,81 @@
                     <td>Chai</td>
                     <td>Thuốc tiêm dưới da 40 mg/0,8 ml.</td>
                     <td>3.500</td>
-                    <td class="status-available">Available</td>
                     <td class="actions">
                         <i class="fas fa-pen"></i>
                         <i class="fas fa-trash"></i>
                     </td>
                 </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Abobotulinum Toxin A</td>
-                    <td>500</td>
-                    <td>Ví</td>
-                    <td>Thuốc tiêm dưới da 40 mg/0,8 ml.</td>
-                    <td>3.500</td>
-                    <td class="status-available">Available</td>
-                    <td class="actions">
-                        <i class="fas fa-pen"></i>
-                        <i class="fas fa-trash"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Abobotulinum Toxin A</td>
-                    <td>500</td>
-                    <td>Hộp</td>
-                    <td>Thuốc tiêm dưới da 40 mg/0,8 ml.</td>
-                    <td>3.500</td>
-                    <td class="status-available">Available</td>
-                    <td class="actions">
-                        <i class="fas fa-pen"></i>
-                        <i class="fas fa-trash"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Abobotulinum Toxin A</td>
-                    <td>0</td>
-                    <td>Hộp</td>
-                    <td>Thuốc tiêm dưới da 40 mg/0,8 ml.</td>
-                    <td>3.500</td>
-                    <td class="status-unavailable">Unavailable</td>
-                    <td class="actions">
-                        <i class="fas fa-pen"></i>
-                        <i class="fas fa-trash"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Abobotulinum Toxin A</td>
-                    <td>0</td>
-                    <td>Hộp</td>
-                    <td>Thuốc tiêm dưới da 40 mg/0,8 ml.</td>
-                    <td>3.500</td>
-                    <td class="status-unavailable">Unavailable</td>
-                    <td class="actions">
-                        <i class="fas fa-pen"></i>
-                        <i class="fas fa-trash"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Abobotulinum Toxin A</td>
-                    <td>500</td>
-                    <td>Viên</td>
-                    <td>Thuốc tiêm dưới da 40 mg/0,8 ml.</td>
-                    <td>3.500</td>
-                    <td class="status-available">Available</td>
-                    <td class="actions">
-                        <i class="fas fa-pen"></i>
-                        <i class="fas fa-trash"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Abobotulinum Toxin A</td>
-                    <td>500</td>
-                    <td>Hộp</td>
-                    <td>Thuốc tiêm dưới da 40 mg/0,8 ml.</td>
-                    <td>3.500</td>
-                    <td class="status-available">Available</td>
-                    <td class="actions">
-                        <i class="fas fa-pen"></i>
-                        <i class="fas fa-trash"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Abobotulinum Toxin A</td>
-                    <td>500</td>
-                    <td>Ví</td>
-                    <td>Thuốc tiêm dưới da 40 mg/0,8 ml.</td>
-                    <td>3.500</td>
-                    <td class="status-available">Available</td>
-                    <td class="actions">
-                        <i class="fas fa-pen"></i>
-                        <i class="fas fa-trash"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Abobotulinum Toxin A</td>
-                    <td>500</td>
-                    <td>Viên</td>
-                    <td>Thuốc tiêm dưới da 40 mg/0,8 ml.</td>
-                    <td>3.500</td>
-                    <td class="status-available">Available</td>
-                    <td class="actions">
-                        <i class="fas fa-pen"></i>
-                        <i class="fas fa-trash"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Abobotulinum Toxin A</td>
-                    <td>0</td>
-                    <td>Viên</td>
-                    <td>Thuốc tiêm dưới da 40 mg/0,8 ml.</td>
-                    <td>3.500</td>
-                    <td class="status-unavailable">Unavailable</td>
-                    <td class="actions">
-                        <i class="fas fa-pen"></i>
-                        <i class="fas fa-trash"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td>220421</td>
-                    <td>Abobotulinum Toxin A</td>
-                    <td>500</td>
-                    <td>Viên</td>
-                    <td>Thuốc tiêm dưới da 40 mg/0,8 ml.</td>
-                    <td>3.500</td>
-                    <td class="status-available">Available</td>
-                    <td class="actions">
-                        <i class="fas fa-pen"></i>
-                        <i class="fas fa-trash"></i>
-                    </td>
-                </tr>
+                
             </tbody>
         </table>
 
     </div>
 
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Modal -->
+    <div class="form-container" id="createModal">
+        <h2>Create new medicine</h2>
+        <form>
+            <div class="form-group">
+                <label for="name">Medicine Name:</label>
+                <input type="text" id="name" placeholder="Enter medicine name">
+            </div>
+            <div class="form-group">
+                <label for="unit">Unit:</label>
+                <input type="text" id="unit" placeholder="Enter unit">
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <input type="text" id="description" placeholder="Enter description">
+            </div>
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="number" id="price" placeholder="Enter the price">
+            </div>           
+
+            <div class="buttons">
+                <button type="button" class="create" id="createMedicine">CREATE</button>
+                <button type="button" class="cancel" id="closeModal">CANCEL</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="form-container" id="editModal">
+        <h2>Edit medicine</h2>
+        <form>
+            <div class="form-group">
+                <label for="name-edit">Medicine Name:</label>
+                <input type="text" id="name-edit" placeholder="Enter medicine name">
+            </div>
+            <div class="form-group">
+                <label for="quantity-edit">Quantity:</label>
+                <input disabled type="number" id="quantity-edit" value="10" placeholder="Enter quantity">
+            </div>
+            <div class="form-group">
+                <label for="unit-edit">Unit:</label>
+                <input type="text" id="unit-edit" placeholder="Enter unit">
+            </div>
+            <div class="form-group">
+                <label for="description-edit">Description:</label>
+                <input type="text" id="description-edit" placeholder="Enter description">
+            </div>
+            <div class="form-group">
+                <label for="price-edit">Price</label>
+                <input type="number" id="price-edit" placeholder="Enter the price">
+            </div>           
+
+            <div class="buttons">
+                <button type="button" class="save-btn" id="saveMedicine">SAVE</button>
+                <button type="button" class="cancel" id="closeEditModal">CANCEL</button>
+            </div>
+        </form>
+    </div>
+
     <script type="module" src="/js/components/sidebar.js"></script>
+    <script type="module" src="/js/services/staff/medicine.js"></script>
+    <script src="/js/pages/staff/medicine.js"></script>
 </body>
 </html>

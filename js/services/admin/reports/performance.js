@@ -1,6 +1,7 @@
 import CONFIG from '../../../utils/settings.js';
 
 const API_URL = `http://${CONFIG.BASE_URL}/api/reports`;
+const token = localStorage.getItem('token');
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -8,7 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchDoctorReport() {
         try {
-            const response = await fetch(API_URL + '/doctor');
+            const response = await fetch(API_URL + '/doctor', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Token ${token}`,
+                    'Content-Type': 'application/json' 
+                }
+            });
             const data = await response.json();
             renderDoctorReport(data);
         } catch (error) {
@@ -39,7 +46,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchPharmacistReport() {
         try {
-            const response = await fetch(API_URL + '/pharmacist');
+            const response = await fetch(API_URL + '/pharmacist', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Token ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
             const data = await response.json();
             renderPharmacistReport(data);
         } catch (error) {

@@ -1,12 +1,18 @@
 import CONFIG from '../utils/settings.js';
 
 const API_URL = `http://${CONFIG.BASE_URL}/api/accounts`;
+const token = localStorage.getItem('token');
 
 document.addEventListener("DOMContentLoaded", () => {
 
     const username = localStorage.getItem("username");
 
-    fetch(API_URL + `/profile/${username}`)
+    fetch(API_URL + `/profile/${username}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Token ${token}`,
+        }
+    })
         .then((response) => {
             if (!response.ok) {
                 throw new Error("Failed to fetch employee details");

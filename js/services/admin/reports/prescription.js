@@ -1,6 +1,7 @@
 import CONFIG from '../../../utils/settings.js';
 
 const API_URL = `http://${CONFIG.BASE_URL}/api/reports`;
+const token = localStorage.getItem('token');
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -8,7 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchReportData() {
         try {
-            const response = await fetch(API_URL + '/number-of-prescriptions');
+            const response = await fetch(API_URL + '/number-of-prescriptions', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Token ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
             const data = await response.json();
             renderReportData(data);
         } catch (error) {
@@ -41,7 +48,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchMedicationsReport() {
         try {
-            const response = await fetch(API_URL + '/med-in-prescription');
+            const response = await fetch(API_URL + '/med-in-prescription', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Token ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
             const data = await response.json();
             renderMedicationsReport(data);
         } catch (error) {

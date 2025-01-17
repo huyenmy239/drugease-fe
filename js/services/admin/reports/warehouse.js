@@ -8,7 +8,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchExportReport() {
         try {
-            const response = await fetch(API_URL + '/medicine-export');
+            const response = await fetch(API_URL + '/medicine-export', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Token ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
             const data = await response.json();
             renderExportReport(data);
         } catch (error) {

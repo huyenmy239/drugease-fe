@@ -7,76 +7,70 @@
     </title>
     <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" rel="stylesheet" />
-    <link rel="icon" type="image/png" href="/assets/images/logoblue.png">
     <link rel="stylesheet" href="/assets/styles/components/sidebar.css">
-    <link rel="stylesheet" href="/assets/styles/prescription.css">
+    <link rel="icon" type="image/png" href="/assets/images/logoblue.png">
+    <link rel="stylesheet" href="/assets/styles/pharmacist/export.css">
 </head>
 
 <body>
     <div class="sidebar" id="sidebar-placeholder"></div>
     <div class="container">
         <div class="manage-banner">
-            <h1>Prescription</h1>
+            <h1>Export Receipt</h1>
             <button id="save-btn" class="btn-save">
                 Save
                 <i class="fa-solid fa-download"></i>
             </button>
 
             <!-- Disease Information Section -->
-            <section class="disease-infor">
-                <h2>Disease Information</h2>
+            <section class="receipt-infor">
+                <h2>Export Receipt Information</h2>
 
                 <div class="form">
-                    <div class="patient-select">
-                        <label for="patient-select">Patient:</label>
-                        <select id="patient-select" name="patient">
+                    <div class="prescription-select">
+                        <label for="prescription-select">Prescription ID:</label>
+                        <select id="prescription-select" name="prescription">
                             <!-- <option value="patient1">Patient 1</option>
                             <option value="patient2">Patient 2</option>
                             <option value="patient3">Patient 3</option> -->
                         </select>
                     </div>
 
+                    <div class="show-prescription">
+                        <label for="prescription">Prescription ID:</label>
+                        <span id="prescription">N/A</span>
+                    </div>
                     <!-- Patient Details (to be shown after selecting a patient) -->
-                    <div class="patient-details">
+                    <div class="export-details">
                         <div class="detail">
-                            <label for="dob">Date of Birth:</label>
-                            <span id="dob">N/A</span>
+                            <label for="date">Date:</label>
+                            <span id="date">N/A</span>
                         </div>
-                        <div class="detail">
-                            <label for="gender">Gender:</label>
-                            <span id="gender">N/A</span>
-                        </div>
-                        <div class="detail">
-                            <label for="address">Address:</label>
-                            <span id="address">N/A</span>
-                        </div>
-                        <div class="detail">
-                            <label for="insurance">Health Insurance:</label>
-                            <span id="insurance">N/A</span>
-                        </div>
+                        <!--<div class="detail">
+                            <label for="total_amount">Total amount:</label>
+                            <span id="total_amount">N/A</span>
+                        </div>-->
+
                     </div>
 
                     <!-- Disease Name Input -->
-                    <div class="disease-name-input">
-                        <label for="disease-name">Diagnosis:</label>
-                        <input type="text" id="disease-name" name="disease-name" placeholder="Type...">
+                    <div class="warehouse-select">
+                        <label for="warehouse-select">Warehouse:</label>
+                        <select id="warehouse-select" name="prescription">
+                            <!-- <option value="patient1">Patient 1</option>
+                            <option value="patient2">Patient 2</option>
+                            <option value="patient3">Patient 3</option> -->
+                        </select>
                     </div>
 
-                    <div class="advice-input">
-                        <label for="advice">Instruction:</label>
-                        <input type="text" id="advice" name="advice" placeholder="Type...">
-                    </div>
+                    
 
-                    <button id="add-prescription-btn" class="add-btn">+ Add</button>
+                    <button id="add-export-btn" class="add-btn">+ Add</button>
 
                     <div class="medicine-add">
                         <div class="medicine-select">
                             <label for="medicine-select">Medicine:</label>
-                            <select id="medicine-select" name="medicine">
-                                <!-- <option value="medicine1">Adalimumab</option>
-                                <option value="medicine2">Broncho Vacxom</option>
-                                <option value="medicine3">Paracetamol</option> -->
-                            </select>
+                            <span id="medicine-select">N/A</span>
                         </div>
 
                         <div class="quantity-container">
@@ -88,45 +82,45 @@
                             </div>
                         </div>
 
-                        <div class="note-input">
-                            <label for="note">Note:</label>
-                            <input type="text" id="note" name="note" placeholder="Type...">
-                        </div>
+                        <span id="stock-quantity">N/A</span>
 
-                        <button class="add-medicine-btn">+ Add</button>
+                        <button class="add-medicine-btn" id="add-medicine">+ Add</button>
 
                     </div>
                 </div>
             </section>
 
             <div class="medicine-infor">
-                <h2 class="h-prescription">Prescriptions</h2>
-                <div class="list-prescription">
-                    <table class="patient-table list-table">
+                <h2 class="h-export">Export Receipts</h2>
+                <div class="list-export">
+                    <table class="export-table list-table">
                         <thead>
                             <tr>
-                                <th>PRESCRIPTION ID</th>
-                                <th>PATIENT NAME</th>
-                                <th>DIAGNOSIS</th>
+                                <th>ID</th>
+                                <th>WAREHOUSE</th>
                                 <th>DATE</th>
+                                <th>TOTAL AMOUNT</th>
                                 <th>ACTION</th>
                             </tr>
                         </thead>
-                        <tbody id="patient-list">
+                        <tbody id="export-list">
 
                         </tbody>
                     </table>
                 </div>
 
 
-                <h2 class="h-details">Prescription Details</h2>
+                <h2 class="h-details">Export Details</h2>
                 <div class="list-details">
                     <table class="detail-medicine-table list-table">
                         <thead>
                             <tr>
-                                <th>MEDICINE NAME</th>
+                                <th>MEDICINE</th>
                                 <th>QUANTITY</th>
-                                <th>NOTE</th>
+                                <th>PRICE</th>
+                                <th>INSURANCE</th>
+                                <th>INSURANCE PAY</th>
+                                <th>PATIENT PAY</th>
                                 <th>ACTION</th>
                             </tr>
                         </thead>
@@ -154,11 +148,10 @@
                 </div>
             </div>
         </div>
-    </div>
 
         <script src="/js/components/sidebar.js"></script>
-        <script src="/js/pages/prescription.js"></script>
-        <script type="module" src="/js/services/prescription.js"></script>
+        <script src="/js/pages/pharmacist/export.js"></script>
+        <script type="module" src="/js/services/pharmacist/export.js"></script>
 </body>
 
 </html>

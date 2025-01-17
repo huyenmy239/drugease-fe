@@ -4,7 +4,13 @@ const API_URL = `http://${CONFIG.BASE_URL}/api/reports`;
 
 async function fetchData() {
     try {
-        const response = await fetch(API_URL + '/medicine-revenue');
+        const response = await fetch(API_URL + '/medicine-revenue', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Token ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json'
+            }
+        });
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }

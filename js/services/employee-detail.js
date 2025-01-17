@@ -10,7 +10,13 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    fetch(API_URL + `/employees/${employeeId}`)
+    fetch(API_URL + `/employees/${employeeId}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Token ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json'
+        }
+    })
         .then((response) => {
             if (!response.ok) {
                 throw new Error("Failed to fetch employee details");
