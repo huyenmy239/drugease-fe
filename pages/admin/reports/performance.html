@@ -1,0 +1,93 @@
+<html>
+<head>
+    <title>Report - Performance</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/styles/components/sidebar.css">
+    <link rel="stylesheet" href="/assets/styles/admin/report.css">
+</head>
+<body>
+    <div class="sidebar" id="sidebar-placeholder"></div>
+
+    <div class="container">
+        <h1>Performance</h1>
+        <div class="report-header">
+            <div class="tab active" id="doctor-tab">Doctor Report</div>
+            <div class="tab" id="pharmacist-tab">Pharmacist Report</div>
+            <div class="tab" id="staff-tab">Staff Report</div>
+        </div>
+        <div id="doctor-report" class="report-content">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Doctor</th>
+                        <th>Prescriptions</th>
+                        <th>Average (Minute)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Dr. Mie</td>
+                        <td>50</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>Dr. Null</td>
+                        <td>50</td>
+                        <td>20</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="pharmacist-report" class="report-content" style="display: none;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pharmacist</th>
+                        <th>Prescriptions Dispensed</th>
+                        <th>Efficiency (Prescriptions/Hour)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Amoxicillin</td>
+                        <td>25</td>
+                        <td>2.5</td>
+                    </tr>
+                    <tr>
+                        <td>Ibuprofen</td>
+                        <td>15</td>
+                        <td>4</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="staff-report" class="report-content" style="display: none;"">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Doctor</th>
+                        <th>Prescriptions</th>
+                        <th>Average (Minute)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Dr. Mie</td>
+                        <td>50</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>Dr. Null</td>
+                        <td>50</td>
+                        <td>20</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script type="module" src="/js/components/sidebar.js"></script>
+    <script src="/js/pages/admin/reports/performance.js"></script>
+    <script type="module" src="/js/services/admin/reports/performance.js"></script>
+</body>
+</html>

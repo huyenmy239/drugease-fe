@@ -1,0 +1,102 @@
+<html>
+<head>
+    <title>Patients</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/styles/components/sidebar.css">
+    <link rel="stylesheet" href="/assets/styles/admin/report.css">
+</head>
+<body>
+    <div class="sidebar" id="sidebar-placeholder"></div>
+
+    <div class="container">
+        <h1>Warehouse</h1>
+        <div class="report-header">
+            <div class="tab active" id="inventory-tab">Inventory Report</div>
+            <div class="tab" id="import-tab">Import Report</div>
+            <div class="tab" id="export-tab">Export Report</div>
+        </div>
+        <div id="inventory-report" class="report-content">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Total Prescriptions</th>
+                        <th>Undispensed Prescriptions</th>
+                        <th>Dispensed Prescriptions</th>
+                        <th>Prescribing Doctor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Tháng 01/2025</td>
+                        <td>50</td>
+                        <td>30</td>
+                        <td>20</td>
+                        <td>Dr. Lumis</td>
+                    </tr>
+                    <tr>
+                        <td>Tháng 01/2025</td>
+                        <td>50</td>
+                        <td>30</td>
+                        <td>20</td>
+                        <td>Dr. Lumis</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="import-report" class="report-content" style="display: none;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Medication</th>
+                        <th>Prescriptions</th>
+                        <th>Average (Qty/Pres)</th>
+                        <th>Total Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Amoxicillin</td>
+                        <td>25</td>
+                        <td>2.5</td>
+                        <td>20</td>
+                    </tr>
+                    <tr>
+                        <td>Ibuprofen</td>
+                        <td>15</td>
+                        <td>4</td>
+                        <td>60</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="export-report" class="report-content" style="display: none;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Medicine</th>
+                        <th>Quantity Exported</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>12/2024</td>
+                        <td>Amoxicillin</td>
+                        <td>2.5</td>
+                    </tr>
+                    <tr>
+                        <td>01/2025</td>
+                        <td>Ibuprofen</td>
+                        <td>4</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script type="module" src="/js/components/sidebar.js"></script>
+    <script src="/js/pages/admin/reports/warehouse.js"></script>
+    <script type="module" src="/js/services/admin/reports/warehouse.js"></script>
+</body>
+</html>

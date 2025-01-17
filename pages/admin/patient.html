@@ -1,0 +1,261 @@
+<html>
+<head>
+    <title>Patients</title>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/styles/components/sidebar.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        .container {
+            width: 90%;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            font-size: 24px;
+            color: #333;
+        }
+        .search-bar {
+            position: relative;
+            width: 300px;
+        }
+        .search-bar input {
+            width: 100%;
+            padding: 10px 40px 10px 20px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        .search-bar i {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            color: #aaa;
+        }
+        .add-patient-btn {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .add-patient-btn i {
+            margin-right: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table th, table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        table th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+        }
+        table td {
+            background-color: #fff;
+        }
+        .action-icons i {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .pagination a {
+            margin: 0 5px;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        .pagination a.active {
+            background-color: #007bff;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar" id="sidebar-placeholder"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1>Patients</h1>
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search">
+            </div>
+            <button class="add-patient-btn"><i class="fas fa-plus"></i> Patient</button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>PATIENT ID</th>
+                    <th>FULL NAME</th>
+                    <th>DATE OF BIRTH</th>
+                    <th>GENDER</th>
+                    <th>PHONE NUMBER</th>
+                    <th>HEALTH INSURANCE</th>
+                    <th>ACTION</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>220421</td>
+                    <td>Nguyễn Thị Thanh Huyền</td>
+                    <td>03/07/2003</td>
+                    <td>Female</td>
+                    <td>0123546987</td>
+                    <td>0.8</td>
+                    <td class="action-icons">
+                        <i class="fas fa-eye"></i>
+                        <i class="fas fa-pen"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td>220421</td>
+                    <td>Nguyễn Thị Thanh Huyền</td>
+                    <td>03/07/2003</td>
+                    <td>Female</td>
+                    <td>0123546987</td>
+                    <td>0.5</td>
+                    <td class="action-icons">
+                        <i class="fas fa-eye"></i>
+                        <i class="fas fa-pen"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td>220421</td>
+                    <td>Nguyễn Thị Thanh Huyền</td>
+                    <td>03/07/2003</td>
+                    <td>Female</td>
+                    <td>0123546987</td>
+                    <td>0.8</td>
+                    <td class="action-icons">
+                        <i class="fas fa-eye"></i>
+                        <i class="fas fa-pen"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td>220421</td>
+                    <td>Nguyễn Thị Thanh Huyền</td>
+                    <td>03/07/2003</td>
+                    <td>Female</td>
+                    <td>0123546987</td>
+                    <td>0.8</td>
+                    <td class="action-icons">
+                        <i class="fas fa-eye"></i>
+                        <i class="fas fa-pen"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td>220421</td>
+                    <td>Nguyễn Thị Thanh Huyền</td>
+                    <td>03/07/2003</td>
+                    <td>Female</td>
+                    <td>0123546987</td>
+                    <td>0.5</td>
+                    <td class="action-icons">
+                        <i class="fas fa-eye"></i>
+                        <i class="fas fa-pen"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td>220421</td>
+                    <td>Nguyễn Thị Thanh Huyền</td>
+                    <td>03/07/2003</td>
+                    <td>Female</td>
+                    <td>0123546987</td>
+                    <td>0.8</td>
+                    <td class="action-icons">
+                        <i class="fas fa-eye"></i>
+                        <i class="fas fa-pen"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td>220421</td>
+                    <td>Nguyễn Thị Thanh Huyền</td>
+                    <td>03/07/2003</td>
+                    <td>Female</td>
+                    <td>0123546987</td>
+                    <td>0.8</td>
+                    <td class="action-icons">
+                        <i class="fas fa-eye"></i>
+                        <i class="fas fa-pen"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td>220421</td>
+                    <td>Nguyễn Thị Thanh Huyền</td>
+                    <td>03/07/2003</td>
+                    <td>Female</td>
+                    <td>0123546987</td>
+                    <td>0.8</td>
+                    <td class="action-icons">
+                        <i class="fas fa-eye"></i>
+                        <i class="fas fa-pen"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td>220421</td>
+                    <td>Nguyễn Thị Thanh Huyền</td>
+                    <td>03/07/2003</td>
+                    <td>Female</td>
+                    <td>0123546987</td>
+                    <td>0.8</td>
+                    <td class="action-icons">
+                        <i class="fas fa-eye"></i>
+                        <i class="fas fa-pen"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td>220421</td>
+                    <td>Nguyễn Thị Thanh Huyền</td>
+                    <td>03/07/2003</td>
+                    <td>Female</td>
+                    <td>0123546987</td>
+                    <td>0.8</td>
+                    <td class="action-icons">
+                        <i class="fas fa-eye"></i>
+                        <i class="fas fa-pen"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="pagination">
+            <a href="#" class="active">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#">...</a>
+            <a href="#">20</a>
+        </div>
+    </div>
+
+    <script type="module" src="/js/components/sidebar.js"></script>
+</body>
+</html>

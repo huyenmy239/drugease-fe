@@ -1,0 +1,50 @@
+<html>
+<head>
+    <title>Report - Financial</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/styles/components/sidebar.css">
+    <link rel="stylesheet" href="/assets/styles/admin/report.css">
+</head>
+<body>
+    <div class="sidebar" id="sidebar-placeholder"></div>
+
+    <div class="container">
+        <h1>Financial</h1>
+        <div class="report-header">
+            <div class="tab active" id="doctor-tab">Medicine Revenue Report</div>
+        </div>
+        <div class="report-content">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Medicine</th>
+                        <th>Cost</th>
+                        <th>Revenue</th>
+                        <th>Profit</th>
+                    </tr>
+                </thead>
+                <tbody  id="revenue-report">
+                    <tr>
+                        <td>12/2024</td>
+                        <td>Ensulin</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>02/2024</td>
+                        <td>Endorphin</td>
+                        <td>20</td>
+                        <td>20</td>
+                        <td>20</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script type="module" src="/js/components/sidebar.js"></script>
+    <script type="module" src="/js/services/admin/reports/financial.js"></script>
+</body>
+</html>

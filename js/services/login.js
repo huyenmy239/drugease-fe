@@ -2,6 +2,34 @@ import CONFIG from '../utils/settings.js';
 
 const API_BASE_URL = `http://${CONFIG.BASE_URL}/api/accounts/accounts`;
 
+const routes = {
+    admin: [
+        { path: '/pages/home.html', component: 'AdminDashboard' },
+    ],
+    doctor: [
+        { path: '/pages/home.html', component: 'UserDashboard' },
+    ],
+    staff: [
+        { path: '/pages/home.html', component: 'LoginPage' },
+    ],
+    pharmacist: [
+        { path: '/pages/home.html', component: 'LoginPage' },
+    ]
+};
+
+function navigateToRoleBasedRoute(role) {
+    const userRoutes = routes[role];
+    if (!userRoutes) {
+        console.error('Role not found, redirecting to login');
+        window.location.href = '/login';
+        return;
+    }
+
+    const defaultRoute = userRoutes[0];
+    window.location.href = defaultRoute.path;
+}
+
+
 async function login() {
     const username = document.getElementById('login-username').value;
     const password = document.getElementById('login-password').value;
@@ -25,7 +53,8 @@ async function login() {
             localStorage.setItem('role', data.role);
             localStorage.setItem('employee_id', data.employee_id);
 
-            window.location.href = "home.html";
+            navigateToRoleBasedRoute(data.role);
+            // window.location.href = "home.html";
         } else {
             console.log(`Error: ${JSON.stringify(data)}`);
             alert('Đăng nhập thất bại: ' + data.error);

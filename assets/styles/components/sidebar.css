@@ -5,22 +5,26 @@
     height: 100vh;
     background-color: #F9FAFB;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    padding: 20px 0 0 0;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 1000;
     color: #333;
-    height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
 }
 
 .logo {
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 20px;
     border-bottom: 1px solid #AFAFAF;
+    cursor: pointer;
+}
+
+.logo a {
+    text-decoration: none;
 }
 
 .logo img {
@@ -49,21 +53,21 @@
     cursor: pointer;
 }
 
-.menu li:not(:first-child):not(:nth-child(5)):not(:nth-child(10)):not(:nth-child(12)):hover {
-    background-color: rgba(0, 94, 181, 0.17);
-}
-
-
 .menu li a {
     text-decoration: none;
     color: #646464;
     display: flex;
     align-items: center;
     gap: 10px;
+    padding-left: 20px;
 }
 
 .menu li:hover a {
     color: #005EB5;
+}
+
+.menu li:hover {
+    background-color: rgba(0, 94, 181, 0.17);
 }
 
 .menu li i {
@@ -71,21 +75,10 @@
 }
 
 /* Section Headers */
-.menu li:not(:first-child):not(:nth-child(5)):not(:nth-child(10)):not(:nth-child(12)) {
-    padding-left: 40px;
-}
-
-.menu li:nth-child(1), 
-.menu li:nth-child(5), 
-.menu li:nth-child(10), 
-.menu li:nth-child(12) {
+.section-header {
     font-weight: bold;
     font-size: 14px;
     padding: 15px 20px;
     color: #AFAFAF;
-}
-
-.menu li:last-child {
-    padding: 20px;
-    border-top: 1px solid #AFAFAF;
+    background-color: transparent;
 }
