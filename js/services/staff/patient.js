@@ -153,7 +153,6 @@ function editPatient(id) {
         method: 'GET',
         headers: {
             'Authorization': `Token ${token}`, 
-            'Content-Type': 'application/json'
         }
     })
         .then((response) => response.json())
@@ -205,7 +204,6 @@ function updatePatient(id) {
         method: "PUT",
         headers: {
             'Authorization': `Token ${token}`, 
-            'Content-Type': 'application/json'
         },
         body: formData,
     })
