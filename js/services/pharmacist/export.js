@@ -56,6 +56,7 @@ function handleAddButtonClick() {
     medicineDetail.style.display = "grid";
     listDetails.style.display = "block";
     hDetails.style.display = "block";
+    document.querySelector('.filter-container').style.display = 'none';
 
     if (listExport && hExport) {
         listExport.style.display = "none";
@@ -94,62 +95,7 @@ async function fetchDropdownData() {
 }
 
 // Fetch and display export receipts
-async function fetchExportReceipts() {
-    try {
-        const receipts = await fetch(`${API_URL}/export-list/`, {
-            method: 'GET',
-            headers: {
-                'Authorization': 'Token ' + localStorage.getItem('token'),
-                'Content-Type': 'application/json'
-            }
-        }).then(res => res.json());
 
-        exportList.innerHTML = receipts.map(receipt => `
-            <tr>
-                <td>${receipt.id}</td>
-                <td>${receipt.warehouse.warehouse_name}</td>
-                <td>${formatDateTime(receipt.export_date)}</td>
-                <td>${receipt.total_amount}</td>
-                <td>
-                    <button class="view-btn" data-id="${receipt.id}">
-                        <i class="fa-solid fa-eye"></i>
-                    </button>
-                    <button class="print-btn" data-id="${receipt.id}" ${receipt.is_approved ? 'disabled' : ''}>
-                        <i class="fa-solid fa-print"></i>
-                    </button>
-                    <button class="delete-btn" data-id="${receipt.id}"${receipt.is_approved ? 'disabled' : ''}>
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-                </td>
-            </tr>
-        `).join('');
-
-        // Add event listeners for buttons
-        document.querySelectorAll('.view-btn').forEach(button => {
-            button.addEventListener('click', function () {
-                const exportId = this.getAttribute('data-id');
-                handleViewReceipt(exportId);
-            });
-        });
-
-        document.querySelectorAll('.print-btn').forEach(button => {
-            button.addEventListener('click', function () {
-                const exportId = this.getAttribute('data-id');
-                handlePrintButtonClick(exportId);
-            });
-        });
-        
-        document.querySelectorAll('.delete-btn').forEach(button => {
-            button.addEventListener('click', function () {
-                const exportId = this.getAttribute('data-id');
-                handleDeleteReceipt(exportId);
-            });
-        });
-
-    } catch (error) {
-        console.error('Error fetching export receipts:', error);
-    }
-}
 
 
 // Handle delete receipt
@@ -167,7 +113,7 @@ async function handleDeleteReceipt(exportId) {
 
         if (response.ok) {
             alert('Export receipt deleted successfully!');
-            fetchExportReceipts(); 
+            fetchExportReceipts("all"); 
         } else {
             const result = await response.json();
             alert('Failed to delete export receipt: ' + result.detail);
@@ -591,6 +537,90 @@ async function addExport() {
 }
 
 
+async function fetchExportReceipts(statusFilter = "") {
+    try {
+        let apiUrl = `${API_URL}`;
+
+        if (statusFilter !== "all") {
+            apiUrl += `/export-search?is_approved=${statusFilter}`;
+        } else {
+            apiUrl += `/export-list`;
+        }
+
+        console.log("API URL:", apiUrl); 
+
+        const response = await fetch(apiUrl, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Token ' + localStorage.getItem('token'),
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            console.error('API error:', response.statusText);
+            return;
+        }
+
+        const receipts = await response.json();
+
+        
+            exportList.innerHTML = receipts.map(receipt => `
+                <tr>
+                    <td>${receipt.id}</td>
+                    <td>${receipt.warehouse.warehouse_name}</td>
+                    <td>${formatDateTime(receipt.export_date)}</td>
+                    <td>${receipt.total_amount}</td>
+                    <td>
+                        <button class="view-btn" data-id="${receipt.id}">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                        <button class="print-btn" data-id="${receipt.id}" ${receipt.is_approved ? 'disabled' : ''}>
+                            <i class="fa-solid fa-print"></i>
+                        </button>
+                        <button class="delete-btn" data-id="${receipt.id}" ${receipt.is_approved ? 'disabled' : ''}>
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+
+            document.querySelectorAll('.view-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const exportId = this.getAttribute('data-id');
+                    handleViewReceipt(exportId);
+                });
+            });
+    
+            document.querySelectorAll('.print-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const exportId = this.getAttribute('data-id');
+                    handlePrintButtonClick(exportId);
+                });
+            });
+            
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const exportId = this.getAttribute('data-id');
+                    handleDeleteReceipt(exportId);
+                });
+            });
+        
+
+    } catch (error) {
+        console.error('Lỗi khi tải danh sách phiếu xuất:', error);
+    }
+}
+
+
+    document.getElementById("receipt-filter").addEventListener("change", function () {
+        const statusFilter = this.value;
+        console.log('Status Filter:', statusFilter);  
+        fetchExportReceipts(statusFilter); 
+    });
+
+
+
 
 
 
@@ -598,7 +628,10 @@ async function addExport() {
 document.addEventListener('DOMContentLoaded', function () {
     setTodayDate();
     fetchDropdownData();
-    fetchExportReceipts();
+    fetchExportReceipts("all");
 });
 
+
 addExportBtn.addEventListener('click', addExport);
+
+

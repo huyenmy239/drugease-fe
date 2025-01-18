@@ -9,7 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" rel="stylesheet" />
     <link rel="icon" type="image/png" href="/assets/images/logoblue.png">
     <link rel="stylesheet" href="/assets/styles/components/sidebar.css">
-    <link rel="stylesheet" href="/assets/styles/prescription.css">
+    <link rel="stylesheet" href="/assets/styles/staff/import.css">
 </head>
 
 <body>
@@ -24,12 +24,12 @@
 
             <!-- Disease Information Section -->
             <section class="disease-infor">
-                <h2>Disease Information</h2>
+                <h2>Import Information</h2>
 
                 <div class="form">
-                    <div class="patient-select">
-                        <label for="patient-select">Patient:</label>
-                        <select id="patient-select" name="patient">
+                    <div class="warehouse-select">
+                        <label for="warehouse-select">Warehouse:</label>
+                        <select id="warehouse-select" name="warehouse">
                             <!-- <option value="patient1">Patient 1</option>
                             <option value="patient2">Patient 2</option>
                             <option value="patient3">Patient 3</option> -->
@@ -37,7 +37,7 @@
                     </div>
 
                     <!-- Patient Details (to be shown after selecting a patient) -->
-                    <div class="patient-details">
+                    <!-- <div class="patient-details">
                         <div class="detail">
                             <label for="dob">Date of Birth:</label>
                             <span id="dob">N/A</span>
@@ -54,10 +54,10 @@
                             <label for="insurance">Health Insurance:</label>
                             <span id="insurance">N/A</span>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- Disease Name Input -->
-                    <div class="disease-name-input">
+                    <!-- <div class="disease-name-input">
                         <label for="disease-name">Diagnosis:</label>
                         <input type="text" id="disease-name" name="disease-name" placeholder="Type...">
                     </div>
@@ -65,9 +65,9 @@
                     <div class="advice-input">
                         <label for="advice">Instruction:</label>
                         <input type="text" id="advice" name="advice" placeholder="Type...">
-                    </div>
+                    </div> -->
 
-                    <button id="add-prescription-btn" class="add-btn">+ Add</button>
+                    <button id="add-import-btn" class="add-btn">+ Add</button>
 
                     <div class="medicine-add">
                         <div class="medicine-select">
@@ -88,9 +88,9 @@
                             </div>
                         </div>
 
-                        <div class="note-input">
-                            <label for="note">Note:</label>
-                            <input type="text" id="note" name="note" placeholder="Type...">
+                        <div class="price-input">
+                            <label for="price">Price:</label>
+                            <input type="number" id="price" name="price" placeholder="Type...">
                         </div>
 
                         <button class="add-medicine-btn">+ Add</button>
@@ -100,37 +100,37 @@
             </section>
 
             <div class="medicine-infor">
-                <h2 class="h-prescription">Prescriptions</h2>
-                <div class="list-prescription">
-                    <table class="patient-table list-table">
+                <h2 class="h-import">Import Receipts</h2>
+                <div class="list-import">
+                    <table class="import-table list-table">
                         <thead>
                             <tr>
-                                <th>PRESCRIPTION ID</th>
-                                <th>PATIENT NAME</th>
-                                <th>DIAGNOSIS</th>
+                                <th>IMPORT RECEIPT ID</th>
                                 <th>DATE</th>
+                                <th>WAREHOUSE</th>
+                                <th>TOTAL AMOUNT</th>
                                 <th>ACTION</th>
                             </tr>
                         </thead>
-                        <tbody id="patient-list">
+                        <tbody id="import-list">
 
                         </tbody>
                     </table>
                 </div>
 
 
-                <h2 class="h-details">Prescription Details</h2>
+                <h2 class="h-details">Import Receipt Details</h2>
                 <div class="list-details">
-                    <table class="detail-medicine-table list-table">
+                    <table class="detail-import-table list-table">
                         <thead>
                             <tr>
                                 <th>MEDICINE NAME</th>
                                 <th>QUANTITY</th>
-                                <th>NOTE</th>
+                                <th>PRICE</th>
                                 <th>ACTION</th>
                             </tr>
                         </thead>
-                        <tbody id="detail-medicine-list">
+                        <tbody id="detail-import-list">
                             <!-- Sample Data -->
                             <!-- <tr>
                                 <td>Paracetamol</td>
@@ -157,8 +157,8 @@
     </div>
 
         <script src="/js/components/sidebar.js"></script>
-        <script src="/js/pages/prescription.js"></script>
-        <script type="module" src="/js/services/prescription.js"></script>
+        <script src="/js/pages/staff/import.js"></script>
+        <script type="module" src="/js/services/staff/import.js"></script>
 </body>
 
 </html>

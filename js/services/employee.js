@@ -59,6 +59,37 @@ function populateTable(employees) {
     });
 }
 
+
+// Search filter
+document.getElementById("search").addEventListener("input", async function (event) {
+    const searchQuery = event.target.value.trim();
+    const params = new URLSearchParams();
+
+    // Thêm các trường cần tìm kiếm
+    if (searchQuery) {
+        params.append("query", searchQuery); // Chỉ gửi một tham số 'query'
+    }
+
+    try {
+        const response = await fetch(`${API_URL}/employee-list/?${params.toString()}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Token ${token}`,
+            }
+        });
+
+        if (response.ok) {
+            const employees = await response.json();
+            populateTable(employees); // Hiển thị kết quả lên bảng
+        } else {
+            console.error("Failed to fetch employees:", response.statusText);
+        }
+    } catch (error) {
+        console.error("Error during search:", error);
+    }
+});
+
+
 function showEmployee(id, role, username) {
     localStorage.setItem("selectedEmployeeId", id);
     localStorage.setItem("selectedEmployeeRole", role);
@@ -70,12 +101,12 @@ function showEmployee(id, role, username) {
 
 document.getElementById("role-filter").addEventListener("change", applyFilters);
 document.getElementById("status-filter").addEventListener("change", applyFilters);
-document.getElementById("search").addEventListener("input", applyFilters);
+// document.getElementById("search").addEventListener("input", applyFilters);
 
 function applyFilters() {
     const role = document.getElementById("role-filter").value;
     const status = document.getElementById("status-filter").value;
-    const search = document.getElementById("search").value.toLowerCase();
+    // const search = document.getElementById("search").value.toLowerCase();
 
     fetch(API_URL + `/employee-list/`, {
         method: 'GET',
@@ -91,11 +122,12 @@ function applyFilters() {
                 const matchesStatus = status 
                     ? (status === "Active" ? employee.is_active === true : employee.is_active === false)
                     : true;
-                const matchesSearch = 
-                    employee.full_name.toLowerCase().includes(search) || 
-                    employee.id_card.toLowerCase().includes(search) || 
-                    employee.phone_number.includes(search);
-                return matchesRole && matchesStatus && matchesSearch;
+                // const matchesSearch = 
+                //     employee.full_name.toLowerCase().includes(search) || 
+                //     employee.id_card.toLowerCase().includes(search) || 
+                //     employee.phone_number.includes(search);
+                // return matchesRole && matchesStatus && matchesSearch;
+                return matchesRole && matchesStatus;
             });
             populateTable(filteredEmployees);
         })
@@ -193,7 +225,6 @@ function updateEmployee(id) {
         method: "PUT",
         headers: {
             'Authorization': `Token ${token}`,
-            'Content-Type': 'application/json'
         },
         body: formData,
     })
@@ -203,7 +234,7 @@ function updateEmployee(id) {
                     if (typeof errorData === "object") {
                         let errorMessages = [];
                         for (const [key, value] of Object.entries(errorData)) {
-                            errorMessages.push(`${value}`);
+                            errorMessages.push(`${key}: ${value}`);
                         }
                         throw new Error(errorMessages.join("\n"));
                     }

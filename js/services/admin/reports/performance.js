@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const row = `
                 <tr>
                     <td>${report.doctor_name}</td>
+                    <td>${report.month}</td>
                     <td>${report.num_prescriptions}</td>
                     <td>${report.avg_minutes.toFixed(2)}</td>
                 </tr>

@@ -92,6 +92,16 @@
 
             <div class="medicine-infor">
                 <h2 class="h-export">Export Receipts</h2>
+
+                <div class="filter-container">
+                    <label for="receipt-filter">Filter: </label>
+                    <select id="receipt-filter">
+                        <option value="all">All</option>
+                        <option value="true">Approved</option>
+                        <option value="false">Unapproved</option>
+                    </select>
+                </div>
+
                 <div class="list-export">
                     <table class="export-table list-table">
                         <thead>

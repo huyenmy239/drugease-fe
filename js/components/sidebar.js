@@ -36,25 +36,17 @@ const sidebarTemplates = {
                     </a></li>
 
                 <li class="no-hover section-header">RESOURCE MANAGEMENT</li>
-                <li><a href="#">
+                <li><a href="/pages/admin/medicine.html">
                         <i class="fa-solid fa-pills"></i>
                         Medicine
                     </a></li>
-                <li><a href="#">
+                <li><a href="/pages/admin/warehouse.html">
                         <i class="fa-solid fa-warehouse"></i>
                         Warehouse
                     </a></li>
-                <li><a href="#">
-                        <i class="fa-solid fa-file-import"></i>
-                        Import Receipt
-                    </a></li>
-                <li><a href="#">
-                        <i class="fa-solid fa-file-export"></i>
-                        Export Receipt
-                    </a></li>
 
                 <li class="no-hover section-header">TREATMENT MANAGEMENT</li>
-                <li><a href="/pages/prescription.html">
+                <li><a href="/pages/admin/prescription.html">
                         <i class="fa-solid fa-file-waveform"></i>
                         Prescription
                     </a></li>

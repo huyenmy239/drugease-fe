@@ -1,0 +1,40 @@
+<html>
+<head>
+    <title>Drug Management System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="/assets/images/logoblue.png">
+    <link rel="stylesheet" href="/assets/styles/components/sidebar.css">
+    <link rel="stylesheet" href="/assets/styles/admin/warehouse.css">
+</head>
+<body>
+    <div class="sidebar" id="sidebar-placeholder"></div>
+
+    <div class="container">
+        <h1>Warehouse</h1>
+        <div class="search-bar">
+            <input type="text" placeholder="Search">
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>WAREHOUSE ID</th>
+                    <th>WAREHOUSE NAME</th>
+                    <th>ADDRESS</th>
+                    <th>STATUS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>220421</td>
+                    <td>Kho Lê Lợi</td>
+                    <td>Số 12, Đường Lê Lợi, Phường Bến Nghé, Quận 1, Thành phố Hồ Chí Minh, Việt Nam</td>
+                    <td class="status-active">Active</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script type="module" src="/js/components/sidebar.js"></script>
+    <script type="module" src="/js/services/admin/warehouse.js"></script>
+</body>
+</html>
