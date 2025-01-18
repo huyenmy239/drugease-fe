@@ -37,7 +37,10 @@ async function loadMedicines() {
 
 function renderMedicineTable(data) {
     const tableBody = document.getElementById('medicine-list');
+    const unitFilter = document.getElementById('unit-filter');
     tableBody.innerHTML = '';
+
+    const uniqueUnits = new Set();
 
     data.forEach(medicine => {
         const row = document.createElement('tr');
@@ -51,7 +54,79 @@ function renderMedicineTable(data) {
         `;
         tableBody.appendChild(row);
 
+        uniqueUnits.add(medicine.unit);
+
+    });
+
+    unitFilter.innerHTML = '<option value="">Filter by Unit</option>'; // Clear existing options and add default
+    uniqueUnits.forEach(unit => {
+        const option = document.createElement('option');
+        option.value = unit;
+        option.textContent = unit;
+        unitFilter.appendChild(option);
     });
 }
+
+
+function populateUnitFilter() {
+    const unitFilter = document.getElementById('unit-filter');
+    const tableRows = document.querySelectorAll('#medicine-list tr');
+    const units = new Set();
+
+    tableRows.forEach(row => {
+        const unit = row.cells[3].textContent.trim();
+        units.add(unit);
+    });
+
+    unitFilter.innerHTML = '<option value="">Filter by Unit</option>';
+
+    units.forEach(unit => {
+        const option = document.createElement('option');
+        option.value = unit;
+        option.textContent = unit;
+        unitFilter.appendChild(option);
+    });
+}
+
+function filterByUnit() {
+    const selectedUnit = document.getElementById('unit-filter').value;
+    const tableRows = document.querySelectorAll('#medicine-list tr');
+
+    tableRows.forEach(row => {
+        const unit = row.cells[3].textContent.trim();
+
+        if (selectedUnit === '' || unit === selectedUnit) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+}
+
+const unitFilter = document.getElementById('unit-filter');
+unitFilter.addEventListener('change', filterByUnit);
+
+document.addEventListener('DOMContentLoaded', populateUnitFilter);
+
+
+
+function filterMedicines() {
+    const searchInput = document.querySelector('.search-bar input').value.toLowerCase();
+    const tableRows = document.querySelectorAll('#medicine-list tr');
+
+    tableRows.forEach(row => {
+        const medicineName = row.cells[1].textContent.toLowerCase();
+        const description = row.cells[4].textContent.toLowerCase();
+
+        if (medicineName.includes(searchInput) || description.includes(searchInput)) {
+            row.style.display = ''; // Show row
+        } else {
+            row.style.display = 'none'; // Hide row
+        }
+    });
+}
+
+const searchBar = document.querySelector('.search-bar input');
+searchBar.addEventListener('input', filterMedicines);
 
 document.addEventListener('DOMContentLoaded', loadMedicines);

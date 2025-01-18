@@ -42,3 +42,23 @@ function loadWarehouses() {
 }
 
 document.addEventListener('DOMContentLoaded', loadWarehouses);
+
+
+function filterWarehouses() {
+    const searchInput = document.querySelector('.search-bar input').value.toLowerCase();
+    const tableRows = document.querySelectorAll('tbody tr');
+
+    tableRows.forEach(row => {
+        const warehouseName = row.cells[1].textContent.toLowerCase();
+        const address = row.cells[2].textContent.toLowerCase();
+
+        if (warehouseName.includes(searchInput) || address.includes(searchInput)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+}
+
+const searchBar = document.querySelector('.search-bar input');
+searchBar.addEventListener('input', filterWarehouses);

@@ -64,6 +64,25 @@ function renderTable(data) {
 
 document.addEventListener('DOMContentLoaded', loadPatients);
 
+function filterPatients() {
+    const searchInput = document.querySelector('.search-bar input').value.toLowerCase();
+    const tableRows = document.querySelectorAll('#patient-table-body tr');
+
+    tableRows.forEach(row => {
+        const fullName = row.cells[1].textContent.toLowerCase();
+        const phoneNumber = row.cells[4].textContent.toLowerCase();
+
+        if (fullName.includes(searchInput) || phoneNumber.includes(searchInput)) {
+            row.style.display = ''; // Show row
+        } else {
+            row.style.display = 'none'; // Hide row
+        }
+    });
+}
+
+const searchBar = document.querySelector('.search-bar input');
+searchBar.addEventListener('input', filterPatients);
+
 
 document.getElementById('createPatient').addEventListener('click', async () => {
     const fullName = document.getElementById('full-name').value;

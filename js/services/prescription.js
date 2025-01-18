@@ -248,7 +248,6 @@ function populatePrescriptionTable(prescriptions) {
         const actionCell = document.createElement('td');
         actionCell.innerHTML = `
             <button><i id="edit-${prescription.id}-btn" class="edit-btn fa-solid fa-pen-to-square"></i></button>
-            <button><i id="print-${prescription.id}-btn" class="print-btn fa-solid fa-print"></i></button>
             <button><i id="delete-${prescription.id}-btn" class="delete-btn fa-solid fa-trash"></i></button>
         `;
         row.appendChild(actionCell);

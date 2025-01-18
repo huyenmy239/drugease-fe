@@ -55,4 +55,25 @@ function renderTable(data) {
     });
 }
 
+
+function filterPatients() {
+    const searchInput = document.querySelector('.search-bar input').value.toLowerCase();
+    const tableRows = document.querySelectorAll('#patient-table-body tr');
+
+    tableRows.forEach(row => {
+        const fullName = row.cells[1].textContent.toLowerCase();
+        const phoneNumber = row.cells[4].textContent.toLowerCase();
+
+        if (fullName.includes(searchInput) || phoneNumber.includes(searchInput)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+}
+
+const searchBar = document.querySelector('.search-bar input');
+searchBar.addEventListener('input', filterPatients);
+
+
 document.addEventListener('DOMContentLoaded', loadPatients);
