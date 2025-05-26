@@ -39,6 +39,16 @@ Drugease Frontend cung cấp một giao diện trực quan, dễ sử dụng đ�
 - **Bảo Mật:** Mã hóa dữ liệu và bảo vệ API với token.
 
 
+## Cài đặt
+
+### 1. Cấu hình API URL
+
+- **Backend Link:** [Drugease Backend](https://github.com/huyenmy239/drugease-be)
+
+### 2. Chạy Ứng Dụng
+
+Khởi động server phát triển frontend bằng Live Server. Rồi truy cập ứng dụng qua trình duyệt tại `http://localhost:5500`.
+
 ## Cấu Trúc Dự Án
 
 ### 1. **assets/**
