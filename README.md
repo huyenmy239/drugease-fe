@@ -74,7 +74,7 @@ Thư mục này chứa các tệp HTML cho các trang khác nhau trong ứng d�
 
 | Thành Viên                  | Tính Năng Được Giao                                                         | Tài Khoản GitHub                  | Avatar                                |
 |------------------------------|----------------------------------------------------------------------------|-----------------------------------|---------------------------------------|
-| **Nguyễn Thị Thanh Huyến**   | Thiết kế giao diện trang web bằng Figma và các component UI cho báo cáo, thống kê và giao diện người dùng. Xậy dựng giao diện và gọi API cho việc xuất thuốc. | [zethro](https://github.com/zethro) | <img src="https://avatars.githubusercontent.com/zethro" width="50" height="50" /> |
+| **Nguyễn Thị Thanh Huyến**   | Design the website interface using Figma and UI components for reports, statistics, and the user interface. | [zethro](https://github.com/zethro) | <img src="https://avatars.githubusercontent.com/zethro" width="50" height="50" /> |
 | **Nguyễn Thị Huyền My**      | Xây dựng giao diện người dùng và gọi API cho các tính năng quản lý nhân viên, đơn thuốc, kho thuốc, bệnh nhân. | [huyenmy239](https://github.com/huyenmy239) | <img src="https://avatars.githubusercontent.com/huyenmy239" width="50" height="50" /> |
 
 
